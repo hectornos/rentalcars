@@ -36,7 +36,7 @@ class Vehiculo extends Model
     }
 
     //-----------------------------------------------------------------------
-    //El vehiculo tiene muchas averias
+    //El vehiculo tiene muchas averias y alquileres.
     //-----------------------------------------------------------------------
 
     public function averias(){
@@ -52,6 +52,13 @@ class Vehiculo extends Model
     //-----------------------------------------------------------------------
     public function incidencias(){
         return $this->hasManyThrough('App\Incidencia','App\Alquiler');
+            
+    }
+    //-----------------------------------------------------------------------
+    //El vehiculo tiene varios clientes que lo han alquilado
+    //-----------------------------------------------------------------------
+    public function clientes(){
+        return $this->hasManyThrough('App\Cliente','App\Alquiler');
             
     }
 

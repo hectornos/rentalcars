@@ -9,7 +9,7 @@ class Alquiler extends Model
 {
     protected $fillable=['id','cliente_id','vehiculo_id','fecha_fin'];
 
-    protected $table='alquilers';
+    protected $table='cliente_vehiculo';
 
 //------------------------------------------------------------------------
 //El alquiler se efectua sobre un vehiculo

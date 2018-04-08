@@ -23,4 +23,12 @@ class Cliente extends Model
     		
     }
 
+    //-----------------------------------------------------------------------
+    //El cliente puede haber alquilado diversos coches
+    //-----------------------------------------------------------------------
+    public function vehiculos() {
+        //return $this->hasManyThrough('App\Vehiculo','App\Alquiler');
+        return $this->belongsToMany('App\Vehiculo');
+        
+    }
 }

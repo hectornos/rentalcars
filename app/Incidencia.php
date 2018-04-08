@@ -4,12 +4,19 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/*
+El model incidencia corresponde a la tabla de incidencias de la base de datos.
+Las incidencias están relacionadas con los alquileres, de modo que en un alquiler 
+se pueden producir un número indeterminado de incidencias.
+*/
+
 class Incidencia extends Model
 {
-   	protected $table = 'incidencias';
+    protected $table = 'incidencias';
+    //Podemos recoger los campos de la tabla con el request.
     protected $fillable = ['id','alquiler_id','descripcion','resuelto'];
 	//-----------------------------------------------------------------------
-    //La averia se asocia a un vehiculo concreto y es de un tipo
+    //La incidencia se relaciona con un alquiler, a través del campo id
     //-----------------------------------------------------------------------
    	public function alquiler(){
     	return $this->hasOne('App\Alquiler','id','alquiler_id');
