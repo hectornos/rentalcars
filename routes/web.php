@@ -22,3 +22,8 @@ Route::get('/Ver','ClienteController@ver')->name('Cliente.ver');
 Route::get('/Averias', 'AveriaController@index')->name('Averia.index');
 
 Route::get('/Incidencias', 'ClienteController@verIncidencias')->name('Cliente.incidencias');
+
+Route::get('/VehiculosCli', 'ClienteController@verVehiculos')->name('Cliente.verVehiculos');
+
+Route::get('/Alquileres', 'AlquilerController@index')->name('Alquiler.index');
+

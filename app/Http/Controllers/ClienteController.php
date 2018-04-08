@@ -21,5 +21,10 @@ class ClienteController extends Controller
     	//Supongo que quiero ver las incidencias del cliente 1
     	$cliente = Cliente::find(1);
     	return view('vistaIncidencias',['cliente'=>$cliente]);
-    }
+	}
+	
+	public function verVehiculos() {
+		$cliente = Cliente::find(1);
+		return view('vistaVehiculosCli',['cliente'=>$cliente]);
+	}
 }

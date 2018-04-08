@@ -4,6 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/*
+El modelo TipoAveria hace referencia a la tabla tipoaverias.
+Las averías pueden ser de un tipo determinado, a escoger de entre aquellos que 
+esten en dicha tabla.
+*/
+
 class Tipoaveria extends Model
 {
 	protected $table = 'tipoaverias';
