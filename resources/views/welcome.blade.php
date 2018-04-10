@@ -88,10 +88,7 @@
                     <a href="https://laravel-news.com">News</a>
                     <a href="https://forge.laravel.com">Forge</a>
                     <a href="https://github.com/laravel/laravel">GitHub</a>
-                    <a href="{{ route('Vehiculo.pruebas') }}">Pruebas</a>
-                    <a href="{{ route('Cliente.ver') }}">Ver</a>
-                    <a href="{{ route('Averia.index') }}">Averias</a>
-                    <a href="{{ route('Cliente.incidencias') }}">Incidencias</a>
+
                 </div>
             </div>
         </div>

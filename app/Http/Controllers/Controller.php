@@ -10,4 +10,16 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    public function token() {
+        echo csrf_token();
+    }
+
+    public function ordenar($modelo, $campo) {
+        $modelo = ucfirst($modelo);
+        $cursor = $modelo::orderBy($campo)->get();
+        return $cursor;
+    }
+
+
 }

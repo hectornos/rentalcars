@@ -12,8 +12,15 @@ use App\Alquiler as Alquiler;
 
 class AlquilerController extends Controller
 {
+    //Listado completo de alquileres
     public function index () {
         $alquileres = Alquiler::all();
-        return view('Alquileres',['alquileres'=>$alquileres]);
+        return $alquileres;
     }
+
+    //Detalle de un alquiler dado su id (primary key)
+    public function show($id) {
+		$alquiler = Alquiler::find($id);
+		return $alquiler;
+	}
 }
