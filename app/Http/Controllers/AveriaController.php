@@ -11,10 +11,15 @@ use App\Alquiler as Alquiler;
 
 class AveriaController extends Controller
 {
+	//Listado completo de averias
     public function index() {
-    	//Sacar listado de averias con su vehiculo asociado
-    	$averias = Averia::all();
-    	return view('vistaAverias',['averias'=>$averias]);
+    $averias = Averia::all();
+    	return $averias;
+	}
 
-    }
+	//Detalle de una averia dado su id (primary key)
+	public function show($id) {
+		$averia = Averia::find($id);
+		return $averia;
+	}
 }
