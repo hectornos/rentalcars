@@ -11,11 +11,12 @@ use App\Alquiler as Alquiler;
 
 class AveriaController extends Controller
 {
-	//Listado completo de averias
-    public function index() {
-    $averias = Averia::all();
-    	return $averias;
-	}
+	//Listado completo de alquileres
+    public function index () {
+        $averias = Averia::all();
+        $count = $averias->count();
+        return \View::make('vistaAverias',compact('averias'),['count'=>$count]);
+    }
 
 	//Detalle de una averia dado su id (primary key)
 	public function show($id) {

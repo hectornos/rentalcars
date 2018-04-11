@@ -3,11 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\Pivot;
+
 
 class Alquiler extends Model
 {
-    protected $fillable=['id','cliente_id','vehiculo_id','fecha_fin'];
+    protected $fillable=['id','cliente_id','vehiculo_id','fecha'];
 
     protected $table='cliente_vehiculo';
 

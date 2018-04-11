@@ -12,11 +12,12 @@ use App\Alquiler as Alquiler;
 
 class IncidenciaController extends Controller
 {
-    //Listado completo de las incidencias
-    public function index() {
-		$incidencias = Incidencia::all();
-		return $incidencias;
-    }
+    //Listado completo de alquileres
+    public function index () {
+      $incidencias = Incidencia::all();
+      $count = $incidencias->count();
+      return \View::make('vistaIncidencias',compact('incidencias'),['count'=>$count]);
+  }
     
     //Detalle de una incidencia dado su id (primary key)
     public function show($id) {

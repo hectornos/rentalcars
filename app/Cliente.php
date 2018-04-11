@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Cliente extends Model
 {
     protected $table='clientes';
-    protected $fillable = ['id','nombre','apellido','ciudad','dni','f_nac','user_id'];
+    protected $fillable = ['id','nombre','apellido','ciudad','dni','f_nac','user_id','telefono'];
 	//-----------------------------------------------------------------------
     //El cliente tiene varios alquileres
     //-----------------------------------------------------------------------
@@ -31,4 +31,5 @@ class Cliente extends Model
         return $this->belongsToMany('App\Vehiculo');
         
     }
+    
 }
