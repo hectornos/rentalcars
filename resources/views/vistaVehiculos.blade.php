@@ -19,7 +19,10 @@
             @else
                 <td>Sin averias</td>
             @endif
+            
+
         </tr>
     @endforeach
+    Contador: {{$count}}
 </body>
 </html>
