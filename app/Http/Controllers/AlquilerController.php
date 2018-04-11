@@ -15,7 +15,8 @@ class AlquilerController extends Controller
     //Listado completo de alquileres
     public function index () {
         $alquileres = Alquiler::all();
-        return $alquileres;
+        $count = $alquileres->count();
+        return \View::make('vistaAlquileres',compact('alquileres'),['count'=>$count]);
     }
 
     //Detalle de un alquiler dado su id (primary key)
