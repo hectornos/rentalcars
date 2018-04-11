@@ -23,4 +23,11 @@ class AveriaController extends Controller
 		$averia = Averia::find($id);
 		return $averia;
 	}
+
+	//Averias de un vehiculo
+    public function listar($vehiculo_id) {
+        $averias = Averia::where('vehiculo_id', $vehiculo_id)->get();
+        $count = $averias->count();
+		return \View::make('vistaAverias',compact('averias'),['count'=>$count]);
+    }
 }

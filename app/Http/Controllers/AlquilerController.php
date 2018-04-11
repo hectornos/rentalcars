@@ -23,5 +23,20 @@ class AlquilerController extends Controller
     public function show($id) {
 		$alquiler = Alquiler::find($id);
 		return $alquiler;
-	}
+    }
+    
+    //Alquileres de un cliente
+    public function listarCli($cliente_id) {
+        $alquileres = Alquiler::where('cliente_id', $cliente_id)->get();
+        $count = $alquileres->count();
+        return \View::make('vistaAlquileres',compact('alquileres'),['count'=>$count]);
+    }
+
+    //Alquileres de un vehiculo
+    public function listarVeh($vehiculo_id) {
+        $alquileres = Alquiler::where('vehiculo_id', $vehiculo_id)->get();
+        $count = $alquileres->count();
+        return \View::make('vistaAlquileres',compact('alquileres'),['count'=>$count]);
+    }
+
 }

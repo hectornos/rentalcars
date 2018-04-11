@@ -19,9 +19,12 @@ class IncidenciaController extends Controller
       return \View::make('vistaIncidencias',compact('incidencias'),['count'=>$count]);
   }
     
-    //Detalle de una incidencia dado su id (primary key)
-    public function show($id) {
-		$incidencia = Incidencia::find($id);
-		return $incidencia;
-	}
+
+    //Listado completo de alquileres
+    public function listar ($alquiler_id) {
+      $incidencias = Incidencia::where('alquiler_id',$alquiler_id)->get();
+      $count = $incidencias->count();
+      return \View::make('vistaIncidencias',compact('incidencias'),['count'=>$count]);
+    }
+
 }

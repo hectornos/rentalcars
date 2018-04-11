@@ -7,7 +7,9 @@
     @foreach ($averias as $averia)
         <tr>
 			<td>{{$averia->tipoaveria->nombre}}</td>
-			<td>{{$averia->vehiculo->matricula}}</td>
+
+			<td><a href="{{ route('Vehiculo.show', ['id'=>$averia->vehiculo->id]) }}">{{$averia->vehiculo->matricula}}</a></td>
+
 			<td>{{$averia->vehiculo->marca->nombre}}</td>
 			<td>{{$averia->vehiculo->modelo}}</td>
 			<td>{{$averia->descripcion}}</td>
@@ -16,3 +18,5 @@
 
 </body>
 </html>
+
+
