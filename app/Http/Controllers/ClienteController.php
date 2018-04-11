@@ -20,37 +20,11 @@ class ClienteController extends Controller
 		$count = $clientes->count();
 		return \View::make('vistaClientes',compact('clientes'),['count'=>$count]);
 	}
-	//Listado completo de los clientes
-	public function create() {
-		$clientes = Cliente::all();
-		return $clientes;
-	}
-	//Almacenar un nuevo cliente
-	public function store(Request $request) {
-		Cliente::create($request->all());
-		$mensaje = "todo bien";
-		return $mensaje;
-	}
+
 	//Detalle de un cliente dado su id (primary key)
 	public function show($id) {
 		$cliente = Cliente::find($id);
 		return \View::make('vistaDetCliente',compact('cliente'));
 	}
-	//Almacenar un nuevo cliente
-	public function edit(Request $request) {
-		Cliente::create($request->all());
-		$mensaje = "todo bien";
-		return $mensaje;
-	}
-	//Mandamos cambios en el cliente a la BD
-	public function update(Request $request) {
-        $cliente = Cliente::find($request->$id);
-        return $cliente;
-	}
-	//Almacenar un nuevo cliente
-	public function destroy(Request $request) {
-		Cliente::create($request->all());
-		$mensaje = "todo bien";
-		return $mensaje;
-	}
+
 }

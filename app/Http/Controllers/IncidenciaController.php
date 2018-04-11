@@ -19,7 +19,6 @@ class IncidenciaController extends Controller
       return \View::make('vistaIncidencias',compact('incidencias'),['count'=>$count]);
   }
     
-
     //Listado completo de alquileres
     public function listar ($alquiler_id) {
       $incidencias = Incidencia::where('alquiler_id',$alquiler_id)->get();

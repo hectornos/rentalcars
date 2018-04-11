@@ -15,7 +15,7 @@
 			<td>{{$averia->descripcion}}</td>
 		</tr>
     @endforeach
-
+	Contador: {{$count}}
 </body>
 </html>
 

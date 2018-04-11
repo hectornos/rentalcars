@@ -18,6 +18,8 @@
             @endif
         </tr>
     @endforeach
+    Contador: {{$count}}
+
 </body>
 </html>
 

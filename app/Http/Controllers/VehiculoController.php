@@ -24,16 +24,4 @@ class VehiculoController extends Controller
 		$vehiculo = Vehiculo::find($id);
         return \View::make('vistaDetVehiculo',compact('vehiculo'));
     }
-    
-    //Listado de vehiculos por modelo
-	public function buscarModelo($modelo) {
-		$vehiculo = Vehiculo::where(['modelo' => $modelo]);
-		return $vehiculo;
-    }
-    
-        //Listado de vehiculos por modelo
-	public function buscarMatricula($matricula) {
-		$vehiculo = Vehiculo::where(['matricula' => $matricula]);
-		return $vehiculo;
-	}
 }
