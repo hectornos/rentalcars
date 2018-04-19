@@ -24,4 +24,20 @@ class VehiculoController extends Controller
 		$vehiculo = Vehiculo::find($id);
         return \View::make('vistaDetVehiculo',compact('vehiculo'));
     }
+
+    //Alquileres de un vehiculo
+    public function listaralc($id) {
+        $vehiculo = Vehiculo::find($id);
+        $alquileres = $vehiculo->alquileres;
+        $count = count($alquileres);
+        return \View::make('vistaAlquileres',compact('alquileres'),['count'=>$count]);
+    }
+
+    //Averias de un vehiculo
+    public function listarave($id) {
+        $vehiculo = Vehiculo::find($id);
+        $averias = $vehiculo->averias;
+        $count = count($averias);
+        return \View::make('vistaAverias',compact('averias'),['count'=>$count]);
+    }
 }

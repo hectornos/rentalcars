@@ -24,6 +24,10 @@ Route::get('/', function () {
      Route::get('/Cliente/{id}/editar', 'ClienteController@edit')->name('Cliente.edit');
      Route::put('/Cliente/{id}','ClienteController@update')->name('Cliente.update');
      Route::delete('/Cliente/{id}', 'ClienteController@destroy')->name('Cliente.destroy');
+
+     Route::get('/Cliente/{id}/alquileres', 'ClienteController@listaralc')->name('Cliente.alquileres');
+     Route::get('/Cliente/{id}/incidencias', 'ClienteController@listarinc')->name('Cliente.incidencias');
+     
  
      //Rutas para la tabla Vehiculos
      Route::get('/Vehiculo', 'VehiculoController@index')->name('Vehiculo.index');
@@ -33,6 +37,9 @@ Route::get('/', function () {
      Route::get('/Vehiculo/{id}/editar', 'VehiculoController@edit')->name('Vehiculo.edit');
      Route::put('/Vehiculo/{id}','VehiculoController@update')->name('Vehiculo.update');
      Route::delete('/Vehiculo/{id}', 'VehiculoController@destroy')->name('Vehiculo.destroy');
+
+     Route::get('/Vehiculo/{id}/alquileres', 'VehiculoController@listaralc')->name('Vehiculo.alquileres');
+     Route::get('/Vehiculo/{id}/averias', 'VehiculoController@listarave')->name('Vehiculo.averias');
  
     //Rutas para la tabla cliente_vehiculo (Modelo Alquiler)
      Route::get('/Alquiler', 'AlquilerController@index')->name('Alquiler.index');
@@ -43,8 +50,7 @@ Route::get('/', function () {
      Route::put('/Alquiler/{id}', 'AlquilerController@update')->name('Alquiler.update');
      Route::delete('/Alquiler/{id}', 'AlquilerController@destroy')->name('Alquiler.destroy');
  
-     Route::get('/AlquilerCli/{cliente_id}', 'AlquilerController@listarCli')->name('Alquiler.listarcli');
-     Route::get('/AlquilerVeh/{vehiculo_id}', 'AlquilerController@listarVeh')->name('Alquiler.listarveh');
+     Route::get('/Alquiler/{id}/incidencias', 'AlquilerController@listarinc')->name('Alquiler.incidencias');
 
  
      //Rutas para la tabla averias
@@ -55,8 +61,7 @@ Route::get('/', function () {
      Route::get('/Averia/{id}/editar', 'AveriaController@edit')->name('Averia.edit');
      Route::put('/Averia/{id}', 'AveriaController@update')->name('Averia.update');
      Route::delete('/Averia/{id}', 'AveriaController@destroy')->name('Averia.destroy');
- 
-     Route::get('/Averias/{vehiculo_id}', 'AveriaController@listar')->name('Averia.listar');
+
 
     //Obtener TOKEN para el insomnia
      Route::get('/Token', 'Controller@token')->name('obtenerToken');
@@ -70,5 +75,4 @@ Route::get('/', function () {
      Route::put('/Incidencia/{id}', 'IncidenciaController@update')->name('Incidencia.update');
      Route::delete('/Incidencia/{id}', 'IncidenciaController@destroy')->name('Incidencia.destroy');
 
-     Route::get('/Incidencias/{alquiler_id}', 'IncidenciaController@listar')->name('Incidencia.listar');
  

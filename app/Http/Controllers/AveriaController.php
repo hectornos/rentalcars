@@ -12,22 +12,29 @@ use App\Alquiler as Alquiler;
 class AveriaController extends Controller
 {
 	//Listado completo de alquileres
-    public function index () {
-        $averias = Averia::all();
+    public function index (Request $request) {
+        if ($request->has('criterio')){
+            $orden=$request->criterio;
+            $averias = Averia::orderBy($orden)->get();
+        }else{
+            $averias = Averia::all();   
+        }
         $count = $averias->count();
-        return \View::make('vistaAverias',compact('averias'),['count'=>$count]);
+        $ordenar = true;
+        return \View::make('vistaAverias',compact('averias'),['count'=>$count, 'ordenar'=>$ordenar]);
     }
 
 	//Detalle de una averia dado su id (primary key)
 	public function show($id) {
 		$averia = Averia::find($id);
-		return $averia;
-	}
+        return \View::make('vistaDetAveria',compact('averia'));
+    }
 
 	//Averias de un vehiculo
     public function listar($vehiculo_id) {
         $averias = Averia::where('vehiculo_id', $vehiculo_id)->get();
         $count = $averias->count();
-		return \View::make('vistaAverias',compact('averias'),['count'=>$count]);
+        $ordenar = false;
+		return \View::make('vistaAverias',compact('averias'),['count'=>$count, 'ordenar'=>$ordenar]);
     }
 }

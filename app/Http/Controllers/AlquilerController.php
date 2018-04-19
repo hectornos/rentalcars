@@ -13,30 +13,32 @@ use App\Alquiler as Alquiler;
 class AlquilerController extends Controller
 {
     //Listado completo de alquileres
-    public function index () {
-        $alquileres = Alquiler::all();
-        $count = $alquileres->count();
-        return \View::make('vistaAlquileres',compact('alquileres'),['count'=>$count]);
+    public function index (Request $request) {
+        if ($request->has('criterio')){
+            $orden = $request->criterio;
+            $alquileres = Alquiler::orderBy($orden)->get();
+            $count = $alquileres->count();
+        }else{
+            $alquileres = Alquiler::all();
+            $count = $alquileres->count();
+        }
+            return \View::make('vistaAlquileres',compact('alquileres'),['count'=>$count]);
     }
 
     //Detalle de un alquiler dado su id (primary key)
     public function show($id) {
-		$alquiler = Alquiler::find($id);
-		return $alquiler;
+        $alquiler = Alquiler::find($id);
+        $numIncidencias = $alquiler->incidencias->count();
+		return \View::make('vistaDetAlquiler',compact('alquiler'),['numIncidencias'=>$numIncidencias]);
     }
     
-    //Alquileres de un cliente
-    public function listarCli($cliente_id) {
-        $alquileres = Alquiler::where('cliente_id', $cliente_id)->get();
-        $count = $alquileres->count();
-        return \View::make('vistaAlquileres',compact('alquileres'),['count'=>$count]);
-    }
-
-    //Alquileres de un vehiculo
-    public function listarVeh($vehiculo_id) {
-        $alquileres = Alquiler::where('vehiculo_id', $vehiculo_id)->get();
-        $count = $alquileres->count();
-        return \View::make('vistaAlquileres',compact('alquileres'),['count'=>$count]);
+    //Incidencias de un alquiler
+    public function listarinc($id) {
+        $alquiler = Alquiler::find($id);
+        $incidencias = $alquiler->incidencias;
+        $count = count($incidencias);
+        return \View::make('vistaIncidencias',compact('incidencias'),['count'=>$count]);
+ 
     }
 
 }

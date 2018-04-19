@@ -10,12 +10,12 @@
             <td>{{$vehiculo->modelo}}</td>
             <td>{{$vehiculo->matricula}}</td>
             @if (count($vehiculo->alquileres)>0)
-                <td><a href="{{ route('Alquiler.listarveh',['vehiculo_id'=>$vehiculo->id]) }}">{{count($vehiculo->alquileres)}}</a></td>
+                <td><a href="{{ route('Vehiculo.alquileres',['vehiculo_id'=>$vehiculo->id]) }}">{{count($vehiculo->alquileres)}}</a></td>
             @else
                 <td>Sin alquileres</td>
             @endif
             @if (count($vehiculo->averias)>0)
-                <td><a href="{{ route('Averia.listar',['vehiculo_id'=>$vehiculo->id]) }}">{{count($vehiculo->averias)}}</a></td>
+                <td><a href="{{ route('Vehiculo.averias',['vehiculo_id'=>$vehiculo->id]) }}">{{count($vehiculo->averias)}}</a></td>
             @else
                 <td>Sin averias</td>
             @endif

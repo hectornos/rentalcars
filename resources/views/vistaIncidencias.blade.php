@@ -3,7 +3,11 @@
 	</head>
 	<body>
 	<table border=1>
-    <tr><td colspan='2'>Conductor</td><td colspan='3'>Coche</td><td>Fecha</td><td>Descripcion</td><td>Resolución</td></tr>
+	@if (@isset ($ordenar)) <!--Si pedimos la rejilla desde public/Incidencia se puede ordenar-->
+    	<tr><td colspan='2'>Conductor</td><td colspan='3'>Coche</td><td><a href="{{ route('Incidencia.index',['criterio' => 'fecha'] )}}" ><b>Fecha</b></a></td><td>Descripcion</td><td><a href="{{ route('Incidencia.index',['criterio' => 'resuelto'] )}}" ><b>Resolucion</b></a></td></tr>
+	@else <!--Si pedimos la rejilla desde public/Incidencias/{id} no se puede ordenar-->
+		<tr><td colspan='2'>Conductor</td><td colspan='3'>Coche</td><td><b>Fecha</b></a></td><td>Descripcion</td><td><b>Resolucion</b></a></td></tr>
+	@endif
     @foreach ($incidencias as $incidencia)
         <tr>
 			<td>{{$incidencia->alquiler->cliente->nombre}}</td>
@@ -21,6 +25,13 @@
 		</tr>
     @endforeach
 	Contador: {{$count}}
-
+	
 </body>
 </html>
+
+
+
+@isset($usersType)
+  // $usersType is defined and is not null...
+@endisset
+

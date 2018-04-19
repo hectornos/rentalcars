@@ -27,4 +27,20 @@ class ClienteController extends Controller
 		return \View::make('vistaDetCliente',compact('cliente'));
 	}
 
+	//Listar las alquileres de un cliente
+	public function listaralc($id) {
+		$cliente = Cliente::find($id);
+		$alquileres = $cliente->alquileres;
+		$count = count($alquileres);
+		return \View::make('VistaAlquileres',compact('alquileres'),['count'=>$count]);
+	}
+
+	//Listar las incidencias de un cliente
+	public function listarinc($id) {
+		$cliente = Cliente::find($id);
+		$incidencias = $cliente->incidencias;
+		$count = count($incidencias);
+		return \View::make('VistaIncidencias',compact('incidencias'),['count'=>$count]);
+	}
+
 }
