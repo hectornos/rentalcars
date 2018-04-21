@@ -27,6 +27,7 @@ Route::get('/', function () {
 
      Route::get('/Cliente/{id}/alquileres', 'ClienteController@listaralc')->name('Cliente.alquileres');
      Route::get('/Cliente/{id}/incidencias', 'ClienteController@listarinc')->name('Cliente.incidencias');
+     Route::get('/Cliente/{id}/pdf', 'ClienteController@pdf')->name('Cliente.pdf');
      
  
      //Rutas para la tabla Vehiculos
@@ -40,6 +41,8 @@ Route::get('/', function () {
 
      Route::get('/Vehiculo/{id}/alquileres', 'VehiculoController@listaralc')->name('Vehiculo.alquileres');
      Route::get('/Vehiculo/{id}/averias', 'VehiculoController@listarave')->name('Vehiculo.averias');
+     Route::get('/Vehiculo/{id}/pdf', 'VehiculoController@pdf')->name('Vehiculo.pdf');
+
  
     //Rutas para la tabla cliente_vehiculo (Modelo Alquiler)
      Route::get('/Alquiler', 'AlquilerController@index')->name('Alquiler.index');
@@ -51,6 +54,7 @@ Route::get('/', function () {
      Route::delete('/Alquiler/{id}', 'AlquilerController@destroy')->name('Alquiler.destroy');
  
      Route::get('/Alquiler/{id}/incidencias', 'AlquilerController@listarinc')->name('Alquiler.incidencias');
+     Route::get('/Alquiler/{id}/pdf', 'AlquilerController@pdf')->name('Alquiler.pdf');
 
  
      //Rutas para la tabla averias
@@ -62,6 +66,7 @@ Route::get('/', function () {
      Route::put('/Averia/{id}', 'AveriaController@update')->name('Averia.update');
      Route::delete('/Averia/{id}', 'AveriaController@destroy')->name('Averia.destroy');
 
+     Route::get('/Averia/{id}/pdf', 'AveriaController@pdf')->name('Averia.pdf');
 
     //Obtener TOKEN para el insomnia
      Route::get('/Token', 'Controller@token')->name('obtenerToken');
@@ -75,4 +80,5 @@ Route::get('/', function () {
      Route::put('/Incidencia/{id}', 'IncidenciaController@update')->name('Incidencia.update');
      Route::delete('/Incidencia/{id}', 'IncidenciaController@destroy')->name('Incidencia.destroy');
 
- 
+     Route::get('/Incidencia/{id}/pdf', 'IncidenciaController@pdf')->name('Incidencia.pdf');
+     Route::get('/Averia/{id}/pdf', 'AveriaController@pdf')->name('Averia.pdf');

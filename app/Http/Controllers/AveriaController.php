@@ -21,7 +21,7 @@ class AveriaController extends Controller
         }
         $count = $averias->count();
         $ordenar = true;
-        return \View::make('vistaAverias',compact('averias'),['count'=>$count, 'ordenar'=>$ordenar]);
+        return \View::make('rejillaAverias',compact('averias'),['count'=>$count, 'ordenar'=>$ordenar]);
     }
 
 	//Detalle de una averia dado su id (primary key)
@@ -30,11 +30,17 @@ class AveriaController extends Controller
         return \View::make('vistaDetAveria',compact('averia'));
     }
 
-	//Averias de un vehiculo
-    public function listar($vehiculo_id) {
-        $averias = Averia::where('vehiculo_id', $vehiculo_id)->get();
-        $count = $averias->count();
-        $ordenar = false;
-		return \View::make('vistaAverias',compact('averias'),['count'=>$count, 'ordenar'=>$ordenar]);
+    //Editamos una averia
+	public function edit($id) {
+		$averia = Averia::find($id);
+        echo $averia;
     }
+
+    //Imprimimios una averia
+	public function pdf($id) {
+		$averia = Averia::find($id);
+        echo $averia;
+    }
+
+	
 }
