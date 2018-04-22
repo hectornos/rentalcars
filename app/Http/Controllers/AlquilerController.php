@@ -52,7 +52,7 @@ class AlquilerController extends Controller
         $alquiler = Alquiler::find($id);
         $incidencias = $alquiler->incidencias;
         $count = count($incidencias);
-        return \View::make('vistaIncidencias',compact('incidencias'),['count'=>$count]);
+        return \View::make('rejillaIncidencias',compact('incidencias'),['count'=>$count]);
     }
 
     //Editar un alquiler

@@ -14,7 +14,10 @@
         </tr>
         @foreach($incidencias as $incidencia)
         <tr class="destacar">
-          <td width="150" align="center">{{$incidencia->alquiler->cliente->apellido}}, {{$incidencia->alquiler->cliente->nombre}}</td>
+        <td width="150" align="center">
+            <a href="{{ route('Cliente.show',['id'=>$incidencia->alquiler->cliente->id]) }}">{{$incidencia->alquiler->cliente->apellido}}, {{$incidencia->alquiler->cliente->nombre}}</a>
+            </td>
+          
           <td width="150" align="center">{{$incidencia->alquiler->vehiculo->matricula}}</td>
           <td width="150" align="center">{{$incidencia->alquiler->fecha}}</td>
           <td width="150" align="center">{{$incidencia->descripcion}}</td>

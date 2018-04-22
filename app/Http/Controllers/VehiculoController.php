@@ -41,7 +41,7 @@ class VehiculoController extends Controller
             $vehiculos = Vehiculo::all();
         }
         $count = count($vehiculos);
-        return \View::make('rejillaVehiculo',compact('vehiculos'),['count'=>$count]);
+        return \View::make('rejillaVehiculos',compact('vehiculos'),['count'=>$count]);
     }
     
     //Detalle de un vehiculo dado su id (primary key)
@@ -55,7 +55,7 @@ class VehiculoController extends Controller
         $vehiculo = Vehiculo::find($id);
         $alquileres = $vehiculo->alquileres;
         $count = count($alquileres);
-        return \View::make('vistaAlquileres',compact('alquileres'),['count'=>$count]);
+        return \View::make('rejillaAlquileres',compact('alquileres'),['count'=>$count]);
     }
 
     //Averias de un vehiculo
@@ -63,7 +63,7 @@ class VehiculoController extends Controller
         $vehiculo = Vehiculo::find($id);
         $averias = $vehiculo->averias;
         $count = count($averias);
-        return \View::make('vistaAverias',compact('averias'),['count'=>$count]);
+        return \View::make('rejillaAverias',compact('averias'),['count'=>$count]);
     }
 
     //Imprime en pdf detalle de vehiculo

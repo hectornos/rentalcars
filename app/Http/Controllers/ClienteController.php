@@ -43,7 +43,7 @@ class ClienteController extends Controller
 			$clientes = Cliente::all();
 		}
 		$count = count($clientes);
-		return \View::make('rejillaCliente',compact('clientes'),['count'=>$count]);
+		return \View::make('rejillaClientes',compact('clientes'),['count'=>$count]);
 	}
 
 	//Detalle de un cliente dado su id (primary key)
@@ -69,7 +69,7 @@ class ClienteController extends Controller
 		$cliente = Cliente::find($id);
 		$alquileres = $cliente->alquileres;
 		$count = count($alquileres);
-		return \View::make('VistaAlquileres',compact('alquileres'),['count'=>$count]);
+		return \View::make('rejillaAlquileres',compact('alquileres'),['count'=>$count]);
 	}
 
 	//Listar las incidencias de un cliente
@@ -77,7 +77,7 @@ class ClienteController extends Controller
 		$cliente = Cliente::find($id);
 		$incidencias = $cliente->incidencias;
 		$count = count($incidencias);
-		return \View::make('VistaIncidencias',compact('incidencias'),['count'=>$count]);
+		return \View::make('rejillaIncidencias',compact('incidencias'),['count'=>$count]);
 	}
 
 }

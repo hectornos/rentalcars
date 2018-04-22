@@ -43,21 +43,6 @@ class IncidenciaController extends Controller
       return \View::make('rejillaIncidencias',compact('incidencias'),['count'=>$count, 'ordenar'=>$ordenar]);
   }
     
-    //Listado completo de incidencias por alquiler
-    public function listar ($alquiler_id) {
-      $incidencias = Incidencia::where('alquiler_id',$alquiler_id)->get();
-      $count = $incidencias->count();
-      $ordenar = false;
-      return \View::make('vistaIncidencias',compact('incidencias'),['count'=>$count, 'ordenar'=>$ordenar]);
-    }
-
-    //Listado completo de incidencias por cliente
-    public function listarcli ($cliente_id) {
-      $incidencias = Incidencia::where('alquiler_id',$alquiler_id)->get();
-      $count = $incidencias->count();
-      $ordenar = false;
-      return \View::make('vistaIncidencias',compact('incidencias'),['count'=>$count, 'ordenar'=>$ordenar]);
-    }
-
+   
 
 }

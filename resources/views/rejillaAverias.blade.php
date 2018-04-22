@@ -4,7 +4,14 @@
 <div class="container-fluid">
     <h1 class="page-header" align="center">Listado de averias</h1>     
     <table class="table table-hover table-striped">
-        <tr><td width="150" title="tipo de averia" align="center"><a href="{{ route('Averia.index',['criterio' => 'tipo'] )}}" ><b>Tipo</b></a></td><td width="150" align="center" title="Datos vehiculo"><a href="{{ route('Averia.index',['criterio' => 'vehiculo'] )}}" ><b>Vehiculo</b></a></td><td width="150" align="center" title="Breve descripcion"><b>Desccripcion</b></td><td width="150" align="center" title="Fecha de la averia"><a href="{{ route('Alquiler.index',['criterio'=>'fecha']) }}"><b>Fecha</b></a></td><td width="150" align="center"><b>Editar</b></td><td width="150" align="center"><b>Eliminar</b></td><td width="150" align="center"><b>Imprimir</b></td></tr>
+        <tr><td width="150" title="tipo de averia" align="center"><a href="{{ route('Averia.index',['criterio' => 'tipo'] )}}" ><b>Tipo</b></a></td>
+            <td width="150" align="center" title="Datos vehiculo"><a href="{{ route('Averia.index',['criterio' => 'matricula'] )}}" ><b>Vehiculo</b></a></td>
+            <td width="150" align="center" title="Breve descripcion"><b>Desccripcion</b></td>
+            <td width="150" align="center" title="Fecha de la averia"><a href="{{ route('Averia.index',['criterio'=>'fecha']) }}"><b>Fecha</b></a></td>
+            <td width="150" align="center"><b>Editar</b></td>
+            <td width="150" align="center"><b>Eliminar</b></td>
+            <td width="150" align="center"><b>Imprimir</b></td>
+        </tr>
         @foreach($averias as $averia)
         <tr class="destacar">
           <td width="150" align="center">{{$averia->tipoaveria->nombre}}</td>

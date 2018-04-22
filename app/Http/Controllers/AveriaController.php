@@ -11,11 +11,21 @@ use App\Alquiler as Alquiler;
 
 class AveriaController extends Controller
 {
-	//Listado completo de alquileres
+	//Listado completo de averias
     public function index (Request $request) {
         if ($request->has('criterio')){
             $orden=$request->criterio;
-            $averias = Averia::orderBy($orden)->get();
+            if ($orden == 'tipo'){
+                $averias = Averia::join('tipoaverias', 'averias.tipoaveria_id','=','tipoaverias.id')
+                                    ->select('averias.*')
+                                    ->orderBy('tipoaverias.nombre','desc')->get();
+            }elseif ($orden == 'matricula') {
+                $averias = Averia::join('vehiculos', 'vehiculos.id','=','averias.vehiculo_id')
+                                    ->select('averias.*')
+                                    ->orderBy('vehiculos.matricula','desc')->get();
+            }else{
+                $averias = Averia::orderBy($orden)->get();
+            }
         }else{
             $averias = Averia::all();   
         }
