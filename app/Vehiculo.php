@@ -61,5 +61,6 @@ class Vehiculo extends Model
         return $this->hasManyThrough('App\Cliente','App\Alquiler');
             
     }
+    public $timestamps = false;
 
 }

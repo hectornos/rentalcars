@@ -2,25 +2,34 @@
 @section('titulo','Listado Incidencias')
 @section('contenido')          
 <div class="container-fluid">
-    <h1 class="page-header" align="center">Listado de incidencias</h1>     
+    <h1 class="page-header" align="center">Listado de incidencias</h1>
+		@if (isset($subtitulo))
+        <h3 class="page-header" align="center">{{$subtitulo}}</h3>
+				<br>
+    @endif 
     <table class="table table-hover table-striped">
-        <tr>
-          <td width="150" title="Conductor del vehiculo" align="center"><a href="{{ route('Incidencia.index',['criterio' => 'conductor'] )}}" ><b>Conductor</b></a></td>
-          <td width="150" align="center" title="Datos vehiculo"><a href="{{ route('Incidencia.index',['criterio' => 'matricula'] )}}" ><b>Matricula</b></a></td>
-          <td width="150" align="center" title="Fecha incidencia"><a href="{{ route('Incidencia.index',['criterio' => 'fecha'] )}}"><b>Fecha</b></td><td width="150" align="center" title="Descripcion de la averia"><b>Descripccion</b></a></td>
-          <td width="150" align="center"><b>Editar</b></td>
-          <td width="150" align="center"><b>Eliminar</b></td>
-          <td width="150" align="center"><b>Imprimir</b></td>
-        </tr>
+        @if ($ordenar)
+					@include('cabeceras.incidencias')
+				@else
+					@include('cabeceras.incidenciasSinorden')
+				@endif
         @foreach($incidencias as $incidencia)
         <tr class="destacar">
-        <td width="150" align="center">
+          <td width="150" align="center">
             <a href="{{ route('Cliente.show',['id'=>$incidencia->alquiler->cliente->id]) }}">{{$incidencia->alquiler->cliente->apellido}}, {{$incidencia->alquiler->cliente->nombre}}</a>
-            </td>
-          
-          <td width="150" align="center">{{$incidencia->alquiler->vehiculo->matricula}}</td>
+          </td>
+					<td width="150" align="center">
+            <a href="{{ route('Vehiculo.show',['id'=>$incidencia->alquiler->vehiculo->id]) }}">{{$incidencia->alquiler->vehiculo->matricula}}</a>
+          </td>
           <td width="150" align="center">{{$incidencia->alquiler->fecha}}</td>
           <td width="150" align="center">{{$incidencia->descripcion}}</td>
+					<td width="150" align="center">
+						@if (($incidencia->resuelto)>0)
+							Si  
+						@else
+							No
+						@endif
+					</td>
           <td width="150" align="center">    
               <a href="{{ route('Incidencia.edit',['id' => $incidencia->id] )}}" class="btn btn-info" title="Edita el alquiler seleccionado">
                   <span class="glyphicon glyphicon-edit"/></a>    

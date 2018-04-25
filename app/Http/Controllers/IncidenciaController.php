@@ -40,9 +40,66 @@ class IncidenciaController extends Controller
       }
       $ordenar = true;
       $count = $incidencias->count();
-      return \View::make('rejillaIncidencias',compact('incidencias'),['count'=>$count, 'ordenar'=>$ordenar]);
+      return \View::make('Incidencia/rejillaIncidencias',compact('incidencias'),['count'=>$count, 'ordenar'=>$ordenar]);
   }
-    
-   
+  
+  //Detalle de un alquiler dado su id (primary key)
+  public function create($alquiler_id) {
+    $alquiler = Alquiler::find($alquiler_id);
+    return \View::make('Incidencia/createIncidencia',['alquiler'=>$alquiler]);
+  }
 
+  //Detalle de un alquiler dado su id (primary key)
+  public function show($id) {
+    $incidencia = Incidencia::find($id);
+    return \View::make('Incidencia/showIncidencia',compact('incidencia'));
+  }
+
+  //Metodo de añadir una incidencia
+	public function store(Request $request) {
+		if ($request->has('cancel')) {
+			$alerta = 'Cancelado';
+			$mensaje = 'Operacion cancelada';
+		} else {
+      $incidencia = Incidencia::create(['alquiler_id' => $request->alquiler_id, 'descripcion'=>$request->descripcion]);
+			$alerta = 'Creado';
+			$mensaje = "Vehiculo con matricula ".$request->matrciula. " ha sido creado.";
+		}
+		return redirect(url('/Vehiculo'))->with($alerta,$mensaje);
+    }
+
+
+  //Metodo de borrar un alquiler
+  public function destroy(Request $request) {
+    if ($request->has('cancel')) {
+      $alerta = 'Cancelado';
+      $mensaje = 'Operacion cancelada';
+    } else {
+      $incidencia = Incidencia::find($request->id);
+      $incidencia -> delete();
+      $alerta = 'Borrado';
+      $mensaje = "Incidencia borrada.";
+    }
+    return redirect(url('/Incidencia'))->with($alerta,$mensaje);
+  }
+
+  //Editar un alquiler
+  public function edit($id) {
+      $incidencia = Incidencia::find($id);
+      return \View::make('Incidencia/editIncidencia',compact('incidencia'));
+  }
+
+  //Almacena los cambios realizados en el vehiculo
+  public function update(Request $request) {
+    if ($request->has('cancel')) {
+      $alerta = 'Cancelado';
+      $mensaje = 'Operacion cancelada';
+  } else {
+      Incidencia::find($request->id)->update($request->all());
+      $alerta = 'Modificado';
+      $mensaje = 'Registro modificado';
+  }
+    return redirect(url('/Incidencia'))->with($alerta,$mensaje);
+  }
+  
 }

@@ -32,5 +32,7 @@ class Alquiler extends Model
     	return $this->hasMany('App\Incidencia');
     	
     }
+    public $timestamps = false;
+    
 
 }

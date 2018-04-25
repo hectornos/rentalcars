@@ -36,15 +36,16 @@ class AlquilerController extends Controller
         }else{
             $alquileres = Alquiler::all();
         }
+            $ordenar = true;
             $count = count($alquileres);
-            return \View::make('rejillaAlquileres',compact('alquileres'),['count'=>$count]);
+            return \View::make('Alquiler/rejillaAlquileres',compact('alquileres'),['count'=>$count, 'ordenar'=>$ordenar]);
     }
 
     //Detalle de un alquiler dado su id (primary key)
     public function show($id) {
         $alquiler = Alquiler::find($id);
         $numIncidencias = $alquiler->incidencias->count();
-		return \View::make('vistaDetAlquiler',compact('alquiler'),['numIncidencias'=>$numIncidencias]);
+		return \View::make('Alquiler/showAlquiler',compact('alquiler'),['numIncidencias'=>$numIncidencias]);
     }
     
     //Incidencias de un alquiler
@@ -52,13 +53,42 @@ class AlquilerController extends Controller
         $alquiler = Alquiler::find($id);
         $incidencias = $alquiler->incidencias;
         $count = count($incidencias);
-        return \View::make('rejillaIncidencias',compact('incidencias'),['count'=>$count]);
+        $ordenar = false;
+        $subtitulo = 'Incidencias asociadas al alquiler: '.$alquiler->id;
+        return \View::make('Incidencia/rejillaIncidencias',compact('incidencias'),['count'=>$count, 'ordenar'=>$ordenar, 'subtitulo'=>$subtitulo]);
     }
+
+    //Metodo de añadir un alquiler
+	public function store(Request $request) {
+		if ($request->has('cancel')) {
+			$alerta = 'Cancelado';
+			$mensaje = 'Operacion cancelada';
+		} else {
+			Alquiler::create($request->all());
+			$alerta = 'Creado';
+			$mensaje = $request->nombre. " ha sido creado.";
+		}
+		return redirect(url('/Alquiler'))->with($alerta,$mensaje);
+	}
+
+    	//Metodo de borrar un alquiler
+		public function destroy(Request $request) {
+			if ($request->has('cancel')) {
+				$alerta = 'Cancelado';
+				$mensaje = 'Operacion cancelada';
+			} else {
+				$alquiler = Alquiler::find($request->id);
+				$alquiler -> delete();
+				$alerta = 'Borrado';
+				$mensaje = "Alquiler ".$request->id. " ha sido borrado.";
+			}
+			return redirect(url('/Alquiler'))->with($alerta,$mensaje);
+		}
 
     //Editar un alquiler
     public function edit($id) {
         $alquiler = Alquiler::find($id);
-        echo $alquiler;
+        return \View::make('Alquiler/detalleAlquiler',compact('alquiler'));
     }
 
     //Imprimir un alquiler

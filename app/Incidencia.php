@@ -22,4 +22,5 @@ class Incidencia extends Model
     	return $this->hasOne('App\Alquiler','id','alquiler_id');
     }
 
+    public $timestamps = false;
 }

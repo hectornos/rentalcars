@@ -31,5 +31,6 @@ class Cliente extends Model
         return $this->belongsToMany('App\Vehiculo');
         
     }
+    public $timestamps = false;
     
 }

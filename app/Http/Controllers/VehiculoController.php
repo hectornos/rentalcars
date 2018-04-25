@@ -9,6 +9,11 @@ use App\Cliente as Cliente;
 use App\Averia as Averia;
 use App\Incidencia as Incidencia;
 use App\Alquiler as Alquiler;
+use App\Marca as Marca;
+use App\Tipo as Tipo;
+use App\Combustible as Combustible;
+use App\Cambio as Cambio;
+use App\Color as Color;
 
 
 class VehiculoController extends Controller
@@ -41,21 +46,84 @@ class VehiculoController extends Controller
             $vehiculos = Vehiculo::all();
         }
         $count = count($vehiculos);
-        return \View::make('rejillaVehiculos',compact('vehiculos'),['count'=>$count]);
+        return \View::make('Vehiculo/rejillaVehiculos',compact('vehiculos'),['count'=>$count]);
     }
-    
+
+    //Pantalla para crear un cliente nuevo
+	public function create() {
+        $marcas = Marca::all();
+        $tipos = Tipo::all();
+        $cambios = Cambio::all();
+        $combustibles = Combustible::all();
+        $colors = Color::all();
+        return \View::make('Vehiculo/createVehiculo',['marcas'=>$marcas,'tipos'=>$tipos,'cambios'=>$cambios,'combustibles'=>$combustibles,'colors'=>$colors]);
+	}
+
+    //Metodo de añadir un vehiculo
+	public function store(Request $request) {
+		if ($request->has('cancel')) {
+			$alerta = 'Cancelado';
+			$mensaje = 'Operacion cancelada';
+		} else {
+			Vehiculo::create($request->all());
+			$alerta = 'Creado';
+			$mensaje = "Vehiculo con matricula ".$request->matrciula. " ha sido creado.";
+		}
+		return redirect(url('/Vehiculo'))->with($alerta,$mensaje);
+    }
+
+    //Pantalla para editar un vehiculo
+	public function edit($id) {
+        $vehiculo = Vehiculo::find($id);
+        $marcas = Marca::all();
+        $tipos = Tipo::all();
+        $cambios = Cambio::all();
+        $combustibles = Combustible::all();
+        $colors = Color::all();
+		return \View::make('Vehiculo/editVehiculo',compact('vehiculo'),['marcas'=>$marcas,'tipos'=>$tipos,'cambios'=>$cambios,'combustibles'=>$combustibles,'colors'=>$colors]);
+    }
+
+    //Almacena los cambios realizados en el vehiculo
+    public function update(Request $request) {
+        if ($request->has('cancel')) {
+			$alerta = 'Cancelado';
+			$mensaje = 'Operacion cancelada';
+		} else {
+            Vehiculo::find($request->id)->update($request->all());
+            $alerta = 'Modificado';
+            $mensaje = 'Registro modificado';
+		}
+		return redirect(url('/Vehiculo'))->with($alerta,$mensaje);
+    }
+
     //Detalle de un vehiculo dado su id (primary key)
     public function show($id) {
 		$vehiculo = Vehiculo::find($id);
-        return \View::make('vistaDetVehiculo',compact('vehiculo'));
+        return \View::make('Vehiculo/showVehiculo',compact('vehiculo'));
     }
 
+    //Metodo de borrar un vehiculo
+		public function destroy(Request $request) {
+			if ($request->has('cancel')) {
+				$alerta = 'Cancelado';
+				$mensaje = 'Operacion cancelada';
+			} else {
+				$vehiculo = Vehiculo::find($request->id);
+				$vehiculo -> delete();
+				$alerta = 'Borrado';
+				$mensaje = "Vehiculo ".$request->matricula. " ha sido borrado.";
+			}
+			return redirect(url('/Vehiculo'))->with($alerta,$mensaje);
+        }
+        
     //Alquileres de un vehiculo
     public function listaralc($id) {
         $vehiculo = Vehiculo::find($id);
         $alquileres = $vehiculo->alquileres;
         $count = count($alquileres);
-        return \View::make('rejillaAlquileres',compact('alquileres'),['count'=>$count]);
+        $ordenar = false;
+        $subtitulo = 'Alquileres del vehiculo: '.$vehiculo->matricula;
+        return \View::make('Alquiler/rejillaAlquileres',compact('alquileres'),['count'=>$count, 'ordenar'=>$ordenar, 'subtitulo'=>$subtitulo]);
     }
 
     //Averias de un vehiculo
@@ -63,17 +131,13 @@ class VehiculoController extends Controller
         $vehiculo = Vehiculo::find($id);
         $averias = $vehiculo->averias;
         $count = count($averias);
-        return \View::make('rejillaAverias',compact('averias'),['count'=>$count]);
+        $ordenar = false;
+        $subtitulo = 'Averias del vehiculo: '.$vehiculo->matricula;
+        return \View::make('Averia/rejillaAverias',compact('averias'),['count'=>$count, 'ordenar'=>$ordenar, 'subtitulo'=>$subtitulo]);
     }
 
     //Imprime en pdf detalle de vehiculo
     public function pdf($id) {
         echo ('Aqui se imprimirá el vehiculo');
     }
-
-    //Edita un cliente
-	public function edit($id) {
-		$vehiculo = Vehiculo::find($id);
-		echo $vehiculo;
-	}
 }

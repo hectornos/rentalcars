@@ -22,4 +22,6 @@ class Marca extends Model
     public function vehiculos(){
     	return $this->hasMany('App\Vehiculo');
     }
+
+    public $timestamps = false;
 }

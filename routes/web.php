@@ -42,9 +42,11 @@ Route::get('/', function () {
      Route::get('/Vehiculo/{id}/alquileres', 'VehiculoController@listaralc')->name('Vehiculo.alquileres');
      Route::get('/Vehiculo/{id}/averias', 'VehiculoController@listarave')->name('Vehiculo.averias');
      Route::get('/Vehiculo/{id}/pdf', 'VehiculoController@pdf')->name('Vehiculo.pdf');
+     Route::get('/Vehiculo/{id}/alquilar', 'VehiculoController@alquilar')->name('Vehiculo.alquilar');
+
 
  
-    //Rutas para la tabla cliente_vehiculo (Modelo Alquiler)
+     //Rutas para la tabla cliente_vehiculo (Modelo Alquiler)
      Route::get('/Alquiler', 'AlquilerController@index')->name('Alquiler.index');
      Route::get('/Alquiler/crear', 'AlquilerController@create')->name('Alquiler.create');
      Route::post('/Alquiler', 'AlquilerController@store')->name('Alquiler.store');
@@ -59,7 +61,7 @@ Route::get('/', function () {
  
      //Rutas para la tabla averias
      Route::get('/Averia', 'AveriaController@index')->name('Averia.index');
-     Route::get('/Averia/crear', 'AveriaController@create')->name('Averia.create');
+     Route::get('/Averia/crear/{vehiculo_id}', 'AveriaController@create')->name('Averia.create');
      Route::post('/Averia', 'AveriaController@store')->name('Averia.store');
      Route::get('/Averia/{id}', 'AveriaController@show')->name('Averia.show');
      Route::get('/Averia/{id}/editar', 'AveriaController@edit')->name('Averia.edit');
@@ -73,7 +75,7 @@ Route::get('/', function () {
 
     //Rutas para la tabla incidencias
      Route::get('/Incidencia', 'IncidenciaController@index')->name('Incidencia.index');
-     Route::get('/Incidencia/crear', 'IncidenciaController@create')->name('Incidencia.create');
+     Route::get('/Incidencia/crear/{alquiler_id}', 'IncidenciaController@create')->name('Incidencia.create');
      Route::post('/Incidencia', 'IncidenciaController@store')->name('Incidencia.store');
      Route::get('/Incidencia/{id}', 'IncidenciaController@show')->name('Incidencia.show');
      Route::get('/Incidencia/{id}/editar', 'IncidenciaController@edit')->name('Incidencia.edit');

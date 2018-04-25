@@ -21,4 +21,5 @@ class Tipoaveria extends Model
     	return $this->hasMany('App\Averia');
     	
     }
+    public $timestamps = false;
 }
