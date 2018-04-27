@@ -17,20 +17,20 @@
         <tr class="destacar">
           <td width="150" align="center">{{$averia->tipoaveria->nombre}}</td>
           <td width="150" align="center">
-            <a href="{{ route('Vehiculo.show',['id'=>$averia->vehiculo->id]) }}">{{$averia->vehiculo->marca->nombre}} {{ $averia->vehiculo->modelo}}, {{ $averia->vehiculo->matricula}}</a>
+            <a href="{{ route('Vehiculo.view',['id'=>$averia->vehiculo->id]) }}">{{$averia->vehiculo->marca->nombre}} {{ $averia->vehiculo->modelo}}, {{ $averia->vehiculo->matricula}}</a>
           </td>
           <td width="150" align="center">{{$averia->descripcion}}</td>
           <td width="150" align="center">{{$averia->fecha}}</td>
           <td width="150" align="center">    
-              <a href="{{ route('Averia.edit',['id' => $averia->id] )}}" class="btn btn-info" title="Edita el alquiler seleccionado">
+              <a href="{{ route('Averia.edit',['id' => $averia->id] )}}" class="btn btn-info" title="Edita la averia seleccionada">
                   <span class="glyphicon glyphicon-edit"/></a>    
           </td>
           <td width="150" align="center">
-              <a href="{{ route('Averia.show',['id' => $averia->id] )}}" class="btn btn-danger" title="Borra el alquiler seleccionado">
+              <a href="{{ route('Averia.show',['id' => $averia->id] )}}" class="btn btn-danger" title="Borra la averia seleccionada">
                   <span class="glyphicon glyphicon-trash"/></a>
           </td>
           <td width="150" align="center">
-              <a href="{{ route('Averia.pdf',['id' => $averia->id] )}}" class="btn-btn-info" title="Exporta alquiler a PDF">
+              <a href="{{ route('Averia.pdf',['id' => $averia->id] )}}" class="btn-btn-info" title="Exporta averia a PDF">
                   <span class="glyphicon glyphicon-floppy-save"/></a>
           </td>
         </tr>

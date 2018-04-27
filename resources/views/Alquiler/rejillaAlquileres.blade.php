@@ -16,8 +16,8 @@
         @foreach($alquileres as $alquiler)
         <tr class="destacar">
           <td width="150" align="center">{{$alquiler->fecha}}</td>
-          <td width="150" align="center"><a href="{{ route('Cliente.show',['id'=>$alquiler->cliente->id]) }}">{{$alquiler->cliente->apellido}}, {{ $alquiler->cliente->nombre}}</a></td>
-          <td width="150" align="center"><a href="{{ route('Vehiculo.show',['id'=>$alquiler->vehiculo->id]) }}">{{$alquiler->vehiculo->matricula}}</td>
+          <td width="150" align="center"><a href="{{ route('Cliente.view',['id'=>$alquiler->cliente->id]) }}">{{$alquiler->cliente->apellido}}, {{ $alquiler->cliente->nombre}}</a></td>
+          <td width="150" align="center"><a href="{{ route('Vehiculo.view',['id'=>$alquiler->vehiculo->id]) }}">{{$alquiler->vehiculo->matricula}}</td>
           <td width="150" align="center">
             @if (count($alquiler->incidencias)>0)
                 <a href="{{ route('Alquiler.incidencias',['id'=>$alquiler->id]) }}">{{count($alquiler->incidencias)}}</a>

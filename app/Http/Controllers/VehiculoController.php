@@ -102,6 +102,12 @@ class VehiculoController extends Controller
         return \View::make('Vehiculo/showVehiculo',compact('vehiculo'));
     }
 
+    //Detalle de un vehiculo dado su id (primary key)
+    public function view($id) {
+		$vehiculo = Vehiculo::find($id);
+        return \View::make('Vehiculo/viewVehiculo',compact('vehiculo'));
+    }
+
     //Metodo de borrar un vehiculo
 		public function destroy(Request $request) {
 			if ($request->has('cancel')) {

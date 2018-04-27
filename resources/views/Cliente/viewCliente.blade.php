@@ -3,9 +3,7 @@
 @section('contenido')  
 <div class="container">
   <h1 class="page-header">Detalle de cliente</h1>
-      <form action="{{ route('Cliente.destroy',['id' => $cliente->id] )}}" method="POST">
-          {{ csrf_field() }}
-          {{ method_field('DELETE') }}
+      
           <div class="form-group">
               <label for="nombre" class="col-2 col-form-label">Nombre: </label>
               <div class="col-10">
@@ -44,11 +42,8 @@
           </div>
 
           <div class="btn-group">
-
-                <button class="btn btn-info" type="submit" name="borrar" value="borrar" id="borra">
-                    <span class="glyphicon glyphicon-trash"></span> Eliminar</button>
                 <a class="btn btn-danger" href="{{ URL::previous() }}"><span class="glyphicon glyphicon-step-backward"></span> Cancelar</a>
             </div>
-      </form>   
+   
   </div>
 @endsection

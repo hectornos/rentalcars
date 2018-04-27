@@ -28,6 +28,8 @@ Route::get('/', function () {
      Route::get('/Cliente/{id}/alquileres', 'ClienteController@listaralc')->name('Cliente.alquileres');
      Route::get('/Cliente/{id}/incidencias', 'ClienteController@listarinc')->name('Cliente.incidencias');
      Route::get('/Cliente/{id}/pdf', 'ClienteController@pdf')->name('Cliente.pdf');
+     Route::get('/Cliente/{id}/view', 'ClienteController@view')->name('Cliente.view');
+
      
  
      //Rutas para la tabla Vehiculos
@@ -43,6 +45,7 @@ Route::get('/', function () {
      Route::get('/Vehiculo/{id}/averias', 'VehiculoController@listarave')->name('Vehiculo.averias');
      Route::get('/Vehiculo/{id}/pdf', 'VehiculoController@pdf')->name('Vehiculo.pdf');
      Route::get('/Vehiculo/{id}/alquilar', 'VehiculoController@alquilar')->name('Vehiculo.alquilar');
+     Route::get('/Vehiculo/{id}/view', 'VehiculoController@view')->name('Vehiculo.view');
 
 
  
@@ -57,6 +60,7 @@ Route::get('/', function () {
  
      Route::get('/Alquiler/{id}/incidencias', 'AlquilerController@listarinc')->name('Alquiler.incidencias');
      Route::get('/Alquiler/{id}/pdf', 'AlquilerController@pdf')->name('Alquiler.pdf');
+     
 
  
      //Rutas para la tabla averias

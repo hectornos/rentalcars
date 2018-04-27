@@ -16,10 +16,10 @@
         @foreach($incidencias as $incidencia)
         <tr class="destacar">
           <td width="150" align="center">
-            <a href="{{ route('Cliente.show',['id'=>$incidencia->alquiler->cliente->id]) }}">{{$incidencia->alquiler->cliente->apellido}}, {{$incidencia->alquiler->cliente->nombre}}</a>
+            <a href="{{ route('Cliente.view',['id'=>$incidencia->alquiler->cliente->id]) }}">{{$incidencia->alquiler->cliente->apellido}}, {{$incidencia->alquiler->cliente->nombre}}</a>
           </td>
 					<td width="150" align="center">
-            <a href="{{ route('Vehiculo.show',['id'=>$incidencia->alquiler->vehiculo->id]) }}">{{$incidencia->alquiler->vehiculo->matricula}}</a>
+            <a href="{{ route('Vehiculo.view',['id'=>$incidencia->alquiler->vehiculo->id]) }}">{{$incidencia->alquiler->vehiculo->matricula}}</a>
           </td>
           <td width="150" align="center">{{$incidencia->alquiler->fecha}}</td>
           <td width="150" align="center">{{$incidencia->descripcion}}</td>

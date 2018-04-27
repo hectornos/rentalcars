@@ -3,7 +3,7 @@
 @section('contenido')  
 <div class="container">
   <h1 class="page-header">Detalle de averia</h1>
-      <form action="{{ route('Averia.destroy')}}" method="POST">
+      <form action="{{ route('Averia.destroy', ['id'=>$averia->id] )}}" method="POST">
           {{ csrf_field() }}
           {{ method_field('DELETE') }}
           <div class="form-group">
@@ -31,11 +31,12 @@
               </div>
           </div>
 
-          <br>
           <div class="btn-group">
-              <button class="btn btn-danger" type="submit" name="cancel" value="Cancelar">
-                  <span class="glyphicon glyphicon-step-backward"></span> Cancelar</button>
-          </div>
+
+            <button class="btn btn-info" type="submit" name="borrar" value="borrar" id="borra">
+                <span class="glyphicon glyphicon-trash"></span> Eliminar</button>
+            <a class="btn btn-danger" href="{{ URL::previous() }}"><span class="glyphicon glyphicon-step-backward"></span> Cancelar</a>
+        </div>
       </form>          
   </div>
 @endsection

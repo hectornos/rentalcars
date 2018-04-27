@@ -90,6 +90,12 @@ class ClienteController extends Controller
 		return \View::make('Cliente/showCliente',compact('cliente'));
 	}
 
+	//Detalle de un cliente dado su id (primary key)
+	public function view($id) {
+		$cliente = Cliente::find($id);
+		return \View::make('Cliente/viewCliente',compact('cliente'));
+	}
+
 	//Metodo de borrar un cliente
 	public function destroy(Request $request) {
 		if ($request->has('cancel')) {

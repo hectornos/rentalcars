@@ -1,11 +1,9 @@
 @extends('plantilla')
-@section('titulo','Editar')
+@section('titulo','Vista en detalle')
 @section('contenido')  
 <div class="container">
   <h1 class="page-header">Detalle de vehiculo</h1>
-      <form action="{{ route('Vehiculo.destroy', ['id'=>$vehiculo->id])}}" method="POST">
-          {{ csrf_field() }}
-          {{ method_field('DELETE') }}
+      
           <div class="form-group">
             <label for="marca_id">Marca</label>
             <input class="form-control" type="text" value="{{$vehiculo->marca->nombre}}" name="marca">
@@ -36,10 +34,9 @@
           </div> 
           <br>
           <div class="btn-group">
-            <button class="btn btn-info" type="submit" name="borrar" value="borrar" id="borra">
-                <span class="glyphicon glyphicon-trash"></span> Eliminar</button>
+            
             <a class="btn btn-danger" href="{{ URL::previous() }}"><span class="glyphicon glyphicon-step-backward"></span> Cancelar</a>
           </div>
-      </form>          
+        
   </div>
 @endsection

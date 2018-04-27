@@ -57,7 +57,7 @@ class AveriaController extends Controller
     }
 
     //Editamos una averia
-	  public function edit($id) {
+	public function edit($id) {
       $averia = Averia::find($id);
       $tipoaverias = Tipoaveria::all();
       $vehiculos = Vehiculo::all();
