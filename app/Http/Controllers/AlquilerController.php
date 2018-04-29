@@ -16,25 +16,45 @@ class AlquilerController extends Controller
     //Listado completo de alquileres
     public function index (Request $request) {
         if ($request->has('criterio')){
-            $orden = $request->criterio;
-            if ($orden == 'incidencias'){
-              $alquileres = Alquiler::join('incidencias', 'cliente_vehiculo.id','=','incidencias.alquiler_id','left outer')
-														->select('cliente_vehiculo.*', DB::raw('count(alquiler_id) as alq_count'))
-														->groupBy('cliente_vehiculo.id')
-														->orderBy('alq_count','desc')->get();
-            }elseif ($orden == 'conductor'){
-              $alquileres = Alquiler::join('clientes', 'cliente_vehiculo.cliente_id','=','clientes.id')
-														->select('cliente_vehiculo.*')
-														->orderBy('clientes.apellido','asc')->get();
-            }elseif ($orden == 'matricula'){
-              $alquileres = Alquiler::join('vehiculos', 'cliente_vehiculo.vehiculo_id','=','vehiculos.id')
-														->select('cliente_vehiculo.*')
-														->orderBy('vehiculos.matricula','asc')->get();
-            }else{
-                $alquileres = Alquiler::orderBy($orden)->get();
-            }
+          $orden = $request->criterio;
+          if ($orden == 'incidencias'){
+            $alquileres = Alquiler::join('incidencias', 'cliente_vehiculo.id','=','incidencias.alquiler_id','left outer')
+                          ->select('cliente_vehiculo.*', DB::raw('count(alquiler_id) as alq_count'))
+                          ->groupBy('cliente_vehiculo.id')
+                          ->orderBy('alq_count','desc')->get();
+          }elseif ($orden == 'conductor'){
+            $alquileres = Alquiler::join('clientes', 'cliente_vehiculo.cliente_id','=','clientes.id')
+                          ->select('cliente_vehiculo.*')
+                          ->orderBy('clientes.apellido','asc')->get();
+          }elseif ($orden == 'matricula'){
+            $alquileres = Alquiler::join('vehiculos', 'cliente_vehiculo.vehiculo_id','=','vehiculos.id')
+                          ->select('cliente_vehiculo.*')
+                          ->orderBy('vehiculos.matricula','asc')->get();
+          }else{
+              $alquileres = Alquiler::orderBy($orden)->get();
+          }
         }else{
-            $alquileres = Alquiler::all();
+          if ($request->busqueda!=""){
+            if ($request->filtro == 'matricula') {
+              $alquileres = Alquiler::join('vehiculos', 'cliente_vehiculo.vehiculo_id','=','vehiculos.id')
+                            ->where('vehiculos.matricula',$request->busqueda)
+                            ->orderby('fecha','desc')
+                            ->get();
+            }elseif ($request->filtro == 'apellido') {
+              $alquileres = Alquiler::join('clientes', 'cliente_vehiculo.cliente_id','=','clientes.id')
+                            ->where('clientes.apellido',$request->busqueda)
+                            ->orderby('fecha','desc')
+                            ->get();
+            }        
+          }else{
+            if ($request->date1 != "" && $request->date2 != "") {
+              $alquileres = Alquiler::whereBetween('fecha', [$request->date1, $request->date2])
+                                        ->orderby('fecha','desc')
+                                        ->get();
+            } else {
+              $alquileres = Alquiler::all();
+            }
+          } 
         }
             $ordenar = true;
             $count = count($alquileres);

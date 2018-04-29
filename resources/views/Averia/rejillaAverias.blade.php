@@ -6,7 +6,28 @@
     @if (isset($subtitulo))
         <h3 class="page-header" align="center">{{$subtitulo}}</h3>
         <br>
-    @endif     
+    @endif
+    <form method="GET" action="{{ route('Averia.index' )}}">
+      <div class="input-group">
+        <span class="input-group-btn">
+          <button class="btn btn-success" type="submit">Buscar</button>
+        </span>
+        <input id="bus" type="text" class="form-control" name="busqueda" placeholder="Elige criterio de busqueda" value="">
+        <select id="filtro" name="filtro">
+            <option value="matricula">Matricula</option>
+            <option value="tipo">Tipo</option>
+        </select>   
+        <div class="col-2">Fecha inicio</div>
+          <div class="col-2">
+            <input class="form-control" type="date" value="" name="date1">
+          </div>
+          <div class="col-2">Fecha fin</div>
+          <div class="col-2">
+              <input class="form-control" type="date" value="{{date('Y-m-d')}}" name="date2">   
+          </div>      
+      </div>       
+    </form>
+    <br>    
     <table class="table table-hover table-striped">
         @if ($ordenar)
           @include('cabeceras.averia')

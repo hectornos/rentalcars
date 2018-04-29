@@ -14,22 +14,43 @@ class AveriaController extends Controller
 {
 	//Listado completo de averias
     public function index (Request $request) {
-        if ($request->has('criterio')){
-            $orden=$request->criterio;
-            if ($orden == 'tipo'){
-                $averias = Averia::join('tipoaverias', 'averias.tipoaveria_id','=','tipoaverias.id')
-                                    ->select('averias.*')
-                                    ->orderBy('tipoaverias.nombre','desc')->get();
-            }elseif ($orden == 'matricula') {
-                $averias = Averia::join('vehiculos', 'vehiculos.id','=','averias.vehiculo_id')
-                                    ->select('averias.*')
-                                    ->orderBy('vehiculos.matricula','desc')->get();
-            }else{
-                $averias = Averia::orderBy($orden)->get();
+      if ($request->has('criterio')){
+        $orden=$request->criterio;
+        if ($orden == 'tipo'){
+            $averias = Averia::join('tipoaverias', 'averias.tipoaveria_id','=','tipoaverias.id')
+                                ->select('averias.*')
+                                ->orderBy('tipoaverias.nombre','desc')->get();
+        }elseif ($orden == 'matricula') {
+            $averias = Averia::join('vehiculos', 'vehiculos.id','=','averias.vehiculo_id')
+                                ->select('averias.*')
+                                ->orderBy('vehiculos.matricula','desc')->get();
+        }else{
+            $averias = Averia::orderBy($orden)->get();
+        }
+      }else{
+        if ($request->busqueda!=""){
+            if ($request->filtro == 'matricula') {
+              $averias = Averia::join('vehiculos','averias.vehiculo_id','=','vehiculos.id')
+                                    ->where('vehiculos.matricula',$request->busqueda)
+                                    ->orderBy('fecha','desc')
+                                    ->get();
+            }elseif ($request->filtro == 'tipo') {
+              $averias = Averia::join('tipoaverias', 'averias.tipoaveria_id','=','tipoaverias.id')
+                                    ->where('tipoaverias.nombre',$request->busqueda)
+                                    ->orderBy('fecha','desc')
+                                    ->get();
             }
         }else{
-            $averias = Averia::all();   
-        }
+            if ($request->date1 != "" && $request->date2 != ""){
+              $averias = Averia::whereBetween('fecha',[$request->date1, $request->date2])
+                                ->orderBy('fecha', 'desc')
+                                ->get();
+            }else{
+              //POR AQUI PASA LA PRIMERA VEZ, TAL CUAL CARGA LA APLICACION
+              $averias = Averia::all(); 
+            }	              
+        }   
+      }
         $count = $averias->count();
         $ordenar = true;
         return \View::make('Averia/rejillaAverias',compact('averias'),['count'=>$count, 'ordenar'=>$ordenar]);

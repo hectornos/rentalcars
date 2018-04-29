@@ -43,7 +43,15 @@ class VehiculoController extends Controller
                 $vehiculos = Vehiculo::orderBy($orden)->get();
             }
         }else{
-            $vehiculos = Vehiculo::all();
+            if ($request->busqueda!=""){
+                $vehiculos = Vehiculo::where($request->filtro,$request->busqueda)
+                                        ->orderby('vehiculos.matricula','desc')
+                                        ->get();               
+			}else{
+				//POR AQUI PASA LA PRIMERA VEZ, TAL CUAL CARGA LA APLICACION
+				$vehiculos = Vehiculo::all();               
+			}              
+			
         }
         $count = count($vehiculos);
         return \View::make('Vehiculo/rejillaVehiculos',compact('vehiculos'),['count'=>$count]);

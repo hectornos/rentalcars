@@ -2,7 +2,27 @@
 @section('titulo','Listado Clientes')
 @section('contenido')          
 <div class="container-fluid">
-    <h1 class="page-header" align="center">Listado de clientes</h1>     
+<h1 class="page-header" align="center">Listado de clientes</h1> 
+
+        <form method="GET" action="{{ route('Cliente.index' )}}">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button class="btn btn-success" type="submit">Buscar</button>
+                    </span>
+                    <input id="bus" type="text" class="form-control" name="busqueda" placeholder="Elige criterio de busqueda" value="">
+                    <select id="filtro" name="filtro">
+                        <option value="nombre">Nombre</option>
+                        <option value="apellido">Apellido</option>
+                        <option value="telefono">Telefono</option>
+                    </select> 
+                  <div class="btn-group" >
+                    <a href="{{ route('Cliente.create')}}" class="btn btn-success">
+                      <span class="glyphicon glyphicon-edit"></span> Nuevo</button></a>
+                  </div>
+                </div>       
+        </form>
+
+    <br>
     <table class="table table-hover table-striped">
         <tr>
           <td width="150" title="Nombre" align="center"><a href="{{ route('Cliente.index',['criterio' => 'nombre'] )}}" >Nombre</a></td>
@@ -13,7 +33,7 @@
           <td width="150" align="center"><b>Editar</b></td><td width="150" align="center"><b>Eliminar</b></td><td width="150" align="center"><b>Imprimir</b></td>
         </tr>
         @foreach($clientes as $cliente)
-        <tr class="destacar">
+        <tr>
           <td width="150" align="center">{{$cliente->nombre}}</td>
           <td width="150" align="center">{{$cliente->apellido}}</td>
           <td width="150" align="center">{{$cliente->telefono}}</td>

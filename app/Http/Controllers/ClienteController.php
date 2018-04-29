@@ -39,8 +39,17 @@ class ClienteController extends Controller
 			}else{
 				$clientes = Cliente::orderBy($orden)->get();
 			}
-		}else{
-			$clientes = Cliente::all();
+		}else{ //Sin ordenar...
+			if ($request->busqueda!=""){
+				$clientes = Cliente::where($request->filtro,$request->busqueda)
+															->orderBy('nombre', 'desc')
+																	->get();               
+
+			}else{
+				//POR AQUI PASA LA PRIMERA VEZ, TAL CUAL CARGA LA APLICACION
+				$clientes = Cliente::all();               
+			}              
+			
 		}
 		$count = count($clientes);
 		return \View::make('Cliente/rejillaClientes',compact('clientes'),['count'=>$count]);

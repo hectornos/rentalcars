@@ -1,11 +1,11 @@
-<p align="center"><img src="rentalcars/resources/assets/Captura.PNG"></p>
+Estas creando los criterios de busqueda (FILTRADO) de la rejilla,
+es facil, has creado ya Cliente Vehiculo y Averia.
+Lo complicado es filtrar por fecha con un datePicker.
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+Averia: Por fechas YA ESTA TERMINADO, COPIALO PARA FILTRAR LAS:
 
-## About Laravel
+1) Incidencia: por fechas
 
+Cambia los resultados de los filtros, para que salgan ordenados.
+
+Ordenar matriculas por LETRA

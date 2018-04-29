@@ -2,7 +2,25 @@
 @section('titulo','Listado Vehiculos')
 @section('contenido')          
 <div class="container-fluid">
-    <h1 class="page-header" align="center">Listado de vehiculos</h1>     
+    <h1 class="page-header" align="center">Listado de vehiculos</h1>
+    <form method="GET" action="{{ route('Vehiculo.index' )}}">
+      <div class="input-group">
+          <span class="input-group-btn">
+              <button class="btn btn-success" type="submit">Buscar</button>
+          </span>
+          <input id="bus" type="text" class="form-control" name="busqueda" placeholder="Elige criterio de busqueda" value="">
+          <select id="filtro" name="filtro">
+              <option value="matricula">Matricula</option>
+              <option value="modelo">Modelo</option>
+
+          </select> 
+        <div class="btn-group" >
+          <a href="{{ route('Vehiculo.create')}}" class="btn btn-success">
+            <span class="glyphicon glyphicon-edit"></span> Nuevo</button></a>
+        </div>
+      </div>       
+    </form>
+    <br>    
     <table class="table table-hover table-striped">
         <tr>
           <td width="150" align="center" title="Modelo de coche"><a href="{{ route('Vehiculo.index',['criterio' => 'modelo'] )}}" >Modelo</a></td>

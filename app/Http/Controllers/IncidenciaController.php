@@ -35,8 +35,30 @@ class IncidenciaController extends Controller
           $incidencias = Incidencia::orderBy($orden)->get();
         }
       }else{
-        $incidencias = Incidencia::all();
-        
+        if ($request->busqueda!=""){
+          if ($request->filtro == 'matricula') {
+            $incidencias = Incidencia::join('cliente_vehiculo','incidencias.alquiler_id','=','cliente_vehiculo.id')
+                            ->join('vehiculos','cliente_vehiculo.vehiculo_id','=','vehiculos.id')
+                            ->where('vehiculos.matricula',$request->busqueda)
+                            ->orderBy('cliente_vehiculo.fecha','desc')
+                            ->get();
+          }elseif ($request->filtro == 'apellido') {
+            $incidencias = Incidencia::join('cliente_vehiculo','incidencias.alquiler_id','=','cliente_vehiculo.id')
+                            ->join('clientes','cliente_vehiculo.cliente_id','=','clientes.id')
+                            ->where('clientes.apellido',$request->busqueda)
+                            ->orderBy('cliente_vehiculo.fecha','desc')
+                            ->get();
+          }        
+        }else{
+          if ($request->date1 != "" && $request->date2 != "") {
+            $incidencias = Incidencia::join('cliente_vehiculo','incidencias.alquiler_id','=','cliente_vehiculo.id')
+                              ->whereBetween('cliente_vehiculo.fecha', [$request->date1, $request->date2])
+                              ->orderBy('cliente_vehiculo.fecha','desc')
+                              ->get();
+          } else {
+            $incidencias = Incidencia::all();
+          }
+        } 
       }
       $ordenar = true;
       $count = $incidencias->count();
