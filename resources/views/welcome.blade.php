@@ -79,16 +79,16 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    RENTAL CARS
                 </div>
 
                 <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
                     <a href="{{ route('Cliente.index') }}">Clientes</a>
+                    <a href="{{ route('Vehiculo.index') }}">Vehiculos</a>
+                    <a href="{{ route('Averia.index') }}">Averias</a>
+                    <a href="{{ route('Incidencia.index') }}">Incidencias</a>
+                    <a href="{{ route('Alquiler.index') }}">Alquileres</a>
+                    
                 </div>
             </div>
         </div>
