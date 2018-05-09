@@ -1,5 +1,10 @@
-Ordenar matriculas por LETRA:
-ORDER BY SUBSTRING('matricula',5,3)
+PARTE DE CONTROLADOR:
+Multiples wheres en VehiculoController::escoger. No consigo que filtre por varias columnas.
+
+
+PARTE DE VISTA:
+Poner todos los nombres a primera mayuscula o todas mayusculas: ucfirst o strtoupper.
+Cambiar anchura de las columnas.
 
 Validar documentos y matrículas:
 

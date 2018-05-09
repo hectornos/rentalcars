@@ -36,8 +36,8 @@
         </tr>
         @foreach($vehiculos as $vehiculo)
         <tr class="destacar">
-          <td width="150" align="center">{{$vehiculo->modelo}}</td>
-          <td width="150" align="center">{{$vehiculo->matricula}}</td>
+          <td width="150" align="center">{{ ucfirst($vehiculo->modelo) }}</td>
+          <td width="150" align="center">{{ strtoupper($vehiculo->matricula) }}</td>
           <td width="150" align="center">
             @if (count($vehiculo->disponible)==0)
               No

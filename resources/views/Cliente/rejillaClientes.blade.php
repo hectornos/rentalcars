@@ -34,8 +34,8 @@
         </tr>
         @foreach($clientes as $cliente)
         <tr>
-          <td width="150" align="center">{{$cliente->nombre}}</td>
-          <td width="150" align="center">{{$cliente->apellido}}</td>
+          <td width="150" align="center">{{ $cliente->nom }}</td>
+          <td width="150" align="center">{{ $cliente->ape }}</td>
           <td width="150" align="center">{{$cliente->telefono}}</td>
           <td width="150" align="center" title="Ver alquieres del cliente">
             @if (count($cliente->alquileres)>0)

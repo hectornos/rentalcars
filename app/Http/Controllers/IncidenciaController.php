@@ -30,7 +30,9 @@ class IncidenciaController extends Controller
           $incidencias = Incidencia::join('cliente_vehiculo', 'incidencias.alquiler_id','=','cliente_vehiculo.id')
                                     ->join('vehiculos', 'cliente_vehiculo.vehiculo_id', '=', 'vehiculos.id')
                                     ->select('incidencias.*')
-                                    ->orderBy('vehiculos.matricula','asc')->get();
+                                    ->orderBy(\DB::raw('substr(vehiculos.matricula,5,3)'))
+                                    ->orderBy(\DB::raw('substr(vehiculos.matricula,1,4)'))
+                                    ->get();
         }else{
           $incidencias = Incidencia::orderBy($orden)->get();
         }
@@ -88,8 +90,7 @@ class IncidenciaController extends Controller
 			$mensaje = "Vehiculo con matricula ".$request->matrciula. " ha sido creado.";
 		}
 		return redirect(url('/Vehiculo'))->with($alerta,$mensaje);
-    }
-
+  }
 
   //Metodo de borrar un alquiler
   public function destroy(Request $request) {
@@ -111,8 +112,8 @@ class IncidenciaController extends Controller
       return \View::make('Incidencia/editIncidencia',compact('incidencia'));
   }
 
-  //Almacena los cambios realizados en el vehiculo
-  public function update(Request $request) {
+  //Almacena los cambios realizados en la incidencia
+public function update(Request $request) {
     if ($request->has('cancel')) {
       $alerta = 'Cancelado';
       $mensaje = 'Operacion cancelada';

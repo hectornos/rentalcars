@@ -28,9 +28,31 @@ class Cliente extends Model
     //-----------------------------------------------------------------------
     public function vehiculos() {
         //return $this->hasManyThrough('App\Vehiculo','App\Alquiler');
-        return $this->belongsToMany('App\Vehiculo');
+        return $this->belongsToMany('App\Vehiculo')
+                    ->as('alquileres')
+                    ->withPivot('fecha');
+
         
     }
+
+    //-----------------------------------------------------------------------
+    //Concatenar nombre cliente
+    //-----------------------------------------------------------------------
+    public function getCompletoAttribute() {
+        return ucfirst($this->nombre) . ' ' . ucfirst($this->apellido);
+    }
+
+    //-----------------------------------------------------------------------
+    //Poner nombre y apellido en mayusculas
+    //-----------------------------------------------------------------------
+    public function getNomAttribute() {
+        return ucfirst($this->nombre);
+    }
+    public function getApeAttribute() {
+        return ucfirst($this->apellido);
+    }
+
+
     public $timestamps = false;
     
 }

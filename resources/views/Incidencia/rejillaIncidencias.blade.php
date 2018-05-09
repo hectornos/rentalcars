@@ -1,6 +1,6 @@
 @extends('plantilla')
 @section('titulo','Listado Incidencias')
-@section('contenido')          
+@section('contenido') 
 <div class="container-fluid">
     <h1 class="page-header" align="center">Listado de incidencias</h1>
 		@if (isset($subtitulo))
@@ -25,11 +25,6 @@
           <div class="col-2">
               <input class="form-control" type="date" value="{{date('Y-m-d')}}" name="date2">   
           </div>
-         
-        <div class="btn-group" >
-          <a href="{{ route('Vehiculo.create')}}" class="btn btn-success">
-            <span class="glyphicon glyphicon-edit"></span> Nuevo</button></a>
-        </div>
       </div>       
     </form>
     <br>    
@@ -42,10 +37,10 @@
         @foreach($incidencias as $incidencia)
         <tr class="destacar">
           <td width="150" align="center">
-            <a href="{{ route('Cliente.view',['id'=>$incidencia->alquiler->cliente->id]) }}">{{$incidencia->alquiler->cliente->apellido}}, {{$incidencia->alquiler->cliente->nombre}}</a>
+            <a href="{{ route('Cliente.view',['id'=>$incidencia->alquiler->cliente->id]) }}">{{$incidencia->alquiler->cliente->completo}}</a>
           </td>
 					<td width="150" align="center">
-            <a href="{{ route('Vehiculo.view',['id'=>$incidencia->alquiler->vehiculo->id]) }}">{{$incidencia->alquiler->vehiculo->matricula}}</a>
+            <a href="{{ route('Vehiculo.view',['id'=>$incidencia->alquiler->vehiculo->id]) }}">{{$incidencia->alquiler->vehiculo->mat }}</a>
           </td>
           <td width="150" align="center">{{$incidencia->alquiler->fecha}}</td>
           <td width="150" align="center">{{$incidencia->descripcion}}</td>

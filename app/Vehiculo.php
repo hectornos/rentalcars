@@ -63,4 +63,53 @@ class Vehiculo extends Model
     }
     public $timestamps = false;
 
+    //-----------------------------------------------------------------------
+    //Poner matricula en formato
+    //-----------------------------------------------------------------------
+    public function getMatAttribute() {
+        return strtoupper($this->matricula);
+    }
+    public function getModAttribute() {
+        return ucfirst($this->modelo);
+    }
+    public function getMarcAttribute() {
+        return ucfirst($this->marca->nombre);
+    }
+
+    //-----------------------------------------------------------------------
+    //----------------------------SCOPES-------------------------------------
+    //-----------------------------------------------------------------------
+
+    public function scopeDisponibles($query) {
+        return $query->where('disponible',1);
+    }
+
+    public function scopeCambio($query, $flag) {
+        if ($flag >0){
+            return $query->whereIn('cambio_id',$flag);
+        }
+    }
+
+    public function scopeCombustible($query, $flag) {
+        if ($flag >0){
+            return $query->whereIn('combustible_id',$flag);
+        }
+        
+    }
+
+    public function scopeColor($query, $flag) {
+        if ($flag >0){
+            return $query->where('disponible','<',3);
+        }else{
+            return $query->whereIn('color_id',$flag);
+
+        }
+    }
+
+    public function scopeTipo($query, $flag) {
+        if ($flag >0){
+            //dd($query->whereIn('tipo_id',$flag));
+            return $query->whereIn('tipo_id',$flag);
+        }
+    }
 }

@@ -19,5 +19,6 @@ class Averia extends Model
     	return $this->hasOne('App\Tipoaveria','id','tipoaveria_id');
     }
     public $timestamps = false;
+
     
 }

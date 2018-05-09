@@ -29,7 +29,9 @@ class AlquilerController extends Controller
           }elseif ($orden == 'matricula'){
             $alquileres = Alquiler::join('vehiculos', 'cliente_vehiculo.vehiculo_id','=','vehiculos.id')
                           ->select('cliente_vehiculo.*')
-                          ->orderBy('vehiculos.matricula','asc')->get();
+                          ->orderBy(\DB::raw('substr(vehiculos.matricula,5,3)'))
+                          ->orderBy(\DB::raw('substr(vehiculos.matricula,1,4)'))
+                          ->get();
           }else{
               $alquileres = Alquiler::orderBy($orden)->get();
           }
@@ -68,15 +70,7 @@ class AlquilerController extends Controller
 		return \View::make('Alquiler/showAlquiler',compact('alquiler'),['numIncidencias'=>$numIncidencias]);
     }
     
-    //Incidencias de un alquiler
-    public function listarinc($id) {
-        $alquiler = Alquiler::find($id);
-        $incidencias = $alquiler->incidencias;
-        $count = count($incidencias);
-        $ordenar = false;
-        $subtitulo = 'Incidencias asociadas al alquiler: '.$alquiler->id;
-        return \View::make('Incidencia/rejillaIncidencias',compact('incidencias'),['count'=>$count, 'ordenar'=>$ordenar, 'subtitulo'=>$subtitulo]);
-    }
+    
 
     //Metodo de añadir un alquiler
 	public function store(Request $request) {
@@ -110,6 +104,18 @@ class AlquilerController extends Controller
         $alquiler = Alquiler::find($id);
         return \View::make('Alquiler/detalleAlquiler',compact('alquiler'));
     }
+
+    /*Listar las incidencias de un alquiler
+    @ Recibe: id del alquiler
+    @ Devuelve: Objeto incidencias, count de incidencias, boolean ordenar, subtitulo*/
+    public function listarinc($id) {
+      $alquiler = Alquiler::find($id);
+      $incidencias = $alquiler->incidencias;
+      $count = count($incidencias);
+      $ordenar = false;
+      $subtitulo = 'Incidencias asociadas al alquiler con id: '.$alquiler->id;
+      return \View::make('Incidencia/rejillaIncidencias',compact('incidencias'),['count'=>$count, 'ordenar'=>$ordenar, 'subtitulo'=>$subtitulo]);
+  }
 
     //Imprimir un alquiler
     public function pdf($id) {

@@ -17,7 +17,10 @@ use Barryvdh\DomPDF\Facade as PDF;
 
 class ClienteController extends Controller
 {
-	//Listado completo de los clientes
+	/*Listado completo de clientes.
+    @ Recibe: Criterios de ordenación o de filtro.
+    @ Devuelve: Objeto clientes y count de clientes.
+    */
 	public function index(Request $request) {
 		if ($request->has('criterio')){
 			$orden = $request->criterio;
@@ -30,7 +33,8 @@ class ClienteController extends Controller
 														->get();
 			}elseif ($orden == 'incidencias'){
 				//QUERY: 'select c.*, count(alquiler_id) as inc_count from incidencias i left join cliente_vehiculo cv on i.alquiler_id = cv.id left join clientes c on cv.cliente_id = c.id group by c.id order by incidencias_count'));
-				$clientes = Cliente::join('cliente_vehiculo', 'clientes.id', '=', 'cliente_vehiculo.cliente_id','left outer')
+				$clientes = Cliente::
+				join('cliente_vehiculo', 'clientes.id', '=', 'cliente_vehiculo.cliente_id','left outer')
 														->join('incidencias', 'cliente_vehiculo.id', '=', 'incidencias.alquiler_id', 'left outer' )
 														->groupBy('clientes.id')
 														->orderBy('inc_count','desc')
@@ -55,12 +59,16 @@ class ClienteController extends Controller
 		return \View::make('Cliente/rejillaClientes',compact('clientes'),['count'=>$count]);
 	}
 
-	//Pantalla para crear un cliente nuevo
+	/*Pantalla para crear un cliente nuevo
+    @ Recibe:
+    @ Devuelve:  */
 	public function create() {
 		return \View::make('Cliente/createCliente');
 	}
 
-	//Metodo de añadir un cliente
+	/*Metodo de añadir un cliente
+    @ Recibe: Request con campos a insertar.
+    @ Devuelve: */
 	public function store(Request $request) {
 		if ($request->has('cancel')) {
 			$alerta = 'Cancelado';
@@ -73,14 +81,17 @@ class ClienteController extends Controller
 		return redirect(url('/Cliente'))->with($alerta,$mensaje);
 	}
 
-	//Edita un cliente
+	/*Pantalla para editar un cliente
+    @ Recibe: id del cliente
+    @ Devuelve: cliente editado*/
 	public function edit($id) {
-		
 		$cliente = Cliente::find($id);
 		return \View::make('Cliente/editCliente',compact('cliente'));
 	}
 
-	//Almacena los cambios realizados en el cliente
+	/*Almacena los cambios realizados en el cliente
+    @ Recibe: Request con campos a editar
+    @ Devuelve: */
 	public function update(Request $request) {
 		if ($request->has('cancel')) {
 			$alerta = 'Cancelado';
@@ -93,19 +104,25 @@ class ClienteController extends Controller
 		return redirect(url('/Cliente'))->with($alerta,$mensaje);
 	}
 
-	//Detalle de un cliente dado su id (primary key)
+	/*Detalle de un cliente para su borrado
+    @ Recibe: id del cliente
+    @ Devuelve: objeto cliente a borrar*/
 	public function show($id) {
 		$cliente = Cliente::find($id);
 		return \View::make('Cliente/showCliente',compact('cliente'));
 	}
 
-	//Detalle de un cliente dado su id (primary key)
+	/*Detalle de un cliente para su borrado
+    @ Recibe: id del cliente
+    @ Devuelve: objeto cliente a ver*/
 	public function view($id) {
 		$cliente = Cliente::find($id);
 		return \View::make('Cliente/viewCliente',compact('cliente'));
 	}
 
-	//Metodo de borrar un cliente
+	/*Borrado de un cliente
+    @ Recibe: request con cliente a borrar
+    @ Devuelve: */
 	public function destroy(Request $request) {
 		if ($request->has('cancel')) {
 			$alerta = 'Cancelado';
@@ -119,7 +136,9 @@ class ClienteController extends Controller
 		return redirect(url('/Cliente'))->with($alerta,$mensaje);
 	}
 
-	//Listar las alquileres de un cliente
+	/*Listar los alquileres de un cliente
+    @ Recibe: id del cliente
+    @ Devuelve: Objeto alquileres, count de alquileres, boolean ordenar, subtitulo*/
 	public function listaralc($id) {
 		$cliente = Cliente::find($id);
 		$alquileres = $cliente->alquileres;
@@ -129,7 +148,9 @@ class ClienteController extends Controller
 		return \View::make('Alquiler/rejillaAlquileres',compact('alquileres'),['count'=>$count, 'ordenar'=>$ordenar, 'subtitulo'=>$subtitulo]);
 	}
 
-	//Listar las incidencias de un cliente
+	/*Listar las incidencias de un cliente
+    @ Recibe: id del cliente
+    @ Devuelve: Objeto incidencias, count de incidencias, boolean ordenar, subtitulo*/
 	public function listarinc($id) {
 		$cliente = Cliente::find($id);
 		$incidencias = $cliente->incidencias;
@@ -139,7 +160,18 @@ class ClienteController extends Controller
 		return \View::make('Incidencia/rejillaIncidencias',compact('incidencias'),['count'=>$count, 'ordenar'=>$ordenar, 'subtitulo'=>$subtitulo]);
 	}
 	
-	//Imprime detalles de un cliente
+    public function alquilar($id) {
+		
+		$vehiculo = Vehiculo::find($id);
+		$cliente = Cliente::find(1);
+		$fecha = array('fecha'=>date('Y-m-d'));
+		$cliente->vehiculos()->save($vehiculo,$fecha);
+		echo ('Vehiculo alquilado!!!');
+    }
+
+	/*Imprimir en pdf un cliente
+    @ Recibe: id del cliente
+    @ Devuelve: pdf creado*/
 	public function pdf($id) {
 		$cliente = Cliente::find($id);
 		echo ('Aqui se imprimiria el cliente');
