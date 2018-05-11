@@ -98,17 +98,15 @@ class Vehiculo extends Model
     }
 
     public function scopeColor($query, $flag) {
-        if ($flag >0){
-            return $query->where('disponible','<',3);
-        }else{
+        //Si hemos escogido 'todos los colores' nos entra un array así.
+        $zero = array(0=>'0');
+        if ($flag != $zero){
             return $query->whereIn('color_id',$flag);
-
         }
     }
 
     public function scopeTipo($query, $flag) {
         if ($flag >0){
-            //dd($query->whereIn('tipo_id',$flag));
             return $query->whereIn('tipo_id',$flag);
         }
     }

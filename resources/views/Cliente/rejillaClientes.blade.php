@@ -34,7 +34,7 @@
         </tr>
         @foreach($clientes as $cliente)
         <tr>
-          <td width="150" align="center">{{ $cliente->nom }}</td>
+          <td width="150" align="center"><a href="{{ route('Vehiculo.elegir',['cliente_id'=>$cliente->id]) }}">{{ $cliente->nom }}</a></td>
           <td width="150" align="center">{{ $cliente->ape }}</td>
           <td width="150" align="center">{{$cliente->telefono}}</td>
           <td width="150" align="center" title="Ver alquieres del cliente">

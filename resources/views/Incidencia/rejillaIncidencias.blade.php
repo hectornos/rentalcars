@@ -52,15 +52,15 @@
 						@endif
 					</td>
           <td width="150" align="center">    
-              <a href="{{ route('Incidencia.edit',['id' => $incidencia->id] )}}" class="btn btn-info" title="Edita el alquiler seleccionado">
+              <a href="{{ route('Incidencia.edit',['id' => $incidencia->id] )}}" class="btn btn-info" title="Edita la incidencia seleccionada">
                   <span class="glyphicon glyphicon-edit"/></a>    
           </td>
           <td width="150" align="center">
-              <a href="{{ route('Incidencia.show',['id' => $incidencia->id] )}}" class="btn btn-danger" title="Borra el alquiler seleccionado">
+              <a href="{{ route('Incidencia.show',['id' => $incidencia->id] )}}" class="btn btn-danger" title="Borra la incidencia seleccionada">
                   <span class="glyphicon glyphicon-trash"/></a>
           </td>
           <td width="150" align="center">
-              <a href="{{ route('Incidencia.pdf',['id' => $incidencia->id] )}}" class="btn-btn-info" title="Exporta alquiler a PDF">
+              <a href="{{ route('Incidencia.pdf',['id' => $incidencia->id] )}}" class="btn-btn-info" title="Exporta incidencia a PDF">
                   <span class="glyphicon glyphicon-floppy-save"/></a>
           </td>
         </tr>

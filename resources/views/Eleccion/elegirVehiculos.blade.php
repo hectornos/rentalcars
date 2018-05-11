@@ -3,6 +3,7 @@
 @section('formulario')
 
 <div class="container-fluid">
+    <input type="hidden" value="{{$cliente_id}}"/>
     {!! Form::model(Request::only(['tipo_id','color_id','cambio_id','combustible_id']), ['route' =>'Vehiculo.elegir', 'method' => 'GET']) !!}
     <table class="table">
       <tr>

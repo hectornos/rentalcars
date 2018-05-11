@@ -25,10 +25,9 @@
         <tr>
           <td width="150" align="center" title="Modelo de coche"><a href="{{ route('Vehiculo.index',['criterio' => 'modelo'] )}}" >Modelo</a></td>
           <td width="150" align="center" title="Matricula"><a href="{{ route('Vehiculo.index',['criterio' => 'matricula'] )}}" >Matricula</a></td>
-          <td width="150" align="center" title="Disponible para alquilar"><a href="{{ route('Vehiculo.index',['criterio' => 'averias'] )}}" >Disponible</a></td>
+          <td width="150" align="center" title="Disponible para alquilar"><a href="{{ route('Vehiculo.index',['criterio' => 'disponible'] )}}" >Disponible</a></td>
           <td width="150" title="Ordena por numero de alquileres" align="center"><a href="{{ route('Vehiculo.index',['criterio' => 'alquileres'] )}}" >Alquileres</a></td>
           <td width="150" title="Ordena por numero de averias" align="center"><a href="{{ route('Vehiculo.index',['criterio' => 'averias'] )}}" >Averias</a></td>
-          <td width="150" align="center" title="Alquilar este coche" >Alquilar</a></td>
           <td width="150" align="center" title="Agregar una" >Agregar averia</a></td>
           <td width="150" align="center"><b>Editar</b></td>
           <td width="150" align="center"><b>Eliminar</b></td>
@@ -39,10 +38,12 @@
           <td width="150" align="center">{{ ucfirst($vehiculo->modelo) }}</td>
           <td width="150" align="center">{{ strtoupper($vehiculo->matricula) }}</td>
           <td width="150" align="center">
-            @if (count($vehiculo->disponible)==0)
-              No
+            @if ($vehiculo->disponible==0)
+            <a href="{{ route('Vehiculo.index',['vehiculo_id' => $vehiculo->id,'criterio'=>'dispo'] )}}" class="btn btn-danger" title="Agrega una averia al vehiculo">
+                  <span class="glyphicon"/>No</a> 
             @else
-              Si
+            <a href="{{ route('Vehiculo.index',['vehiculo_id' => $vehiculo->id, 'criterio' =>'dispo'] )}}" class="btn btn-success" title="Agrega una averia al vehiculo">
+                  <span class="glyphicon"/>Si</a> 
             @endif
           </td>
           <td width="150" align="center" title="Ver alquieres del vehiculo">
@@ -59,10 +60,7 @@
               Sin averias
             @endif
           </td>
-          <td width="150" align="center">    
-              <a href="{{ route('Vehiculo.alquilar',['id' => $vehiculo->id] )}}" class="btn btn-info" title="Alquila el vehiculo seleccionado">
-                  <span class="glyphicon glyphicon-edit"/></a>    
-          </td>
+
           <td width="150" align="center">    
               <a href="{{ route('Averia.create',['vehiculo_id' => $vehiculo->id] )}}" class="btn btn-info" title="Agrega una averia al vehiculo">
                   <span class="glyphicon glyphicon-edit"/></a>    

@@ -31,11 +31,14 @@
           </div>
           <br>
           <div class="btn-group">
-              <button class="btn btn-success" type="submit" name="guardar" value="Almacenar">
+              <button class="btn btn-success"  type="submit" name="guardar" value="Almacenar">
                   <span class="glyphicon glyphicon-ok"></span> Almacenar</button>
               <button class="btn btn-danger" type="submit" name="cancel" value="Cancelar">
                   <span class="glyphicon glyphicon-step-backward"></span> Cancelar</button>
           </div>
       </form>          
   </div>
+
+
+
 @endsection

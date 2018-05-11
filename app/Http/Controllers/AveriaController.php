@@ -80,10 +80,16 @@ class AveriaController extends Controller
       $mensaje = 'Operacion cancelada';
     } else {
       Averia::create($request->all());
+      //Ademas ponemos el coche en no disponible.
+      $vehiculo = Vehiculo::find($request->vehiculo_id);
+      if ($vehiculo->disponible == '1'){
+        $vehiculo->disponible='0';
+        $vehiculo->save();
+      }
       $alerta = 'Creado';
       $mensaje = "Averia ".$request->matrciula. " añadida.";
     }
-    return redirect(url('/Averia'))->with($alerta,$mensaje);
+    return redirect(url('/Vehiculo'))->with($alerta,$mensaje);
   }
 
   /*Pantalla para editar un averia

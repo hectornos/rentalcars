@@ -29,7 +29,7 @@ Route::get('/Cliente/{id}/alquileres', 'ClienteController@listaralc')->name('Cli
 Route::get('/Cliente/{id}/incidencias', 'ClienteController@listarinc')->name('Cliente.incidencias');
 Route::get('/Cliente/{id}/pdf', 'ClienteController@pdf')->name('Cliente.pdf');
 Route::get('/Cliente/{id}/view', 'ClienteController@view')->name('Cliente.view');
-Route::get('/Cliente/{id}/alquilar', 'ClienteController@alquilar')->name('Cliente.alquilar');
+Route::get('/Cliente/{vehiculo_id}/{cliente_id}/alquilar', 'ClienteController@alquilar')->name('Cliente.alquilar');
 
 //Rutas para la tabla Vehiculos
 Route::get('/Vehiculo', 'VehiculoController@index')->name('Vehiculo.index');

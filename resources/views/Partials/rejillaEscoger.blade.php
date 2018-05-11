@@ -18,7 +18,7 @@
     <td width="150" align="center">{{ ucfirst($vehiculo->combustible->nombre) }}</td>
     <td width="150" align="center">{{ ucfirst($vehiculo->cambio->nombre) }}</td>
     <td width="150" align="center">{{ ucfirst($vehiculo->color->nombre) }}</td>
-    <td width="50" align="center"><a href="{{ route('Cliente.alquilar',['id' => $vehiculo->id] )}}" class="btn btn-info" title="Alquilar vehiculo">
+    <td width="50" align="center"><a href="{{ route('Cliente.alquilar',['vehiculo_id' => $vehiculo->id, 'cliente_id' => $cliente_id] )}}" class="btn btn-info" title="Alquilar vehiculo">
                   <span class="glyphicon glyphicon-edit"/></td>
   </tr>
   

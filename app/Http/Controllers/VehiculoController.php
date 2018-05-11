@@ -45,8 +45,17 @@ class VehiculoController extends Controller {
               $vehiculos = Vehiculo::orderBy(\DB::raw('substr(matricula,5,3)'))
                                 ->orderBy(\DB::raw('substr(vehiculos.matricula,1,4)'))
                                 ->get();
+            } elseif ($orden == 'dispo') {
+              $vehiculo = Vehiculo::find($request->vehiculo_id);
+              if ($vehiculo->disponible == '0'){
+                $vehiculo->disponible='1';
+              }else{
+                $vehiculo->disponible='0';
+              }
+              $vehiculo->save();
+              $vehiculos = Vehiculo::all();
             } else {
-                $vehiculos = Vehiculo::orderBy($orden)->get();
+              $vehiculos = Vehiculo::orderBy($orden)->get();
             }
         }else{
             if ($request->busqueda!=""){
@@ -159,7 +168,7 @@ class VehiculoController extends Controller {
         $alquileres = $vehiculo->alquileres;
         $count = count($alquileres);
         $ordenar = false;
-        $subtitulo = 'Alquileres del vehiculo: '.$vehiculo->matricula;
+        $subtitulo = 'Alquileres del vehiculo: '.$vehiculo->mat;
         return \View::make('Alquiler/rejillaAlquileres',compact('alquileres'),['count'=>$count, 'ordenar'=>$ordenar, 'subtitulo'=>$subtitulo]);
     }
 
@@ -171,7 +180,7 @@ class VehiculoController extends Controller {
         $averias = $vehiculo->averias;
         $count = count($averias);
         $ordenar = false;
-        $subtitulo = 'Averias del vehiculo: '.$vehiculo->matricula;
+        $subtitulo = 'Averias del vehiculo: '.$vehiculo->mat;
         return \View::make('Averia/rejillaAverias',compact('averias'),['count'=>$count, 'ordenar'=>$ordenar, 'subtitulo'=>$subtitulo]);
     }
 
@@ -187,6 +196,7 @@ class VehiculoController extends Controller {
     @ Devuelve: vehiculos coincidentes, count, todos los colores, tipos, cambios y combustibles*/
     public function elegir (Request $request) {
         if (!$request->has('cancel') && $request->has('tipo_id') || $request->has('cambio_id') || $request->has('combustible_id') || $request->has('color_id')) {
+            $cliente_id = $request->cliente_id;
             $vehiculos = Vehiculo::disponibles()
                                     ->cambio($request->cambio_id)
                                     ->color($request->color_id)
@@ -200,10 +210,11 @@ class VehiculoController extends Controller {
             $coloresZero = array('0'=>'Todos los colores');
             $colores= array_merge($coloresZero,$coloresPrevio);
             $count = count($vehiculos);
-            return \View::make('Eleccion/elegirVehiculos',compact('vehiculos'),['count'=>$count,'tipos'=>$tipos, 'colores'=>$colores, 'combustibles'=>$combustibles, 'cambios'=>$cambios]);
+            return \View::make('Eleccion/elegirVehiculos',compact('vehiculos'),['count'=>$count,'tipos'=>$tipos, 'colores'=>$colores, 'combustibles'=>$combustibles, 'cambios'=>$cambios,'cliente_id'=>$cliente_id]);
 
         }
             //Si le hemos dado a cancel o no vienen datos (primera entrada en el selector)...
+            $cliente_id = $request->cliente_id;
             $vehiculos = Vehiculo::disponibles()->get();
             $tipos = Tipo::all();
             $combustibles = Combustible::all();
@@ -213,7 +224,7 @@ class VehiculoController extends Controller {
             $colores= array_merge($coloresZero,$coloresPrevio);
             $count= count($vehiculos);
             
-        return \View::make('Eleccion/elegirVehiculos',compact('vehiculos'),['count'=>$count,'tipos'=>$tipos, 'colores'=>$colores, 'combustibles'=>$combustibles, 'cambios'=>$cambios]);
+        return \View::make('Eleccion/elegirVehiculos',compact('vehiculos'),['count'=>$count,'tipos'=>$tipos, 'colores'=>$colores, 'combustibles'=>$combustibles, 'cambios'=>$cambios,'cliente_id'=>$cliente_id]);
     }
 
 

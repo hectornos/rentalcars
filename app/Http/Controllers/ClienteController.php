@@ -144,7 +144,7 @@ class ClienteController extends Controller
 		$alquileres = $cliente->alquileres;
 		$count = count($alquileres);
 		$ordenar = false; //Si cargo un listado parcial de alquileres, no se debe poder ordenar.
-		$subtitulo = 'Alquileres del cliente: '.$cliente->nombre.' '.$cliente->apellido;
+		$subtitulo = 'Alquileres del cliente: '.$cliente->nom.' '.$cliente->ape;
 		return \View::make('Alquiler/rejillaAlquileres',compact('alquileres'),['count'=>$count, 'ordenar'=>$ordenar, 'subtitulo'=>$subtitulo]);
 	}
 
@@ -156,16 +156,20 @@ class ClienteController extends Controller
 		$incidencias = $cliente->incidencias;
 		$count = count($incidencias);
 		$ordenar = false;
-		$subtitulo = 'Incidencias del cliente: '.$cliente->nombre.' '.$cliente->apellido;
+		$subtitulo = 'Incidencias del cliente: '.$cliente->nom.' '.$cliente->ape;
 		return \View::make('Incidencia/rejillaIncidencias',compact('incidencias'),['count'=>$count, 'ordenar'=>$ordenar, 'subtitulo'=>$subtitulo]);
 	}
 	
-    public function alquilar($id) {
-		
-		$vehiculo = Vehiculo::find($id);
-		$cliente = Cliente::find(1);
+	/*Alquila un vehiculo
+    @ Recibe: id del cliente, id del vehiculo
+    @ Devuelve: */
+    public function alquilar($vehiculo_id, $cliente_id) {
+		$vehiculo = Vehiculo::find($vehiculo_id);
+		$cliente = Cliente::find($cliente_id);
 		$fecha = array('fecha'=>date('Y-m-d'));
 		$cliente->vehiculos()->save($vehiculo,$fecha);
+		$vehiculo->disponible = '0';
+		$vehiculo->save();
 		echo ('Vehiculo alquilado!!!');
     }
 
