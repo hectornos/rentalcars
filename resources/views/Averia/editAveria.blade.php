@@ -3,46 +3,41 @@
 @section('contenido')  
 <div class="container">
   <h1 class="page-header">Editar una averia</h1>
-      <form action="{{ route('Averia.update',['id'=>$averia->id])}}" method="POST" name="formulario" onsubmit="return validarOtros()">
+      <form action="{{ route('Averia.update',['id'=>$averia->id])}}" method="POST" id="formulario" onsubmit="return validarOtros()">
           {{ csrf_field() }}
           {{ method_field('PUT') }}
           <div class="form-group">
-              <label for="vehiculo" class="col-2 col-form-label">Vehiculo: </label>
-              <div class="col-10">
-              <input readonly class="form-control" type="text" value="{{strtoupper ($averia->vehiculo->matricula) }}" name="matricula">
-              </div>
+              <label for="vehiculo" >Vehiculo: </label>
+              <input readonly class="form-control" type="text" value="{{strtoupper ($averia->vehiculo->mat) }}" name="matricula">
           </div>
           <div class="form-group">
-              <label for="tipo" class="col-2 col-form-label">Tipo: </label>
+              <label for="tipo" >Tipo: </label>
               <select class="form-control" id="tipoaveria_id" name="tipoaveria_id" id="tipo">
-              <option hidden name={{$averia->tipoaveria->id}} value={{$averia->tipoaveria->id}}>{{ucfirst($averia->tipoaveria->nombre)}}</option>
+              <option hidden name={{$averia->tipoaveria->id}} value={{$averia->tipoaveria->id}}>{{ucfirst($averia->tipoaveria->nom)}}</option>
                 @foreach($tipoaverias as $tipoaveria)
-                    <option name={{$tipoaveria->id}} value={{$tipoaveria->id}}>{{ucfirst ($tipoaveria->nombre)}}</option>
+                    <option name={{$tipoaveria->id}} value={{$tipoaveria->id}}>{{ucfirst ($tipoaveria->nom)}}</option>
                 @endforeach
             </select>
           </div>
           <div class="form-group">
-              <label for="descripcion" class="col-2 col-form-label">Descripcion: </label>
-              <div class="col-10">
-              <input class="form-control" type="text" value="{{ucfirst ($averia->descripcion)}}" id="descripcion" name="descripcion">
-              </div>
+              <label for="descripcion" >Descripcion: </label>
+              <input class="form-control" type="text" value="{{ucfirst ($averia->descrip)}}" id="descripcion" name="descripcion">
           </div>
           <div class="form-group">
-              <label for="f_nac" class="col-2 col-form-label">Fecha: </label>
-              <div class="col-10">
+              <label for="f_nac" >Fecha: </label>
               <input class="form-control" type="date" value="{{$averia->fecha}}" name="fecha">
-              </div>
+              
           </div>
 
           <br>
           <div class="btn-group">
               <button class="btn btn-success" type="submit" name="editar" value="Editar">
                   <span class="glyphicon glyphicon-edit"></span> Editar</button>
-                <a class="btn btn-danger" href="{{ URL::previous() }}"><span class="glyphicon glyphicon-step-backward"></span> Cancelar</a>
-                <button type="button" onclick="validarOtros()">Click Me!</button> 
+                  <a class="btn btn-danger" href="{{ route('Averia.cancel')}}"><span class="glyphicon glyphicon-step-backward"></span> Cancelar</a>
           </div>
       </form>          
   </div>
-
+  <br>
+  <div id="error"></div>
 
 @endsection

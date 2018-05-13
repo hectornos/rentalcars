@@ -30,28 +30,27 @@ class ClienteController extends Controller
 														->select('clientes.*', DB::raw('count(cliente_id) as cli_count'))
 														->groupBy('clientes.id')
 														->orderBy('cli_count','desc')
-														->get();
+														->paginate(8);
 			}elseif ($orden == 'incidencias'){
 				//QUERY: 'select c.*, count(alquiler_id) as inc_count from incidencias i left join cliente_vehiculo cv on i.alquiler_id = cv.id left join clientes c on cv.cliente_id = c.id group by c.id order by incidencias_count'));
-				$clientes = Cliente::
-				join('cliente_vehiculo', 'clientes.id', '=', 'cliente_vehiculo.cliente_id','left outer')
+				$clientes = Cliente::join('cliente_vehiculo', 'clientes.id', '=', 'cliente_vehiculo.cliente_id','left outer')
 														->join('incidencias', 'cliente_vehiculo.id', '=', 'incidencias.alquiler_id', 'left outer' )
 														->groupBy('clientes.id')
 														->orderBy('inc_count','desc')
 														->select('clientes.*', DB::raw('count(alquiler_id) as inc_count'))
-														->get();
+														->paginate(8);
 			}else{
-				$clientes = Cliente::orderBy($orden)->get();
+				$clientes = Cliente::orderBy($orden)->paginate(8);
 			}
 		}else{ //Sin ordenar...
 			if ($request->busqueda!=""){
 				$clientes = Cliente::where($request->filtro,$request->busqueda)
 															->orderBy('nombre', 'desc')
-																	->get();               
+																	->paginate(8);               
 
 			}else{
 				//POR AQUI PASA LA PRIMERA VEZ, TAL CUAL CARGA LA APLICACION
-				$clientes = Cliente::all();               
+				$clientes = Cliente::paginate(8);               
 			}              
 			
 		}
@@ -141,7 +140,9 @@ class ClienteController extends Controller
     @ Devuelve: Objeto alquileres, count de alquileres, boolean ordenar, subtitulo*/
 	public function listaralc($id) {
 		$cliente = Cliente::find($id);
-		$alquileres = $cliente->alquileres;
+		$alquileres = Alquiler::join('clientes', 'clientes.id', '=', 'cliente_vehiculo.cliente_id')
+                                ->where('cliente_vehiculo.cliente_id', '=', $id)
+                                ->paginate(8);
 		$count = count($alquileres);
 		$ordenar = false; //Si cargo un listado parcial de alquileres, no se debe poder ordenar.
 		$subtitulo = 'Alquileres del cliente: '.$cliente->nom.' '.$cliente->ape;
@@ -153,7 +154,9 @@ class ClienteController extends Controller
     @ Devuelve: Objeto incidencias, count de incidencias, boolean ordenar, subtitulo*/
 	public function listarinc($id) {
 		$cliente = Cliente::find($id);
-		$incidencias = $cliente->incidencias;
+		$incidencias = Incidencia::join('cliente_vehiculo', 'incidencias.alquiler_id', '=', 'cliente_vehiculo.id')
+							->join('clientes', 'cliente_vehiculo.cliente_id', '=', 'clientes.id')
+							->paginate(8);
 		$count = count($incidencias);
 		$ordenar = false;
 		$subtitulo = 'Incidencias del cliente: '.$cliente->nom.' '.$cliente->ape;
@@ -181,4 +184,14 @@ class ClienteController extends Controller
 		echo ('Aqui se imprimiria el cliente');
 	}
 
+	
+	/*Cancela operación, lleva al index.
+    @ Recibe: 
+    @ Devuelve: */
+	public function cancel() {
+		$alerta = 'Cancelado';
+		$mensaje = 'Has cancelado la operación';
+		$clientes = Cliente::all();
+		return redirect(url('/Cliente'))->with($alerta,$mensaje,$clientes);
+	}
 }

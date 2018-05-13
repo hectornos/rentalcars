@@ -30,6 +30,8 @@ Route::get('/Cliente/{id}/incidencias', 'ClienteController@listarinc')->name('Cl
 Route::get('/Cliente/{id}/pdf', 'ClienteController@pdf')->name('Cliente.pdf');
 Route::get('/Cliente/{id}/view', 'ClienteController@view')->name('Cliente.view');
 Route::get('/Cliente/{vehiculo_id}/{cliente_id}/alquilar', 'ClienteController@alquilar')->name('Cliente.alquilar');
+Route::get('/ClienteCancelado', 'ClienteController@cancel')->name('Cliente.cancel');
+
 
 //Rutas para la tabla Vehiculos
 Route::get('/Vehiculo', 'VehiculoController@index')->name('Vehiculo.index');
@@ -48,6 +50,8 @@ Route::get('/Vehiculo/{id}/view', 'VehiculoController@view')->name('Vehiculo.vie
 //Route::get('/Vehiculos/escoger', 'VehiculoController@escoger')->name('Vehiculo.escoger');
 Route::get('/Vehiculos/elegir', 'VehiculoController@elegir')->name('Vehiculo.elegir');
 Route::post('/Vehiculos/filtrar', 'VehiculoController@filtrar')->name('Vehiculo.filtrar');
+Route::get('/VehiculoCancelado', 'VehiculoController@cancel')->name('Vehiculo.cancel');
+
 
 //Rutas para la tabla cliente_vehiculo (Modelo Alquiler)
 Route::get('/Alquiler', 'AlquilerController@index')->name('Alquiler.index');
@@ -60,6 +64,8 @@ Route::delete('/Alquiler/{id}', 'AlquilerController@destroy')->name('Alquiler.de
 
 Route::get('/Alquiler/{id}/incidencias', 'AlquilerController@listarinc')->name('Alquiler.incidencias');
 Route::get('/Alquiler/{id}/pdf', 'AlquilerController@pdf')->name('Alquiler.pdf');
+Route::get('/AlquilerCancelado', 'AlquilerController@cancel')->name('Alquiler.cancel');
+
 
 //Rutas para la tabla averias
 Route::get('/Averia', 'AveriaController@index')->name('Averia.index');
@@ -71,6 +77,8 @@ Route::put('/Averia/{id}', 'AveriaController@update')->name('Averia.update');
 Route::delete('/Averia/{id}', 'AveriaController@destroy')->name('Averia.destroy');
 
 Route::get('/Averia/{id}/pdf', 'AveriaController@pdf')->name('Averia.pdf');
+Route::get('/AveriaCancelado', 'AveriaController@cancel')->name('Averia.cancel');
+
 
 //Rutas para la tabla incidencias
 Route::get('/Incidencia', 'IncidenciaController@index')->name('Incidencia.index');
@@ -82,4 +90,6 @@ Route::put('/Incidencia/{id}', 'IncidenciaController@update')->name('Incidencia.
 Route::delete('/Incidencia/{id}', 'IncidenciaController@destroy')->name('Incidencia.destroy');
 
 Route::get('/Incidencia/{id}/pdf', 'IncidenciaController@pdf')->name('Incidencia.pdf');
-Route::get('/Averia/{id}/pdf', 'AveriaController@pdf')->name('Averia.pdf');
+Route::get('/Incidencia/{id}/pdf', 'IncidenciaController@pdf')->name('Incidencia.pdf');
+Route::get('/IncidenciaCancelado', 'IncidenciaController@cancel')->name('Incidencia.cancel');
+

@@ -3,7 +3,7 @@
 @section('contenido')  
 <div class="container">
   <h1 class="page-header">Agregar una averia</h1>
-      <form action="{{ route('Averia.store')}}" method="POST">
+      <form action="{{ route('Averia.store')}}" method="POST" id="formulario" onsubmit="return validarOtros()">
           {{ csrf_field() }}
           <input name="vehiculo_id" type="hidden" value="{{$vehiculo->id}}"/>
           <div class="form-group">
@@ -20,7 +20,7 @@
           <div class="form-group">
               <label for="dni" >Descripcion: </label>
               
-              <input class="form-control" type="text" value="" name="descripcion">
+              <input class="form-control" type="text" value="" id="descripcion" name="descripcion">
               
           </div>
           <div class="form-group">
@@ -30,11 +30,13 @@
 
           <br>
           <div class="btn-group">
-              <button class="btn btn-success" type="submit" name="guardar" value="Almacenar">
-                  <span class="glyphicon glyphicon-ok"></span> Almacenar</button>
-              <button class="btn btn-danger" type="submit" name="cancel" value="Cancelar">
-                  <span class="glyphicon glyphicon-step-backward"></span> Cancelar</button>
+              <button class="btn btn-success" type="submit" name="guardar" value="guardar">
+                  <span class="glyphicon glyphicon-edit"></span> Almacenar</button>
+                  <a class="btn btn-danger" href="{{ route('Averia.cancel')}}"><span class="glyphicon glyphicon-step-backward"></span> Cancelar</a>
+
           </div>
       </form>          
   </div>
+  <br>
+  <div id="error"></div>
 @endsection

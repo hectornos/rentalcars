@@ -29,22 +29,22 @@ class VehiculoController extends Controller {
                                 ->select('vehiculos.*',DB::raw('count(vehiculo_id) as vehi_count'))
                                 ->groupBy('vehiculos.id')
                                 ->orderBy('vehi_count','desc')
-                                ->get();
+                                ->paginate(8);
             } elseif ($orden == 'averias') {
               $vehiculos = Vehiculo::join('averias', 'vehiculos.id','=','averias.vehiculo_id','left outer')
                                 ->select('vehiculos.*',DB::raw('count(vehiculo_id) as vehi_count'))
                                 ->groupBy('vehiculos.id')
                                 ->orderBy('vehi_count','desc')
-                                ->get();
+                                ->paginate(8);
             } elseif ($orden == 'marca') {
               $vehiculos = Vehiculo::join('marcas', 'vehiculos.marca_id','=','marcas.id')
                                 ->select('vehiculos.*')
                                 ->orderBy('marcas.nombre','desc')
-                                ->get();
+                                ->paginate(8);                                
             } elseif ($orden == 'matricula') {
               $vehiculos = Vehiculo::orderBy(\DB::raw('substr(matricula,5,3)'))
                                 ->orderBy(\DB::raw('substr(vehiculos.matricula,1,4)'))
-                                ->get();
+                                ->paginate(8);                             
             } elseif ($orden == 'dispo') {
               $vehiculo = Vehiculo::find($request->vehiculo_id);
               if ($vehiculo->disponible == '0'){
@@ -53,23 +53,23 @@ class VehiculoController extends Controller {
                 $vehiculo->disponible='0';
               }
               $vehiculo->save();
-              $vehiculos = Vehiculo::all();
+              $vehiculos = Vehiculo::paginate(8);
             } else {
-              $vehiculos = Vehiculo::orderBy($orden)->get();
+              $vehiculos = Vehiculo::orderBy($orden)->paginate(8);
             }
         }else{
             if ($request->busqueda!=""){
                 $vehiculos = Vehiculo::where($request->filtro,$request->busqueda)
                                         ->orderBy(\DB::raw('substr(matricula,5,3)'))
                                         ->orderBy(\DB::raw('substr(vehiculos.matricula,1,4)'))
-                                        ->get();               
+                                        ->paginate(8);               
 			}else{
 				//POR AQUI PASA LA PRIMERA VEZ, TAL CUAL CARGA LA APLICACION
-				$vehiculos = Vehiculo::all();               
+				$vehiculos = Vehiculo::paginate(8);               
 			}              
 			
         }
-        $count = count($vehiculos);
+        $count = Vehiculo::all()->count();
         return \View::make('Vehiculo/rejillaVehiculos',compact('vehiculos'),['count'=>$count]);
     }
 
@@ -165,7 +165,9 @@ class VehiculoController extends Controller {
     @ Devuelve: Objeto alquileres, count de alquileres, boolean ordenar, subtitulo*/
     public function listaralc($id) {
         $vehiculo = Vehiculo::find($id);
-        $alquileres = $vehiculo->alquileres;
+        $alquileres = Alquiler::join('vehiculos', 'vehiculos.id', '=', 'cliente_vehiculo.vehiculo_id')
+                                ->where('cliente_vehiculo.vehiculo_id', '=', $id)
+                                ->paginate(8);
         $count = count($alquileres);
         $ordenar = false;
         $subtitulo = 'Alquileres del vehiculo: '.$vehiculo->mat;
@@ -177,7 +179,9 @@ class VehiculoController extends Controller {
     @ Devuelve: Objeto averias, count de averias, boolean ordenar, subtitulo*/
     public function listarave($id) {
         $vehiculo = Vehiculo::find($id);
-        $averias = $vehiculo->averias;
+        $averias = Averia::join('vehiculos', 'vehiculos.id', '=', 'averias.vehiculo_id')
+                                ->where('averias.vehiculo_id', '=', $id)
+                                ->paginate(8);
         $count = count($averias);
         $ordenar = false;
         $subtitulo = 'Averias del vehiculo: '.$vehiculo->mat;
@@ -227,6 +231,15 @@ class VehiculoController extends Controller {
         return \View::make('Eleccion/elegirVehiculos',compact('vehiculos'),['count'=>$count,'tipos'=>$tipos, 'colores'=>$colores, 'combustibles'=>$combustibles, 'cambios'=>$cambios,'cliente_id'=>$cliente_id]);
     }
 
+    /*Cancela operación, lleva al index.
+    @ Recibe: 
+    @ Devuelve: */
+	public function cancel() {
+		$alerta = 'Cancelado';
+		$mensaje = 'Has cancelado la operación';
+		$vehiculos = Vehiculo::all();
+		return redirect(url('/Vehiculo'))->with($alerta,$mensaje,$vehiculos);
+	}
 
 
 }

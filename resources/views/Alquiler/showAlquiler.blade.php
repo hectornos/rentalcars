@@ -40,4 +40,6 @@
           </div>
       </form>          
   </div>
+  <br>
+  <div id="error"></div>
 @endsection

@@ -17,12 +17,13 @@
             <option value="matricula">Matricula</option>
             <option value="apellido">Apellido</option>
         </select>
-        <div class="col-1">Fecha inicio</div>
-          <div class="col-2">
+        
+        <div class="col-2">Fecha inicio</div>
+          <div class="col-1">
             <input class="form-control" type="date" value="" name="date1">
           </div>
           <div class="col-1">Fecha fin</div>
-          <div class="col-2">
+          <div class="col-1">
               <input class="form-control" type="date" value="{{date('Y-m-d')}}" name="date2">   
           </div>
       </div>       
@@ -43,7 +44,7 @@
             <a href="{{ route('Vehiculo.view',['id'=>$incidencia->alquiler->vehiculo->id]) }}">{{$incidencia->alquiler->vehiculo->mat }}</a>
           </td>
           <td width="150" align="center">{{$incidencia->alquiler->fecha}}</td>
-          <td width="150" align="center">{{$incidencia->descripcion}}</td>
+          <td width="150" align="center">{{$incidencia->desc}}</td>
 					<td width="150" align="center">
 						@if (($incidencia->resuelto)>0)
 							Si  
@@ -65,9 +66,31 @@
           </td>
         </tr>
         @endforeach
+    <tr class="table-light">
+        <td align='center' colspan="2">Total de incidencias: {{$count}}</td>
+        <td align='center' colspan="2">
+          {{ $incidencias->links() }}
+        </td>
+        <td align='center' colspan="2">Máximo pagina: 8</td>
+    </tr>
     </table>
-    <div class="row">
-        <div class="col-sm-2">Incidencias: {{$count}}</div>
-    </div>
+    
 </div> 
+@if (session('Cancelado'))
+      <div class="alert alert-danger">
+          {{ session('Cancelado') }}
+      </div>
+  @endif
+
+  @if (session('Creado'))
+      <div class="alert alert-success">
+          {{ session('Creado') }}
+      </div>
+  @endif
+
+  @if (session('Borrado'))
+      <div class="alert alert-warning">
+          {{ session('Borrado') }}
+      </div>
+  @endif
 @endsection

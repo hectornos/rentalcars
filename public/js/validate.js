@@ -2,82 +2,113 @@
 //Funciones para validar formularios completos.
 //Formularios de vehiculos.
 function validarCoche () {
-  let marca = document.getElementById("marca_id").selectedIndex;
-  let matricula = document.getElementById("matricula").value;
-  let modelo = document.getElementById("modelo").value;
-  let tipo = document.getElementById("tipo_id").selectedIndex;
-  let combustible = document.getElementById("combustible_id").selectedIndex;
-  let color = document.getElementById("color_id").selectedIndex;
-  let cambio = document.getElementById("cambio_id").selectedIndex;
-  
-    if (marca==0 || tipo==0 || combustible==0 || color==0 || cambio==0 ) {
-      alert('Introduce todos los datos');
-      return false;
-    } else {
-      if (!mat(matricula)) {
-        alert('Matricula inválida');
-        return false;
-      } else {
-        if (modelo=="") {
-          alert('Rellena todos los campos');
-          return false;
-        }
+  let marca = document.getElementById("marca_id");
+  let matricula = document.getElementById("matricula");
+  let modelo = document.getElementById("modelo");
+  let tipo = document.getElementById("tipo_id");
+  let combustible = document.getElementById("combustible_id");
+  let color = document.getElementById("color_id");
+  let cambio = document.getElementById("cambio_id");
+  let salida = true;
+
+    if (marca.selectedIndex==0) {
+      marca.style.borderColor="red";
+      salida = false;
+    }else{
+      if (marca.style.borderColor=="red"){
+        marca.style.borderColor="grey";
       }
     }
-    return true;
+    if (!mat(matricula.value)) {
+      matricula.style.borderColor="red";
+      salida = false;
+    }else{
+      if (matricula.style.borderColor=="red"){
+        matricula.style.borderColor="grey";
+      }
+    }
+    if (combustible.selectedIndex==0) {
+      combustible.style.borderColor="red";
+      salida = false;
+    }else{
+      if (combustible.style.borderColor=="red"){
+        combustible.style.borderColor="grey";
+      }
+    }
+    if (color.selectedIndex==0) {
+      color.style.borderColor="red";
+      salida = false;
+    }else{
+      if (color.style.borderColor=="red"){
+        color.style.borderColor="grey";
+      }
+    }
+    if (cambio.selectedIndex==0) {
+      cambio.style.borderColor="red";
+      salida = false;
+    }else{
+      if (cambio.style.borderColor=="red"){
+        cambio.style.borderColor="grey";
+      }     
+    }
+    if (tipo.selectedIndex==0) {
+      tipo.style.borderColor="red";
+      salida = false;
+    }else{
+      if (tipo.style.borderColor=="red"){
+        tipo.style.borderColor="grey";
+      }
+    }
+    if (modelo.value=="") {
+      modelo.style.borderColor="red";
+      salida = false;
+    }else{
+      if (modelo.style.borderColor=="red"){
+        modelo.style.borderColor="green";
+      }
+    }
+    if (!salida) {
+      document.getElementById("error").outerHTML = "<div id='error' class='alert alert-warning'>Introduce todos los campos</div>";
+    }
+    return salida;
 
 }
+
 //Formularios de clientes.
 function validarCliente () {
-  let nombre = document.getElementById("nombre").value;
-  let apellido = document.getElementById("apellido").value;
-  let dni = document.getElementById("dni").value;
-  let f_nac = document.getElementById("f_nac").value;
-  let ciudad = document.getElementById("ciudad").value;
-  let telefono = document.getElementById("telefono").value;
-  
-    if (nombre=="" || apellido=="" || ciudad=="" ) {
-      alert('Introduce todos los datos');
-      return false;
+  let form = document.getElementById('formulario');
+  let inputs = form.getElementsByTagName("input");
+  let salida = true;
+
+  for (let i=1; i<7; i++){
+    if ((inputs[i].value)=="") {
+      document.getElementById("error").outerHTML = "<div id='error' class='alert alert-warning'>Introduce todos los campos</div>";
+      inputs[i].style.borderColor="red";
+      salida = false;
     } else {
-      if (!doc(dni)) {
-        alert('DNI invalido');
-        return false;
-      } else {
-        if (f_nac=="") {                      
-          alert('Introduce una fecha de nacimiento');
-          return false;
-        } else {
-          if (!tel(telefono)) {
-            alert('Telefono invalido');
-            return false;
-          }
-        }
+      if (inputs[i].style.borderColor="red"){
+        inputs[i].style.borderColor="grey";
       }
     }
-    return true;
-
+  }
+  return salida;
 }
+
 //Formularios de incidencias y averias.
 function validarOtros () {
   //La descripcion no puede estar vacia.
   let descripcion = document.getElementById("descripcion");
   let longitud = descripcion.value.length;
+  let sal = true;
+
   if (longitud<1) {
-    alert('Introduce descripcion');
-    return false;
-  } else {
-    return true;
+    descripcion.style.borderColor = "red";
+    sal = false;
+    document.getElementById("error").outerHTML = "<div id='error' class='alert alert-warning'>Introduce descripcion</div>";
   }
- /*
-  if (String(descripcion) = "") {
-    alert('Debes introducir una descripcion.')
-    return false;
-  }else{
-    alert((String(descripcion)).length);
-    return true;
-  }
-  */
+
+  return sal;
+
 }
 //Funciones para validar campos con expresiones regulares.
 function tel (valor) {

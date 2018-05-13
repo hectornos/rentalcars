@@ -28,9 +28,9 @@ class AveriaController extends Controller
                               ->select('averias.*')
                               ->orderBy(\DB::raw('substr(vehiculos.matricula,5,3)'))
                               ->orderBy(\DB::raw('substr(vehiculos.matricula,1,4)'))
-                              ->get();
+                              ->paginate(8);
       }else{
-          $averias = Averia::orderBy($orden)->get();
+          $averias = Averia::orderBy($orden)->paginate(8);
       }
     }else{
       if ($request->busqueda!=""){
@@ -38,21 +38,21 @@ class AveriaController extends Controller
             $averias = Averia::join('vehiculos','averias.vehiculo_id','=','vehiculos.id')
                                   ->where('vehiculos.matricula',$request->busqueda)
                                   ->orderBy('fecha','desc')
-                                  ->get();
+                                  ->paginate(8);
           }elseif ($request->filtro == 'tipo') {
             $averias = Averia::join('tipoaverias', 'averias.tipoaveria_id','=','tipoaverias.id')
                                   ->where('tipoaverias.nombre',$request->busqueda)
                                   ->orderBy('fecha','desc')
-                                  ->get();
+                                  ->paginate(8);
           }
       }else{
           if ($request->date1 != "" && $request->date2 != ""){
             $averias = Averia::whereBetween('fecha',[$request->date1, $request->date2])
                               ->orderBy('fecha', 'desc')
-                              ->get();
+                              ->paginate(8);
           }else{
             //POR AQUI PASA LA PRIMERA VEZ, TAL CUAL CARGA LA APLICACION
-            $averias = Averia::all(); 
+            $averias = Averia::paginate(8); 
           }	              
       }   
     }
@@ -148,5 +148,13 @@ class AveriaController extends Controller
       echo $averia;
   }
 
-	
+		/*Cancela operación, lleva al index.
+    @ Recibe: 
+    @ Devuelve: */
+    public function cancel() {
+      $alerta = 'Cancelado';
+      $mensaje = 'Has cancelado la operación';
+      $averias = Averia::all();
+      return redirect(url('/Averia'))->with($alerta,$mensaje,$averias);
+    }
 }

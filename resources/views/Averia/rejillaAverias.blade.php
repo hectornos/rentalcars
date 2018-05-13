@@ -36,11 +36,11 @@
         @endif
         @foreach($averias as $averia)
         <tr class="destacar">
-          <td width="150" align="center">{{ucfirst ($averia->tipoaveria->nombre)}}</td>
+          <td width="150" align="center">{{ucfirst ($averia->tipoaveria->nom)}}</td>
           <td width="150" align="center">
             <a href="{{ route('Vehiculo.view',['id'=>$averia->vehiculo->id]) }}">{{ $averia->vehiculo->marc}} {{ $averia->vehiculo->mod}}, {{ $averia->vehiculo->mat}}</a>
           </td>
-          <td width="150" align="center">{{ucfirst ($averia->descripcion)}}</td>
+          <td width="150" align="center">{{$averia->desc}}</td>
           <td width="150" align="center">{{$averia->fecha}}</td>
           <td width="150" align="center">    
               <a href="{{ route('Averia.edit',['id' => $averia->id] )}}" class="btn btn-info" title="Edita la averia seleccionada">
@@ -56,9 +56,31 @@
           </td>
         </tr>
         @endforeach
+    <tr class="table-light">
+        <td align='center' colspan="2">Total de averias: {{$count}}</td>
+        <td align='center' colspan="2">
+          {{ $averias->links() }}
+        </td>
+        <td align='center' colspan="2">Máximo pagina: 10</td>
+    </tr>
     </table>
-    <div class="row">
-        <div class="col-sm-2">Averias: {{$count}}</div>
-    </div>
+    
 </div> 
+@if (session('Cancelado'))
+      <div class="alert alert-danger">
+          {{ session('Cancelado') }}
+      </div>
+  @endif
+
+  @if (session('Creado'))
+      <div class="alert alert-success">
+          {{ session('Creado') }}
+      </div>
+  @endif
+
+  @if (session('Borrado'))
+      <div class="alert alert-warning">
+          {{ session('Borrado') }}
+      </div>
+  @endif
 @endsection

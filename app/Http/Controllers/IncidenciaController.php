@@ -20,21 +20,22 @@ class IncidenciaController extends Controller
           $incidencias = Incidencia::join('cliente_vehiculo as c', 'c.id','=','incidencias.alquiler_id')
                                     ->orderBy('c.fecha', 'asc')
                                     ->select('incidencias.*')
-                                    ->get();    
+                                    ->paginate(8);    
         }elseif ($orden == 'conductor') {
           $incidencias = Incidencia::join('cliente_vehiculo', 'incidencias.alquiler_id','=','cliente_vehiculo.id')
                                     ->join('clientes', 'cliente_vehiculo.cliente_id', '=', 'clientes.id')
 														        ->select('incidencias.*')
-                                    ->orderBy('clientes.apellido','asc')->get();
+                                    ->orderBy('clientes.apellido','asc')
+                                    ->paginate(8);
         }elseif ($orden == 'matricula') {
           $incidencias = Incidencia::join('cliente_vehiculo', 'incidencias.alquiler_id','=','cliente_vehiculo.id')
                                     ->join('vehiculos', 'cliente_vehiculo.vehiculo_id', '=', 'vehiculos.id')
                                     ->select('incidencias.*')
                                     ->orderBy(\DB::raw('substr(vehiculos.matricula,5,3)'))
                                     ->orderBy(\DB::raw('substr(vehiculos.matricula,1,4)'))
-                                    ->get();
+                                    ->paginate(8);
         }else{
-          $incidencias = Incidencia::orderBy($orden)->get();
+          $incidencias = Incidencia::orderBy($orden)->paginate(8);
         }
       }else{
         if ($request->busqueda!=""){
@@ -43,22 +44,22 @@ class IncidenciaController extends Controller
                             ->join('vehiculos','cliente_vehiculo.vehiculo_id','=','vehiculos.id')
                             ->where('vehiculos.matricula',$request->busqueda)
                             ->orderBy('cliente_vehiculo.fecha','desc')
-                            ->get();
+                            ->paginate(8);
           }elseif ($request->filtro == 'apellido') {
             $incidencias = Incidencia::join('cliente_vehiculo','incidencias.alquiler_id','=','cliente_vehiculo.id')
                             ->join('clientes','cliente_vehiculo.cliente_id','=','clientes.id')
                             ->where('clientes.apellido',$request->busqueda)
                             ->orderBy('cliente_vehiculo.fecha','desc')
-                            ->get();
+                            ->paginate(8);
           }        
         }else{
           if ($request->date1 != "" && $request->date2 != "") {
             $incidencias = Incidencia::join('cliente_vehiculo','incidencias.alquiler_id','=','cliente_vehiculo.id')
                               ->whereBetween('cliente_vehiculo.fecha', [$request->date1, $request->date2])
                               ->orderBy('cliente_vehiculo.fecha','desc')
-                              ->get();
+                              ->paginate(8);
           } else {
-            $incidencias = Incidencia::all();
+            $incidencias = Incidencia::paginate(8);
           }
         } 
       }
@@ -111,6 +112,16 @@ class IncidenciaController extends Controller
       $incidencia = Incidencia::find($id);
       return \View::make('Incidencia/editIncidencia',compact('incidencia'));
   }
+
+  	/*Cancela operación, lleva al index.
+    @ Recibe: 
+    @ Devuelve: */
+	public function cancel() {
+		$alerta = 'Cancelado';
+		$mensaje = 'Has cancelado la operación';
+		$incidencias = Incidencia::all();
+		return redirect(url('/Incidencia'))->with($alerta,$mensaje,$incidencias);
+	}
 
   //Almacena los cambios realizados en la incidencia
 public function update(Request $request) {

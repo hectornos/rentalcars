@@ -8,15 +8,15 @@
           {{ method_field('PUT') }}
           <div class="form-group">
               <label for="vehiculo" >Vehiculo: </label>
-              <input readonly class="form-control" type="text" value="{{$incidencia->alquiler->vehiculo->marca->nombre}} {{$incidencia->alquiler->vehiculo->modelo}} , {{$incidencia->alquiler->vehiculo->matricula}}" name="vehiculo">
+              <input readonly class="form-control" type="text" value="{{$incidencia->alquiler->vehiculo->marca->nom}} {{$incidencia->alquiler->vehiculo->mod}} , {{$incidencia->alquiler->vehiculo->mat}}" name="vehiculo">
           </div>
           <div class="form-group">
               <label for="cliente" >Cliente: </label> 
-              <input readonly class="form-control" type="text" value="{{$incidencia->alquiler->cliente->nombre}} {{$incidencia->alquiler->cliente->apellido}}" name="cliente">    
+              <input readonly class="form-control" type="text" value="{{$incidencia->alquiler->cliente->nom}} {{$incidencia->alquiler->cliente->ape}}" name="cliente">    
           </div>
           <div class="form-group">
               <label for="cliente" >Descripcion: </label> 
-              <input class="form-control" type="text" value="{{$incidencia->descripcion}}" id="descripcion" name="descripcion">    
+              <input class="form-control" type="text" value="{{$incidencia->descrip}}" id="descripcion" name="descripcion">    
           </div>
           <br>
           <div class="btn-group">
@@ -27,4 +27,6 @@
           </div>
       </form>          
   </div>
+  <br>
+  <div id="error"></div>
 @endsection

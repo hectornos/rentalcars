@@ -21,4 +21,13 @@ class Combustible extends Model
     	return $this->hasMany('App\Vehiculo');
     }
     public $timestamps = false;
+
+
+        //-----------------------------------------------------------------------
+    //El nombre con formato
+    //-----------------------------------------------------------------------
+
+    public function getNomAttribute() {
+        return ucfirst($this->nombre);
+    }
 }

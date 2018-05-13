@@ -3,14 +3,14 @@
 @section('contenido')  
 <div class="container">
   <h1 class="page-header">Crear un vehiculo</h1>
-      <form action="{{ route('Vehiculo.store')}}" method="POST" onsubmit="return validarCoche()">
+      <form action="{{ route('Vehiculo.store')}}" method="POST" id="formulario" onsubmit="return validarCoche()">
           {{ csrf_field() }}
           <div class="form-group">
             <label for="marca_id">Marca</label>
             <select class="form-control" id="marca_id" name="marca_id" id="marca_id">
                     <option selected disabled>Selecciona marca</option>
                 @foreach($marcas as $marca)
-                    <option name={{$marca->id}} value={{$marca->id}}>{{$marca->nombre}}</option>
+                    <option name={{$marca->id}} value={{$marca->id}}>{{$marca->nom}}</option>
                 @endforeach
             </select>
           </div>
@@ -31,7 +31,7 @@
               <select class="form-control" id="tipo_id" name="tipo_id">
                     <option selected disabled>Selecciona tipo</option>
                   @foreach($tipos as $tipo)
-                      <option name={{$tipo->id}} value={{$tipo->id}}>{{$tipo->nombre}}</option>
+                      <option name={{$tipo->id}} value={{$tipo->id}}>{{$tipo->nom}}</option>
                       {{$tipo->id}}
                   @endforeach
 
@@ -42,7 +42,7 @@
               <select class="form-control" id="combustible_id" name="combustible_id">
                       <option selected disabled>Selecciona combustible</option>
                   @foreach($combustibles as $combustible)
-                      <option name={{$combustible->id}} value={{$combustible->id}}>{{$combustible->nombre}}</option>  
+                      <option name={{$combustible->id}} value={{$combustible->id}}>{{$combustible->nom}}</option>  
                   @endforeach
               </select>
           </div> 
@@ -51,7 +51,7 @@
               <select class="form-control" id="color_id" name="color_id">
                     <option selected disabled>Selecciona color</option>
                   @foreach($colors as $color)
-                      <option name={{$color->id}} value={{$color->id}}>{{$color->nombre}}</option>
+                      <option name={{$color->id}} value={{$color->id}}>{{$color->nom}}</option>
                   @endforeach
               </select>
           </div> 
@@ -60,7 +60,7 @@
               <select class="form-control" id="cambio_id" name="cambio_id">
               <option selected disabled>Selecciona cambio</option>
                   @foreach($cambios as $cambio)
-                      <option name={{$cambio->id}} value={{$cambio->id}}>{{$cambio->nombre}}</option>
+                      <option name={{$cambio->id}} value={{$cambio->id}}>{{$cambio->nom}}</option>
                   @endforeach
               </select>
           </div> 
@@ -68,10 +68,14 @@
           <div class="btn-group">
               <button class="btn btn-success" type="submit" name="guardar" value="Almacenar">
                   <span class="glyphicon glyphicon-ok"></span> Almacenar</button>
-              <button class="btn btn-danger" type="submit" name="cancel" value="Cancelar">
-                  <span class="glyphicon glyphicon-step-backward"></span> Cancelar</button>
+                  <a class="btn btn-danger" href="{{ route('Vehiculo.cancel')}}"><span class="glyphicon glyphicon-step-backward"></span> Cancelar</a>
+
           </div>
           
-      </form>          
+      </form>    
   </div>
+  <button onclick="validarCoche2 ()">OK</button>
+  <br>
+  <div id="error"></div>
+
 @endsection

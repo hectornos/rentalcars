@@ -5,6 +5,9 @@
 <h1 class="page-header" align="center">Listado de clientes</h1> 
 
         <form method="GET" action="{{ route('Cliente.index' )}}">
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-5">
                 <div class="input-group">
                     <span class="input-group-btn">
                         <button class="btn btn-success" type="submit">Buscar</button>
@@ -14,12 +17,16 @@
                         <option value="nombre">Nombre</option>
                         <option value="apellido">Apellido</option>
                         <option value="telefono">Telefono</option>
-                    </select> 
+                    </select>
+          
                   <div class="btn-group" >
                     <a href="{{ route('Cliente.create')}}" class="btn btn-success">
                       <span class="glyphicon glyphicon-edit"></span> Nuevo</button></a>
                   </div>
-                </div>       
+                </div>
+            </div>
+            <div class="col-sm-5"></div>
+        </div>
         </form>
 
     <br>
@@ -66,9 +73,13 @@
         </tr>
         @endforeach
     </table>
-    <div class="row">
-        <div class="col-sm-2">clientes llamados: {{$count}}</div>
-    </div>
+    <tr class="table-light">
+        <td align='center' colspan="3">Total de vehiculos: {{$count}}</td>
+        <td align='center' colspan="3">
+          {{ $clientes->links() }}
+        </td>
+        <td align='center' colspan="4">Máximo pagina: 8</td>
+        </tr>
 </div>
   @if (session('Cancelado'))
       <div class="alert alert-danger">

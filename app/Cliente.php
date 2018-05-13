@@ -51,7 +51,9 @@ class Cliente extends Model
     public function getApeAttribute() {
         return ucfirst($this->apellido);
     }
-
+    public function getCiuAttribute() {
+        return ucfirst($this->ciudad);
+    }
 
     public $timestamps = false;
     

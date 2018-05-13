@@ -2,21 +2,21 @@
 @section('titulo','Editar')
 @section('contenido')  
 <div class="container">
-  <h1 class="page-header">Borrar una incidencia</h1>
+  <h1 class="page-header">Eliminar incidencia</h1>
       <form action="{{ route('Incidencia.destroy', ['id'=>$incidencia->id])}}" method="POST">
           {{ csrf_field() }}
           {{ method_field('DELETE') }}
           <div class="form-group">
               <label for="vehiculo" >Vehiculo: </label>
-              <input readonly class="form-control" type="text" value="{{$incidencia->alquiler->vehiculo->marca->nombre}} {{$incidencia->alquiler->vehiculo->modelo}} , {{$incidencia->alquiler->vehiculo->matricula}}" name="vehiculo">
+              <input readonly class="form-control" type="text" value="{{$incidencia->alquiler->vehiculo->marca->nom}} {{$incidencia->alquiler->vehiculo->mod}} , {{$incidencia->alquiler->vehiculo->mat}}" name="vehiculo">
           </div>
           <div class="form-group">
               <label for="cliente" >Cliente: </label> 
-              <input readonly class="form-control" type="text" value="{{$incidencia->alquiler->cliente->nombre}} {{$incidencia->alquiler->cliente->apellido}}" name="cliente">    
+              <input readonly class="form-control" type="text" value="{{$incidencia->alquiler->cliente->nom}} {{$incidencia->alquiler->cliente->ape}}" name="cliente">    
           </div>
           <div class="form-group">
               <label for="cliente" >Descripcion: </label> 
-              <input class="form-control" type="text" value="{{$incidencia->descripcion}}" name="descripcion">    
+              <input class="form-control" type="text" value="{{$incidencia->descrip}}" name="descripcion">    
           </div>
           <br>
           <div class="btn-group">
@@ -26,4 +26,6 @@
           </div>
       </form>          
   </div>
+  <br>
+  <div id="error"></div>
 @endsection

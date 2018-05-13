@@ -3,38 +3,38 @@
 @section('contenido')  
 <div class="container">
   <h1 class="page-header">Editar un vehiculo</h1>
-      <form action="{{ route('Vehiculo.update', ['id'=>$vehiculo->id])}}" method="POST" onsubmit="return validarCoche()">
+      <form action="{{ route('Vehiculo.update', ['id'=>$vehiculo->id])}}" method="POST" id="formulario" onsubmit="return validarCoche()">
           {{ csrf_field() }}
           {{ method_field('PUT') }}
           <div class="form-group">
             <label for="marca_id">Marca</label>
             <select class="form-control" id="marca_id" name="marca_id">
             <option disabled>Selecciona</option>
-              <option hidden name={{$vehiculo->marca_id}} value={{$vehiculo->marca_id}}>{{$vehiculo->marca->nombre}}</option>
+              <option hidden name={{$vehiculo->marca_id}} value={{$vehiculo->marca_id}}>{{$vehiculo->marca->nom}}</option>
                 @foreach($marcas as $marca)
-                    <option name={{$marca->id}} value={{$marca->id}}>{{$marca->nombre}}</option>
+                    <option name={{$marca->id}} value={{$marca->id}}>{{$marca->nom}}</option>
                 @endforeach
             </select>
           </div>
           <div class="form-group">
               <label for="modelo" >Modelo: </label>
               
-              <input class="form-control" type="text" value="{{$vehiculo->modelo}}" id="modelo" name="modelo">
+              <input class="form-control" type="text" value="{{$vehiculo->mod}}" id="modelo" name="modelo">
               
           </div>
           <div class="form-group">
               <label for="matricula" >Matricula: </label>
               
-              <input class="form-control" type="text" value="{{$vehiculo->matricula}}" id="matricula" name="matricula">
+              <input class="form-control" type="text" value="{{$vehiculo->mat}}" id="matricula" name="matricula">
               
           </div>
           <div class="form-group">
               <label for="tipo_id">Tipo</label>
               <select class="form-control" id="tipo_id" name="tipo_id">
               <option disabled>Selecciona</option>
-                    <option hidden name={{$vehiculo->tipo_id}} value={{$vehiculo->tipo_id}}>{{$vehiculo->tipo->nombre}}</option>
+                    <option hidden name={{$vehiculo->tipo_id}} value={{$vehiculo->tipo_id}}>{{$vehiculo->tipo->nom}}</option>
                   @foreach($tipos as $tipo)
-                      <option name={{$tipo->id}} value={{$tipo->id}}>{{$tipo->nombre}}</option>
+                      <option name={{$tipo->id}} value={{$tipo->id}}>{{$tipo->nom}}</option>
                       {{$tipo->id}}
                   @endforeach
 
@@ -44,9 +44,9 @@
               <label for="combustible_id">Combustible</label>
               <select class="form-control" id="combustible_id" name="combustible_id">
               <option disabled>Selecciona</option>
-                    <option hidden name={{$vehiculo->combustible_id}} value={{$vehiculo->combustible_id}}>{{$vehiculo->combustible->nombre}}</option>
+                    <option hidden name={{$vehiculo->combustible_id}} value={{$vehiculo->combustible_id}}>{{$vehiculo->combustible->nom}}</option>
                   @foreach($combustibles as $combustible)
-                      <option name={{$combustible->id}} value={{$combustible->id}}>{{$combustible->nombre}}</option>  
+                      <option name={{$combustible->id}} value={{$combustible->id}}>{{$combustible->nom}}</option>  
                   @endforeach
               </select>
           </div> 
@@ -54,9 +54,9 @@
               <label for="color_id">Color</label>
               <select class="form-control" id="color_id" name="color_id">
                     <option disabled>Selecciona</option>
-                    <option hidden name={{$vehiculo->color_id}} value={{$vehiculo->color_id}}>{{$vehiculo->color->nombre}}</option>
+                    <option hidden name={{$vehiculo->color_id}} value={{$vehiculo->color_id}}>{{$vehiculo->color->nom}}</option>
                   @foreach($colors as $color)
-                      <option name={{$color->id}} value={{$color->id}}>{{$color->nombre}}</option>
+                      <option name={{$color->id}} value={{$color->id}}>{{$color->nom}}</option>
                   @endforeach
               </select>
           </div> 
@@ -64,9 +64,9 @@
               <label for="cambio_id">cambio</label>
               <select class="form-control" id="cambio_id" name="cambio_id">
                     <option disabled>Selecciona</option>
-                    <option hidden name={{$vehiculo->cambio_id}} value={{$vehiculo->cambio_id}}>{{$vehiculo->cambio->nombre}}</option>
+                    <option hidden name={{$vehiculo->cambio_id}} value={{$vehiculo->cambio_id}}>{{$vehiculo->cambio->nom}}</option>
                   @foreach($cambios as $cambio)
-                      <option name={{$cambio->id}} value={{$cambio->id}}>{{$cambio->nombre}}</option>
+                      <option name={{$cambio->id}} value={{$cambio->id}}>{{$cambio->nom}}</option>
                   @endforeach
               </select>
           </div> 
@@ -74,9 +74,11 @@
           <div class="btn-group">
               <button class="btn btn-success" type="submit" name="guardar" value="Almacenar">
                   <span class="glyphicon glyphicon-ok"></span> Almacenar</button>
-              <button class="btn btn-danger" type="submit" name="cancel" value="Cancelar">
-                  <span class="glyphicon glyphicon-step-backward"></span> Cancelar</button>
+                  <a class="btn btn-danger" href="{{ route('Vehiculo.cancel')}}"><span class="glyphicon glyphicon-step-backward"></span> Cancelar</a>
+
           </div>
       </form>          
   </div>
+  <br>
+  <div id="error"></div>
 @endsection

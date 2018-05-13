@@ -22,4 +22,8 @@ class Tipoaveria extends Model
     	
     }
     public $timestamps = false;
+
+    public function getNomAttribute() {
+        return ucfirst($this->nombre);
+    }
 }

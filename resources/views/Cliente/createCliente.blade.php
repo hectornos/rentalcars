@@ -3,7 +3,7 @@
 @section('contenido')  
 <div class="container">
   <h1 class="page-header">Agregar un cliente</h1>
-      <form action="{{ route('Cliente.store')}}" method="POST" onsubmit="return validarCliente()">
+      <form action="{{ route('Cliente.store')}}" method="POST" id="formulario" onsubmit="return validarCliente()">
           {{ csrf_field() }}
           <div class="form-group">
               <label for="nombre" class="col-2 col-form-label">Nombre: </label>
@@ -44,9 +44,14 @@
           <br>
           <div class="btn-group">
               <button class="btn btn-success" type="submit" name="guardar" value="Almacenar">
-                  <span class="glyphicon glyphicon-ok"></span> Almacenar</button>
-            <a class="btn btn-danger" href="{{ URL::previous() }}"><span class="glyphicon glyphicon-step-backward"></span> Cancelar</a>
+                  <span class="glyphicon glyphicon-ok"></span> Almacenar</button>           
+            <a class="btn btn-danger" href="{{ route('Cliente.cancel')}}"><span class="glyphicon glyphicon-step-backward"></span> Cancelar</a>
+            
+
           </div>
       </form>          
   </div>
+
+  <br>
+  <div id="error"></div>
 @endsection

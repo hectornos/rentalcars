@@ -21,19 +21,21 @@ class AlquilerController extends Controller
             $alquileres = Alquiler::join('incidencias', 'cliente_vehiculo.id','=','incidencias.alquiler_id','left outer')
                           ->select('cliente_vehiculo.*', DB::raw('count(alquiler_id) as alq_count'))
                           ->groupBy('cliente_vehiculo.id')
-                          ->orderBy('alq_count','desc')->get();
+                          ->orderBy('alq_count','desc')
+                          ->paginate(8);
           }elseif ($orden == 'conductor'){
             $alquileres = Alquiler::join('clientes', 'cliente_vehiculo.cliente_id','=','clientes.id')
                           ->select('cliente_vehiculo.*')
-                          ->orderBy('clientes.apellido','asc')->get();
+                          ->orderBy('clientes.apellido','asc')
+                          ->paginate(8);
           }elseif ($orden == 'matricula'){
             $alquileres = Alquiler::join('vehiculos', 'cliente_vehiculo.vehiculo_id','=','vehiculos.id')
                           ->select('cliente_vehiculo.*')
                           ->orderBy(\DB::raw('substr(vehiculos.matricula,5,3)'))
                           ->orderBy(\DB::raw('substr(vehiculos.matricula,1,4)'))
-                          ->get();
+                          ->paginate(8);
           }else{
-              $alquileres = Alquiler::orderBy($orden)->get();
+              $alquileres = Alquiler::orderBy($orden)->paginate(8);
           }
         }else{
           if ($request->busqueda!=""){
@@ -41,20 +43,20 @@ class AlquilerController extends Controller
               $alquileres = Alquiler::join('vehiculos', 'cliente_vehiculo.vehiculo_id','=','vehiculos.id')
                             ->where('vehiculos.matricula',$request->busqueda)
                             ->orderby('fecha','desc')
-                            ->get();
+                            ->paginate(8);
             }elseif ($request->filtro == 'apellido') {
               $alquileres = Alquiler::join('clientes', 'cliente_vehiculo.cliente_id','=','clientes.id')
                             ->where('clientes.apellido',$request->busqueda)
                             ->orderby('fecha','desc')
-                            ->get();
+                            ->paginate(8);
             }        
           }else{
             if ($request->date1 != "" && $request->date2 != "") {
               $alquileres = Alquiler::whereBetween('fecha', [$request->date1, $request->date2])
                                         ->orderby('fecha','desc')
-                                        ->get();
+                                        ->paginate(8);
             } else {
-              $alquileres = Alquiler::all();
+              $alquileres = Alquiler::paginate(8);
             }
           } 
         }
@@ -67,7 +69,7 @@ class AlquilerController extends Controller
     public function show($id) {
         $alquiler = Alquiler::find($id);
         $numIncidencias = $alquiler->incidencias->count();
-		return \View::make('Alquiler/showAlquiler',compact('alquiler'),['numIncidencias'=>$numIncidencias]);
+		  return \View::make('Alquiler/showAlquiler',compact('alquiler'),['numIncidencias'=>$numIncidencias]);
     }
     
     
@@ -123,5 +125,14 @@ class AlquilerController extends Controller
         echo 'IMPRIMIR: '+$alquiler;
     }
 
+    /*Cancela operación, lleva al index.
+    @ Recibe: 
+    @ Devuelve: */
+	  public function cancel() {
+		  $alerta = 'Cancelado';
+		  $mensaje = 'Has cancelado la operación';
+		  $alquileres = Alquiler::all();
+		  return redirect(url('/Alquiler'))->with($alerta,$mensaje,$alquileres);
+	  }
 
 }

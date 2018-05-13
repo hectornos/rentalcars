@@ -79,9 +79,31 @@
           </td>
         </tr>
         @endforeach
+        <tr class="table-light">
+        <td align='center' colspan="3">Total de vehiculos: {{$count}}</td>
+        <td align='center' colspan="3">
+          {{ $vehiculos->links() }}
+        </td>
+        <td align='center' colspan="4">Máximo pagina: 10</td>
+        </tr>
     </table>
-    <div class="row">
-        <div class="col-sm-2">Vehiculos: {{$count}}</div>
-    </div>
-</div> 
+    </div> 
+  @if (session('Cancelado'))
+      <div class="alert alert-danger">
+          {{ session('Cancelado') }}
+      </div>
+  @endif
+
+  @if (session('Creado'))
+      <div class="alert alert-success">
+          {{ session('Creado') }}
+      </div>
+  @endif
+
+  @if (session('Borrado'))
+      <div class="alert alert-warning">
+          {{ session('Borrado') }}
+      </div>
+  @endif
+
 @endsection

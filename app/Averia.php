@@ -20,5 +20,12 @@ class Averia extends Model
     }
     public $timestamps = false;
 
+    public function getDescAttribute() {
+        return ucfirst(substr($this->descripcion,0,25));
+    }
+
+    public function getDescripAttribute() {
+        return ucfirst($this->descripcion);
+    }
     
 }
