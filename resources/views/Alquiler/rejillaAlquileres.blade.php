@@ -13,7 +13,7 @@
           <button class="btn btn-success" type="submit">Buscar</button>
         </span>
         <input id="bus" type="text" class="form-control" name="busqueda" placeholder="Elige criterio de busqueda" value="">
-        <select id="filtro" name="filtro">
+        <select class='form-control' id="filtro" name="filtro">
           <option value="apellido">Apellido</option>
           <option value="matricula">Matricula</option>
         </select>

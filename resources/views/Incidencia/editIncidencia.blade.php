@@ -22,8 +22,7 @@
           <div class="btn-group">
           <button class="btn btn-success" type="submit" name="editar" value="Editar">
                   <span class="glyphicon glyphicon-edit"></span> Editar</button>
-                <a class="btn btn-danger" href="{{ URL::previous() }}"><span class="glyphicon glyphicon-step-backward"></span> Cancelar</a>
-                <button type="button" onclick="validarOtros()">Click Me!</button>
+                  <a class="btn btn-danger" href="{{ route('Incidencia.cancel',['mensaje'=>'Edicion de incidencia cancelada'])}}"><span class="glyphicon glyphicon-step-backward"></span> Cancelar</a>
           </div>
       </form>          
   </div>

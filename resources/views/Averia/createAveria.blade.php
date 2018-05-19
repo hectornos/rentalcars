@@ -32,7 +32,7 @@
           <div class="btn-group">
               <button class="btn btn-success" type="submit" name="guardar" value="guardar">
                   <span class="glyphicon glyphicon-edit"></span> Almacenar</button>
-                  <a class="btn btn-danger" href="{{ route('Averia.cancel')}}"><span class="glyphicon glyphicon-step-backward"></span> Cancelar</a>
+                  <a class="btn btn-danger" href="{{ route('Vehiculo.cancel',['mensaje'=>'Creacion de averia cancelada'])}}"><span class="glyphicon glyphicon-step-backward"></span> Cancelar</a>
 
           </div>
       </form>          

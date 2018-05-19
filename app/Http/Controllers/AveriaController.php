@@ -75,10 +75,6 @@ class AveriaController extends Controller
   @ Recibe: Request con campos a insertar.
   @ Devuelve: */
   public function store(Request $request) {
-    if ($request->has('cancel')) {
-      $alerta = 'Cancelado';
-      $mensaje = 'Operacion cancelada';
-    } else {
       Averia::create($request->all());
       //Ademas ponemos el coche en no disponible.
       $vehiculo = Vehiculo::find($request->vehiculo_id);
@@ -87,8 +83,7 @@ class AveriaController extends Controller
         $vehiculo->save();
       }
       $alerta = 'Creado';
-      $mensaje = "Averia ".$request->matrciula. " añadida.";
-    }
+      $mensaje = "Averia para vehiculo ".$request->matricula. " añadida.";
     return redirect(url('/Vehiculo'))->with($alerta,$mensaje);
   }
 
@@ -105,14 +100,9 @@ class AveriaController extends Controller
   @ Recibe: Request con campos a editar
   @ Devuelve: */
   public function update(Request $request) {
-      if ($request->has('cancel')) {
-        $alerta = 'Cancelado';
-        $mensaje = 'Operacion cancelada';
-      } else {
-          Averia::find($request->id)->update($request->all());
-          $alerta = 'Modificado';
-          $mensaje = 'Registro modificado';
-      }
+		$alerta = 'Modificado';
+    $mensaje = 'Averia para el vehiculo '.$request->matricula.' modificado';
+    Averia::find($request->id)->update($request->all());
     return redirect(url('/Averia'))->with($alerta,$mensaje);
   }
 
@@ -148,13 +138,13 @@ class AveriaController extends Controller
       echo $averia;
   }
 
-		/*Cancela operación, lleva al index.
-    @ Recibe: 
-    @ Devuelve: */
-    public function cancel() {
-      $alerta = 'Cancelado';
-      $mensaje = 'Has cancelado la operación';
-      $averias = Averia::all();
-      return redirect(url('/Averia'))->with($alerta,$mensaje,$averias);
-    }
+  /*Cancela operación, lleva al index.
+  @ Recibe: Request con mensaje a mostrar
+  @ Devuelve: */
+	public function cancel(Request $request) {
+		$alerta = 'Cancelado';
+		$mensaje = $request->mensaje;
+    $averias = Averia::all();
+    return redirect(url('/Averia'))->with($alerta,$mensaje,$averias);
+  }
 }

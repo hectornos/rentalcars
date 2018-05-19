@@ -126,11 +126,11 @@ class AlquilerController extends Controller
     }
 
     /*Cancela operación, lleva al index.
-    @ Recibe: 
-    @ Devuelve: */
-	  public function cancel() {
-		  $alerta = 'Cancelado';
-		  $mensaje = 'Has cancelado la operación';
+  @ Recibe: Request con mensaje a mostrar
+  @ Devuelve: */
+	public function cancel(Request $request) {
+		$alerta = 'Cancelado';
+		$mensaje = $request->mensaje;
 		  $alquileres = Alquiler::all();
 		  return redirect(url('/Alquiler'))->with($alerta,$mensaje,$alquileres);
 	  }

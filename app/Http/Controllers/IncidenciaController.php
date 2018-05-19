@@ -82,14 +82,9 @@ class IncidenciaController extends Controller
 
   //Metodo de añadir una incidencia
 	public function store(Request $request) {
-		if ($request->has('cancel')) {
-			$alerta = 'Cancelado';
-			$mensaje = 'Operacion cancelada';
-		} else {
       $incidencia = Incidencia::create(['alquiler_id' => $request->alquiler_id, 'descripcion'=>$request->descripcion]);
 			$alerta = 'Creado';
-			$mensaje = "Vehiculo con matricula ".$request->matrciula. " ha sido creado.";
-		}
+			$mensaje = "Incidencia para vehiculo ".$request->matricula. " añadida.";
 		return redirect(url('/Vehiculo'))->with($alerta,$mensaje);
   }
 
@@ -113,26 +108,21 @@ class IncidenciaController extends Controller
       return \View::make('Incidencia/editIncidencia',compact('incidencia'));
   }
 
-  	/*Cancela operación, lleva al index.
-    @ Recibe: 
+  /*Cancela operación, lleva al index.
+    @ Recibe: Request con mensaje a mostrar
     @ Devuelve: */
-	public function cancel() {
+	public function cancel(Request $request) {
 		$alerta = 'Cancelado';
-		$mensaje = 'Has cancelado la operación';
+		$mensaje = $request->mensaje;
 		$incidencias = Incidencia::all();
 		return redirect(url('/Incidencia'))->with($alerta,$mensaje,$incidencias);
 	}
 
   //Almacena los cambios realizados en la incidencia
-public function update(Request $request) {
-    if ($request->has('cancel')) {
-      $alerta = 'Cancelado';
-      $mensaje = 'Operacion cancelada';
-  } else {
-      Incidencia::find($request->id)->update($request->all());
-      $alerta = 'Modificado';
-      $mensaje = 'Registro modificado';
-  }
+	public function update(Request $request) {
+		$alerta = 'Modificado';
+    $mensaje = "Incidencia para vehiculo ".$request->matricula. " modificada.";
+    Incidencia::find($request->id)->update($request->all());
     return redirect(url('/Incidencia'))->with($alerta,$mensaje);
   }
   

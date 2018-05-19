@@ -36,9 +36,9 @@
           </div> 
           <br>
           <div class="btn-group">
-            <button class="btn btn-info" type="submit" name="borrar" value="borrar" id="borra">
-            <a class="btn btn-danger" href="{{ route('Vehiculo.cancel')}}"><span class="glyphicon glyphicon-step-backward"></span> Cancelar</a>
-
+          <button class="btn btn-info" type="submit" name="borrar" value="borrar" id="borra">
+                    <span class="glyphicon glyphicon-trash"></span> Eliminar</button>
+                    <a class="btn btn-danger" href="{{ route('Vehiculo.cancel',['mensaje'=>'Borrado de vehiculo cancelado'])}}"><span class="glyphicon glyphicon-step-backward"></span> Cancelar</a>
           </div>
       </form>          
   </div>

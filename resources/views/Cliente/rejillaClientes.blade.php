@@ -3,34 +3,31 @@
 @section('contenido')          
 <div class="container-fluid">
 <h1 class="page-header" align="center">Listado de clientes</h1> 
-
-        <form method="GET" action="{{ route('Cliente.index' )}}">
-        <div class="row">
-            <div class="col-sm-2"></div>
-            <div class="col-sm-5">
+    <br>
+    <table class="table table-hover table-striped">
+        <tr>
+        <td colspan="2"></td>
+        <td colspan="3">
+                <form method="GET" action="{{ route('Cliente.index' )}}">
                 <div class="input-group">
-                    <span class="input-group-btn">
-                        <button class="btn btn-success" type="submit">Buscar</button>
-                    </span>
+                    <button class="btn btn-success" type="submit">Buscar</button>
                     <input id="bus" type="text" class="form-control" name="busqueda" placeholder="Elige criterio de busqueda" value="">
-                    <select id="filtro" name="filtro">
+                    
+                </div>
+        </td>
+        <td><select class='form-control' id="filtro" name="filtro">
                         <option value="nombre">Nombre</option>
                         <option value="apellido">Apellido</option>
                         <option value="telefono">Telefono</option>
-                    </select>
-          
-                  <div class="btn-group" >
-                    <a href="{{ route('Cliente.create')}}" class="btn btn-success">
-                      <span class="glyphicon glyphicon-edit"></span> Nuevo</button></a>
-                  </div>
-                </div>
-            </div>
-            <div class="col-sm-5"></div>
-        </div>
+                    </select></td>
+        <td></td>
+        <td align="center">
+            <a href="{{ route('Cliente.create')}}" class="btn btn-success">
+                <span class="glyphicon glyphicon-edit"></span> Nuevo</button>
+            </a>
+        </td>
+        </tr>
         </form>
-
-    <br>
-    <table class="table table-hover table-striped">
         <tr>
           <td width="150" title="Nombre" align="center"><a href="{{ route('Cliente.index',['criterio' => 'nombre'] )}}" >Nombre</a></td>
           <td width="150" align="center" title="Apellido"><a href="{{ route('Cliente.index',['criterio' => 'apellido'] )}}" >Apellido</a></td>
@@ -72,7 +69,7 @@
           </td>
         </tr>
         @endforeach
-    </table>
+    
     <tr class="table-light">
         <td align='center' colspan="3">Total de vehiculos: {{$count}}</td>
         <td align='center' colspan="3">
@@ -80,6 +77,7 @@
         </td>
         <td align='center' colspan="4">Máximo pagina: 8</td>
         </tr>
+        </table>
 </div>
   @if (session('Cancelado'))
       <div class="alert alert-danger">

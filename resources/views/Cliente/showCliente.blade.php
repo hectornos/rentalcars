@@ -41,7 +41,7 @@
 
                 <button class="btn btn-info" type="submit" name="borrar" value="borrar" id="borra">
                     <span class="glyphicon glyphicon-trash"></span> Eliminar</button>
-                    <a class="btn btn-danger" href="{{ route('Cliente.cancel')}}"><span class="glyphicon glyphicon-step-backward"></span> Cancelar</a>            </div>
+                    <a class="btn btn-danger" href="{{ route('Cliente.cancel',['mensaje'=>'Borrado de cliente cancelado'])}}"><span class="glyphicon glyphicon-step-backward"></span> Cancelar</a>            </div>
             </div>
       </form>   
   </div>

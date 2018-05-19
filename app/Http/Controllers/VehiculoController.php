@@ -89,14 +89,9 @@ class VehiculoController extends Controller {
     @ Recibe: Request con campos a insertar.
     @ Devuelve: */
 	public function store(Request $request) { //Recibe campos a insertar
-		if ($request->has('cancel')) {
-			$alerta = 'Cancelado';
-			$mensaje = 'Operacion cancelada';
-		} else {
-			Vehiculo::create($request->all());
-			$alerta = 'Creado';
-			$mensaje = "Vehiculo con matricula ".$request->matrciula. " ha sido creado.";
-		}
+		Vehiculo::create($request->all());
+		$alerta = 'Creado';
+		$mensaje = "Vehiculo con matricula ".$request->matrciula. " añadido.";
 		return redirect(url('/Vehiculo'))->with($alerta,$mensaje);
     }
 
@@ -116,15 +111,10 @@ class VehiculoController extends Controller {
     /*Almacena los cambios realizados en el vehiculo
     @ Recibe: Request con campos a editar
     @ Devuelve: */
-    public function update(Request $request) { 
-      if ($request->has('cancel')) {
-        $alerta = 'Cancelado';
-        $mensaje = 'Operacion cancelada';
-      } else {
-              Vehiculo::find($request->id)->update($request->all());
-              $alerta = 'Modificado';
-              $mensaje = 'Registro modificado';
-      }
+	public function update(Request $request) {
+		$alerta = 'Modificado';
+        $mensaje = 'Vehiculo con matricula'. $request->matricula .'añadido';
+        Vehiculo::find($request->id)->update($request->all());
         return redirect(url('/Vehiculo'))->with($alerta,$mensaje);
     }
 
@@ -232,11 +222,11 @@ class VehiculoController extends Controller {
     }
 
     /*Cancela operación, lleva al index.
-    @ Recibe: 
+    @ Recibe: Request con mensaje a mostrar
     @ Devuelve: */
-	public function cancel() {
+	public function cancel(Request $request) {
 		$alerta = 'Cancelado';
-		$mensaje = 'Has cancelado la operación';
+		$mensaje = $request->mensaje;
 		$vehiculos = Vehiculo::all();
 		return redirect(url('/Vehiculo'))->with($alerta,$mensaje,$vehiculos);
 	}

@@ -69,14 +69,9 @@ class ClienteController extends Controller
     @ Recibe: Request con campos a insertar.
     @ Devuelve: */
 	public function store(Request $request) {
-		if ($request->has('cancel')) {
-			$alerta = 'Cancelado';
-			$mensaje = 'Operacion cancelada';
-		} else {
-			Cliente::create($request->all());
-			$alerta = 'Creado';
-			$mensaje = $request->nombre. " ha sido creado.";
-		}
+		Cliente::create($request->all());
+		$alerta = 'Creado';
+		$mensaje = $request->nombre. " añadido.";
 		return redirect(url('/Cliente'))->with($alerta,$mensaje);
 	}
 
@@ -92,14 +87,10 @@ class ClienteController extends Controller
     @ Recibe: Request con campos a editar
     @ Devuelve: */
 	public function update(Request $request) {
-		if ($request->has('cancel')) {
-			$alerta = 'Cancelado';
-			$mensaje = 'Operacion cancelada';
-		} else {
-            Cliente::find($request->id)->update($request->all());
-            $alerta = 'Modificado';
-            $mensaje = 'Registro modificado';
-		}
+		Cliente::find($request->id)->update($request->all());
+		$alerta = 'Modificado';
+		$mensaje = ' modificado';
+		//dd($alerta.''.$mensaje);
 		return redirect(url('/Cliente'))->with($alerta,$mensaje);
 	}
 
@@ -156,6 +147,7 @@ class ClienteController extends Controller
 		$cliente = Cliente::find($id);
 		$incidencias = Incidencia::join('cliente_vehiculo', 'incidencias.alquiler_id', '=', 'cliente_vehiculo.id')
 							->join('clientes', 'cliente_vehiculo.cliente_id', '=', 'clientes.id')
+							->where('cliente_id',$id)
 							->paginate(8);
 		$count = count($incidencias);
 		$ordenar = false;
@@ -186,11 +178,11 @@ class ClienteController extends Controller
 
 	
 	/*Cancela operación, lleva al index.
-    @ Recibe: 
+    @ Recibe: Request con mensaje a mostrar
     @ Devuelve: */
-	public function cancel() {
+	public function cancel(Request $request) {
 		$alerta = 'Cancelado';
-		$mensaje = 'Has cancelado la operación';
+		$mensaje = $request->mensaje;
 		$clientes = Cliente::all();
 		return redirect(url('/Cliente'))->with($alerta,$mensaje,$clientes);
 	}

@@ -45,7 +45,7 @@
           <div class="btn-group">
               <button class="btn btn-success" type="submit" name="guardar" value="Almacenar">
                   <span class="glyphicon glyphicon-ok"></span> Almacenar</button>           
-            <a class="btn btn-danger" href="{{ route('Cliente.cancel')}}"><span class="glyphicon glyphicon-step-backward"></span> Cancelar</a>
+            <a class="btn btn-danger" href="{{ route('Cliente.cancel',['mensaje'=>'Creacion de cliente cancelada'])}}"><span class="glyphicon glyphicon-step-backward"></span> Cancelar</a>
             
 
           </div>

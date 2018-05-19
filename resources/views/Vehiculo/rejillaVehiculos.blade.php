@@ -4,24 +4,35 @@
 <div class="container-fluid">
     <h1 class="page-header" align="center">Listado de vehiculos</h1>
     <form method="GET" action="{{ route('Vehiculo.index' )}}">
+    <table class="table table-hover table-striped">
+    <tr>
+    <td colspan=3></td>
+    <td colspan=2>
       <div class="input-group">
           <span class="input-group-btn">
               <button class="btn btn-success" type="submit">Buscar</button>
           </span>
           <input id="bus" type="text" class="form-control" name="busqueda" placeholder="Elige criterio de busqueda" value="">
-          <select id="filtro" name="filtro">
+          
+      </div>       
+    </td>
+    <td>
+    <select class='form-control' id="filtro" name="filtro">
               <option value="matricula">Matricula</option>
               <option value="modelo">Modelo</option>
 
           </select> 
+        
+    </td>
+    <td colspan="2"></td>
+    <td align="center">
         <div class="btn-group" >
           <a href="{{ route('Vehiculo.create')}}" class="btn btn-success">
             <span class="glyphicon glyphicon-edit"></span> Nuevo</button></a>
         </div>
-      </div>       
+    </td>
     </form>
-    <br>    
-    <table class="table table-hover table-striped">
+    </tr>
         <tr>
           <td width="150" align="center" title="Modelo de coche"><a href="{{ route('Vehiculo.index',['criterio' => 'modelo'] )}}" >Modelo</a></td>
           <td width="150" align="center" title="Matricula"><a href="{{ route('Vehiculo.index',['criterio' => 'matricula'] )}}" >Matricula</a></td>
@@ -80,11 +91,11 @@
         </tr>
         @endforeach
         <tr class="table-light">
-        <td align='center' colspan="3">Total de vehiculos: {{$count}}</td>
-        <td align='center' colspan="3">
+        <td align="center" colspan="3">Total de vehiculos: {{$count}}</td>
+        <td align="center" colspan="3">
           {{ $vehiculos->links() }}
         </td>
-        <td align='center' colspan="4">Máximo pagina: 10</td>
+        <td align="center" colspan="3">Máximo pagina: 10</td>
         </tr>
     </table>
     </div> 

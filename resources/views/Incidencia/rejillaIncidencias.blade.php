@@ -6,37 +6,47 @@
 		@if (isset($subtitulo))
         <h3 class="page-header" align="center">{{$subtitulo}}</h3>
 				<br>
-    @endif 
+    @endif
+    <table class="table table-hover table-striped">
     <form method="GET" action="{{ route('Incidencia.index' )}}">
+    <tr>
+        <td colspan="2"></td>
+        <td colspan="2">
       <div class="input-group">
         <span class="input-group-btn">
             <button class="btn btn-success" type="submit">Buscar</button>
         </span>
         <input id="bus" type="text" class="form-control" name="busqueda" placeholder="Selecciona criterio de busqueda" value="">
-        <select id="filtro" name="filtro">
+        
+      </div>       
+       </td>
+       <td>
+       <select class='form-control' id="filtro" name="filtro">
             <option value="matricula">Matricula</option>
             <option value="apellido">Apellido</option>
         </select>
-        
-        <div class="col-2">Fecha inicio</div>
-          <div class="col-1">
+       </td>
+        <td colspan="3">
+        <div class="input-group">
+        <div align="right" class="col-2">De</div>
+          <div class="col-4">
             <input class="form-control" type="date" value="" name="date1">
           </div>
-          <div class="col-1">Fecha fin</div>
-          <div class="col-1">
+        <div class="col-2">Hasta</div>
+          <div class="col-4">
               <input class="form-control" type="date" value="{{date('Y-m-d')}}" name="date2">   
           </div>
-      </div>       
-    </form>
-    <br>    
-    <table class="table table-hover table-striped">
+        </div>
+        </td>
+        </tr>
+        </form>
         @if ($ordenar)
 					@include('cabeceras.incidencias')
 				@else
 					@include('cabeceras.incidenciasSinorden')
 				@endif
         @foreach($incidencias as $incidencia)
-        <tr class="destacar">
+        <tr>
           <td width="150" align="center">
             <a href="{{ route('Cliente.view',['id'=>$incidencia->alquiler->cliente->id]) }}">{{$incidencia->alquiler->cliente->completo}}</a>
           </td>
@@ -68,7 +78,7 @@
         @endforeach
     <tr class="table-light">
         <td align='center' colspan="2">Total de incidencias: {{$count}}</td>
-        <td align='center' colspan="2">
+        <td align='center' colspan="4">
           {{ $incidencias->links() }}
         </td>
         <td align='center' colspan="2">Máximo pagina: 8</td>

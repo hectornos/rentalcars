@@ -36,7 +36,8 @@
           <div class="btn-group">
               <button class="btn btn-info" type="submit" name="borrar" value="borrar" id="borra">
                 <span class="glyphicon glyphicon-trash"></span> Eliminar</button>
-              <a class="btn btn-danger" href="{{ URL::previous() }}"><span class="glyphicon glyphicon-step-backward"></span> Cancelar</a>
+                <a class="btn btn-danger" href="{{ route('Alquiler.cancel',['mensaje'=>'Borrado de alquiler cancelado'])}}"><span class="glyphicon glyphicon-step-backward"></span> Cancelar</a>
+
           </div>
       </form>          
   </div>

@@ -35,7 +35,7 @@
 
                 <button class="btn btn-info" type="submit" name="editar" value="editar" id="editar">
                     <span class="glyphicon glyphicon-edit"></span> Editar</button>
-                    <a class="btn btn-danger" href="{{ route('Cliente.cancel')}}"><span class="glyphicon glyphicon-step-backward"></span> Cancelar</a>            </div>
+                    <a class="btn btn-danger" href="{{ route('Cliente.cancel',['mensaje'=>'Edicion de cliente cancelada'])}}"><span class="glyphicon glyphicon-step-backward"></span> Cancelar</a>            </div>
       </form>          
   </div>
   <br>
