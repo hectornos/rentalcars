@@ -1,38 +1,26 @@
 @extends('plantilla')
 @section('titulo','Listado Vehiculos')
-@section('contenido')          
-<div class="container-fluid">
-    <h1 class="page-header" align="center">Listado de vehiculos</h1>
-    <form method="GET" action="{{ route('Vehiculo.index' )}}">
-    <table class="table table-hover table-striped">
-    <tr>
-    <td colspan=3></td>
-    <td colspan=2>
-      <div class="input-group">
-          <span class="input-group-btn">
-              <button class="btn btn-success" type="submit">Buscar</button>
-          </span>
-          <input id="bus" type="text" class="form-control" name="busqueda" placeholder="Elige criterio de busqueda" value="">
-          
-      </div>       
-    </td>
-    <td>
-    <select class='form-control' id="filtro" name="filtro">
-              <option value="matricula">Matricula</option>
-              <option value="modelo">Modelo</option>
-
-          </select> 
-        
-    </td>
-    <td colspan="2"></td>
-    <td align="center">
-        <div class="btn-group" >
-          <a href="{{ route('Vehiculo.create')}}" class="btn btn-success">
+@section('formularioCabecera')
+<form class="form-inline my-2 my-lg-0" method="GET" action="{{ route('Vehiculo.index' )}}" >
+  <select class='form-control' id="filtro" name="filtro">
+    <option value="matricula">Matricula</option>
+    <option value="modelo">Modelo</option>
+  </select>
+  <input class="form-control mr-sm-2" type="text" placeholder="Elige criterio" name="busqueda" value="">
+  <div class="btn-group" >
+  <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Buscar</button>
+          <a href="{{ route('Vehiculo.create')}}" class="btn btn-outline-success my-2 my-sm-0">
             <span class="glyphicon glyphicon-edit"></span> Nuevo</button></a>
         </div>
-    </td>
-    </form>
-    </tr>
+</form>
+@endsection
+@section('contenido')
+
+<div class="container-fluid">
+    <h1 class="page-header" align="center">Listado de vehiculos</h1>
+    
+    <table class="table table-hover table-striped">
+
         <tr>
           <td width="150" align="center" title="Modelo de coche"><a href="{{ route('Vehiculo.index',['criterio' => 'modelo'] )}}" >Modelo</a></td>
           <td width="150" align="center" title="Matricula"><a href="{{ route('Vehiculo.index',['criterio' => 'matricula'] )}}" >Matricula</a></td>

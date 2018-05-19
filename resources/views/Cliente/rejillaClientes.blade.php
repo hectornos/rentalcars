@@ -1,33 +1,26 @@
 @extends('plantilla')
 @section('titulo','Listado Clientes')
-@section('contenido')          
+@section('formularioCabecera')
+<form class="form-inline my-2 my-lg-0" method="GET" action="{{ route('Cliente.index' )}}" >
+  <select class='form-control' id="filtro" name="filtro">
+    <option value="nombre">Nombre</option>
+    <option value="apellido">Apellido</option>
+    <option value="telefono">Telefono</option>
+  </select>
+  <input class="form-control mr-sm-2" type="text" placeholder="Elige criterio" name="busqueda" value="">
+  <div class="btn-group" >
+  <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Buscar</button>
+          <a href="{{ route('Cliente.create')}}" class="btn btn-outline-success my-2 my-sm-0">
+            <span class="glyphicon glyphicon-edit"></span> Nuevo</button></a>
+        </div>
+</form>
+@endsection
+@section('contenido')       
 <div class="container-fluid">
 <h1 class="page-header" align="center">Listado de clientes</h1> 
     <br>
     <table class="table table-hover table-striped">
-        <tr>
-        <td colspan="2"></td>
-        <td colspan="3">
-                <form method="GET" action="{{ route('Cliente.index' )}}">
-                <div class="input-group">
-                    <button class="btn btn-success" type="submit">Buscar</button>
-                    <input id="bus" type="text" class="form-control" name="busqueda" placeholder="Elige criterio de busqueda" value="">
-                    
-                </div>
-        </td>
-        <td><select class='form-control' id="filtro" name="filtro">
-                        <option value="nombre">Nombre</option>
-                        <option value="apellido">Apellido</option>
-                        <option value="telefono">Telefono</option>
-                    </select></td>
-        <td></td>
-        <td align="center">
-            <a href="{{ route('Cliente.create')}}" class="btn btn-success">
-                <span class="glyphicon glyphicon-edit"></span> Nuevo</button>
-            </a>
-        </td>
-        </tr>
-        </form>
+        
         <tr>
           <td width="150" title="Nombre" align="center"><a href="{{ route('Cliente.index',['criterio' => 'nombre'] )}}" >Nombre</a></td>
           <td width="150" align="center" title="Apellido"><a href="{{ route('Cliente.index',['criterio' => 'apellido'] )}}" >Apellido</a></td>
@@ -71,7 +64,7 @@
         @endforeach
     
     <tr class="table-light">
-        <td align='center' colspan="3">Total de vehiculos: {{$count}}</td>
+        <td align='center' colspan="3">Total de clientes: {{$count}}</td>
         <td align='center' colspan="3">
           {{ $clientes->links() }}
         </td>

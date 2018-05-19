@@ -1,33 +1,32 @@
 @extends('plantilla')
 @section('titulo','Listado Alquileres')
-@section('contenido')          
+@section('formularioCabecera')
+<form class="form-inline my-2 my-lg-0" method="GET" action="{{ route('Alquiler.index' )}}" >
+<font color="white">De</font>::
+<input class="form-control" type="date" value="" name="date1">::
+<font color="white">Hasta </font>::
+<input class="form-control" type="date" value="{{date('Y-m-d')}}" name="date2">
+__
+  <select class='form-control' id="filtro" name="filtro">
+    <option value="apellido">Apellido</option>
+    <option value="matricula">Matricula</option>
+  </select>
+  <input class="form-control mr-sm-2" type="text" placeholder="Elige criterio" name="busqueda" value="">
+  <div class="btn-group" >
+    <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Buscar</button>      
+  </div>
+</form>
+@endsection
+@section('contenido')
+       
 <div class="container-fluid">
     <h1 class="page-header" align="center">Listado de alquileres</h1>
     @if (isset($subtitulo))
         <h3 class="page-header" align="center">{{$subtitulo}}</h3>
         <br>
     @endif
-    <form method="GET" action="{{ route('Alquiler.index' )}}">
-      <div class="input-group">
-        <span class="input-group-btn">
-          <button class="btn btn-success" type="submit">Buscar</button>
-        </span>
-        <input id="bus" type="text" class="form-control" name="busqueda" placeholder="Elige criterio de busqueda" value="">
-        <select class='form-control' id="filtro" name="filtro">
-          <option value="apellido">Apellido</option>
-          <option value="matricula">Matricula</option>
-        </select>
-        <div class="col-2">Fecha inicio</div>
-          <div class="col-2">
-            <input class="form-control" type="date" value="" name="date1">
-          </div>
-          <div class="col-2">Fecha fin</div>
-          <div class="col-2">
-              <input class="form-control" type="date" value="{{date('Y-m-d')}}" name="date2">   
-          </div>    
-      </div>       
-    </form>
-    <br>    
+    
+      
     <table class="table table-hover table-striped">
       @if ($ordenar)
           @include('cabeceras.alquiler')

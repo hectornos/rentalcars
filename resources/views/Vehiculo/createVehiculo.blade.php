@@ -74,7 +74,7 @@
           
       </form>    
   </div>
-  <button onclick="validarCoche2 ()">OK</button>
+
   <br>
   <div id="error"></div>
 

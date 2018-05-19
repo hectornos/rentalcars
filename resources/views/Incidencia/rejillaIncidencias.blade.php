@@ -1,6 +1,25 @@
 @extends('plantilla')
 @section('titulo','Listado Incidencias')
-@section('contenido') 
+@section('formularioCabecera')
+<form class="form-inline my-2 my-lg-0" method="GET" action="{{ route('Vehiculo.index' )}}" >
+<font color="white">De</font>::
+<input class="form-control" type="date" value="" name="date1">::
+<font color="white">Hasta </font>::
+<input class="form-control" type="date" value="{{date('Y-m-d')}}" name="date2">
+__
+  <select class='form-control' id="filtro" name="filtro">
+    <option value="matricula">Matricula</option>
+    <option value="modelo">Modelo</option>
+  </select>
+  <input class="form-control mr-sm-2" type="text" placeholder="Elige criterio" name="busqueda" value="">
+  <div class="btn-group" >
+  <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Buscar</button>
+         
+        </div>
+</form>
+@endsection
+@section('contenido')
+
 <div class="container-fluid">
     <h1 class="page-header" align="center">Listado de incidencias</h1>
 		@if (isset($subtitulo))
@@ -8,38 +27,7 @@
 				<br>
     @endif
     <table class="table table-hover table-striped">
-    <form method="GET" action="{{ route('Incidencia.index' )}}">
-    <tr>
-        <td colspan="2"></td>
-        <td colspan="2">
-      <div class="input-group">
-        <span class="input-group-btn">
-            <button class="btn btn-success" type="submit">Buscar</button>
-        </span>
-        <input id="bus" type="text" class="form-control" name="busqueda" placeholder="Selecciona criterio de busqueda" value="">
-        
-      </div>       
-       </td>
-       <td>
-       <select class='form-control' id="filtro" name="filtro">
-            <option value="matricula">Matricula</option>
-            <option value="apellido">Apellido</option>
-        </select>
-       </td>
-        <td colspan="3">
-        <div class="input-group">
-        <div align="right" class="col-2">De</div>
-          <div class="col-4">
-            <input class="form-control" type="date" value="" name="date1">
-          </div>
-        <div class="col-2">Hasta</div>
-          <div class="col-4">
-              <input class="form-control" type="date" value="{{date('Y-m-d')}}" name="date2">   
-          </div>
-        </div>
-        </td>
-        </tr>
-        </form>
+    
         @if ($ordenar)
 					@include('cabeceras.incidencias')
 				@else

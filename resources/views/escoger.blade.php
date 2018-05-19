@@ -9,6 +9,8 @@
       <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
       <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
       <link rel="shortcut icon" href="{{ asset('coche.ico') }}" >
+      <script type="text/javascript" src="{{ URL::asset('js/validate.js') }}"></script>
+        <script type="text/javascript" src="{{ URL::asset('js/style.js') }}"></script>
   </head>
   <body>
   <h1 class="page-header" align="center">Escoge tu vehiculo</h1>
