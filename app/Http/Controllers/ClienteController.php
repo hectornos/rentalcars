@@ -89,8 +89,7 @@ class ClienteController extends Controller
 	public function update(Request $request) {
 		Cliente::find($request->id)->update($request->all());
 		$alerta = 'Modificado';
-		$mensaje = ' modificado';
-		//dd($alerta.''.$mensaje);
+		$mensaje = $request->nombre.' '.$request->apellido.' modificado';
 		return redirect(url('/Cliente'))->with($alerta,$mensaje);
 	}
 

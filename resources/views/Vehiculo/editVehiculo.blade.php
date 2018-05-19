@@ -72,8 +72,8 @@
           </div> 
           <br>
           <div class="btn-group">
-              <button class="btn btn-success" type="submit" name="guardar" value="Almacenar">
-                  <span class="glyphicon glyphicon-ok"></span> Almacenar</button>
+          <button class="btn btn-success" type="submit" name="editar" value="Editar">
+                  <span class="glyphicon glyphicon-edit"></span> Editar</button>
                   <a class="btn btn-danger" href="{{ route('Vehiculo.cancel',['mensaje'=>'Edicion de vehiculo cancelada'])}}"><span class="glyphicon glyphicon-step-backward"></span> Cancelar</a>
 
           </div>

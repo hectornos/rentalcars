@@ -105,6 +105,12 @@
       </div>
   @endif
 
+  @if (session('Modificado'))
+      <div class="alert alert-info">
+          {{ session('Modificado') }}
+      </div>
+  @endif
+
   @if (session('Creado'))
       <div class="alert alert-success">
           {{ session('Creado') }}

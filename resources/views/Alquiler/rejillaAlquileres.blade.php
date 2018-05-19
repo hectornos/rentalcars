@@ -88,4 +88,9 @@
           {{ session('Borrado') }}
       </div>
   @endif 
+  @if (session('Modificado'))
+      <div class="alert alert-info">
+          {{ session('Modificado') }}
+      </div>
+  @endif
 @endsection

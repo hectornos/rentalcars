@@ -113,7 +113,7 @@ class VehiculoController extends Controller {
     @ Devuelve: */
 	public function update(Request $request) {
 		$alerta = 'Modificado';
-        $mensaje = 'Vehiculo con matricula'. $request->matricula .'añadido';
+        $mensaje = 'Vehiculo con matricula '. $request->matricula .' modificado';
         Vehiculo::find($request->id)->update($request->all());
         return redirect(url('/Vehiculo'))->with($alerta,$mensaje);
     }
