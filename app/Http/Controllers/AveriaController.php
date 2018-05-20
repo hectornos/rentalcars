@@ -134,9 +134,11 @@ class AveriaController extends Controller
   /*Imprimir en pdf un averia
   @ Recibe: id del averia
   @ Devuelve: pdf creado*/
-  public function pdf($id) {
-    $averia = Averia::find($id);
-      echo $averia;
+
+    public function pdf($id) {
+      $averia = Averia::find($id);
+      $pdf = PDF::loadView('pdf.averiaPDF',compact('averia'));
+      return $pdf->download('averia'.$averia->id.'detalle.pdf');
   }
 
   /*Cancela operación, lleva al index.

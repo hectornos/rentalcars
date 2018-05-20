@@ -120,11 +120,14 @@ class AlquilerController extends Controller
       return \View::make('Incidencia/rejillaIncidencias',compact('incidencias'),['count'=>$count, 'ordenar'=>$ordenar, 'subtitulo'=>$subtitulo]);
   }
 
-    //Imprimir un alquiler
+    /*Imprimir en pdf un vehiculo
+    @ Recibe: id del vehiculo
+    @ Devuelve: pdf creado*/
     public function pdf($id) {
-        $alquiler = Alquiler::find($id);
-        echo 'IMPRIMIR: '+$alquiler;
-    }
+      $alquiler = Alquiler::find($id);
+      $pdf = PDF::loadView('pdf.alquilerPDF',compact('alquiler'));
+      return $pdf->download('alquiler'.$alquiler->id.'detalle.pdf');
+  }
 
     /*Cancela operación, lleva al index.
   @ Recibe: Request con mensaje a mostrar

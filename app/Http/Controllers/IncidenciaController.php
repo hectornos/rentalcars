@@ -126,5 +126,14 @@ class IncidenciaController extends Controller
     Incidencia::find($request->id)->update($request->all());
     return redirect(url('/Incidencia'))->with($alerta,$mensaje);
   }
+
+    /*Imprimir en pdf una incidencia
+    @ Recibe: id de incidencia
+    @ Devuelve: pdf creado*/
+    public function pdf($id) {
+      $incidencia = Incidencia::find($id);
+      $pdf = PDF::loadView('pdf.incidenciaPDF',compact('incidencia'));
+      return $pdf->download('incidencia'.$incidencia->id.'detalle.pdf');
+  }
   
 }

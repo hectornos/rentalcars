@@ -170,10 +170,11 @@ class ClienteController extends Controller
 	/*Imprimir en pdf un cliente
     @ Recibe: id del cliente
     @ Devuelve: pdf creado*/
-	public function pdf($id) {
-		$cliente = Cliente::find($id);
-		echo ('Aqui se imprimiria el cliente');
-	}
+    public function pdf($id) {
+        $cliente = Cliente::find($id);
+		$pdf = PDF::loadView('pdf.clientePDF',compact('cliente'));
+        return $pdf->stream($cliente->nom.' '.$cliente->ape.'detalle.pdf');
+    }
 
 	
 	/*Cancela operación, lleva al index.

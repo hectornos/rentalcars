@@ -183,8 +183,11 @@ class VehiculoController extends Controller {
     @ Recibe: id del vehiculo
     @ Devuelve: pdf creado*/
     public function pdf($id) {
-        echo ('Aqui se imprimirá el vehiculo');
+        $vehiculo = Vehiculo::find($id);
+        $pdf = PDF::loadView('pdf.vehiculoPDF',compact('vehiculo'));
+        return $pdf->download($vehiculo->mat.'detalle.pdf');
     }
+
 
      /*Filtar vehiculos
     @ Recibe: request con criterios de búsqueda

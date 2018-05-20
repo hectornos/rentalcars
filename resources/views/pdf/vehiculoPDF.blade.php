@@ -1,7 +1,4 @@
-@extends('plantilla')
-@section('titulo','Vista en detalle')
-@include('partials.navBar')
-@include('partials.formularioCabecera.divNav')
+@extends('plantillaPDF')
 @section('contenido')  
 <div class="container">
   <h1 class="page-header">Detalle de vehiculo</h1>
@@ -34,11 +31,6 @@
               <label for="cambio_id">Cambio</label>
               <input class="form-control" readonly type="text" value="{{$vehiculo->cambio->nom}}" name="cambio">  
           </div> 
-          <br>
-          <div class="btn-group">
-            
-            <a class="btn btn-danger" href="{{ URL::previous() }}"><span class="glyphicon glyphicon-step-backward"></span> Cancelar</a>
-          </div>
         
   </div>
 @endsection
