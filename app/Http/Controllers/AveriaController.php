@@ -18,6 +18,30 @@ class AveriaController extends Controller
   @ Devuelve: Objeto averias y count de averias.
   */
   public function index (Request $request) {
+    //Si lo que queremos es imprimir...
+    if ($request->has('imp')){
+      if ($request->busqueda!=""){
+        if ($request->filtro == 'matricula') {
+              $averias = Averia::join('vehiculos','averias.vehiculo_id','=','vehiculos.id')
+              ->where('vehiculos.matricula',$request->busqueda)
+              ->orderBy('fecha','desc')
+              ->get();
+                $file = 'averias-'.$request->filtro.'-'.$request->busqueda.'.pdf';
+          }elseif ($request->filtro == 'tipo') {
+            $averias = Averia::join('tipoaverias', 'averias.tipoaveria_id','=','tipoaverias.id')
+            ->where('tipoaverias.nombre',$request->busqueda)
+            ->orderBy('fecha','desc')
+            ->get();
+                $file = 'averias-'.$request->filtro.'-'.$request->busqueda.'.pdf';
+        }        
+      }else{
+          $averias = Averia::all();
+          $file = 'averias.pdf';
+      }
+      $pdf = PDF::loadView('pdf.averiasPDF',compact('averias'))->setPaper('a4', 'landscape');
+      return $pdf->download($file);
+    }
+
     if ($request->has('criterio')){
       $orden=$request->criterio;
       if ($orden == 'tipo'){

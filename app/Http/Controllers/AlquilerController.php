@@ -16,6 +16,28 @@ class AlquilerController extends Controller
 {
     //Listado completo de alquileres
     public function index (Request $request) {
+    //Si lo que queremos es imprimir...
+    if ($request->has('imp')){
+      if ($request->busqueda!=""){
+        if ($request->filtro == 'matricula') {
+              $alquileres = Alquiler::join('vehiculos', 'cliente_vehiculo.vehiculo_id','=','vehiculos.id')
+                ->where('vehiculos.matricula',$request->busqueda)
+                ->orderby('fecha','desc')->get();
+            $file = 'alquileres'.$request->filtro.'-'.$request->busqueda.'.pdf';
+          }elseif ($request->filtro == 'apellido') {
+              $alquileres = Alquiler::join('clientes', 'cliente_vehiculo.cliente_id','=','clientes.id')
+                ->where('clientes.apellido',$request->busqueda)
+                ->orderby('fecha','desc')->get();
+            $file = 'alquileres'.$request->filtro.'-'.$request->busqueda.'.pdf';
+        }        
+      }else{
+          $alquileres = Alquiler::all();
+          $file = 'alquileres.pdf';
+      }
+      $pdf = PDF::loadView('pdf.alquileresPDF',compact('alquileres'))->setPaper('a4', 'landscape');
+      return $pdf->download($file);
+    }
+
         if ($request->has('criterio')){
           $orden = $request->criterio;
           if ($orden == 'incidencias'){

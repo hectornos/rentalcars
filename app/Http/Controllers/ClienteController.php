@@ -22,6 +22,20 @@ class ClienteController extends Controller
     @ Devuelve: Objeto clientes y count de clientes.
     */
 	public function index(Request $request) {
+        //Si lo que queremos es imprimir...
+        if ($request->has('imp')){
+          if ($request->busqueda!=""){
+              $clientes = Cliente::where($request->filtro,$request->busqueda)
+                                      ->get();
+              $file = 'clientes'.$request->filtro.'-'.$request->busqueda.'.pdf';
+          }else{
+              $clientes = Cliente::all();
+              $file = 'clientes.pdf';
+          }
+          $pdf = PDF::loadView('pdf.clientesPDF',compact('clientes'))->setPaper('a4', 'landscape');
+          return $pdf->download($file);
+      }
+      
 		if ($request->has('criterio')){
 			$orden = $request->criterio;
 			if ($orden == 'alquileres' ){

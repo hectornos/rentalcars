@@ -15,6 +15,32 @@ class IncidenciaController extends Controller
 {
     //Listado completo de incidencias
     public function index (Request $request) {
+      //Si lo que queremos es imprimir...
+      if ($request->has('imp')){
+        if ($request->busqueda!=""){
+          if ($request->filtro == 'matricula') {
+            $incidencias = Incidencia::join('cliente_vehiculo','incidencias.alquiler_id','=','cliente_vehiculo.id')
+                            ->join('vehiculos','cliente_vehiculo.vehiculo_id','=','vehiculos.id')
+                            ->where('vehiculos.matricula',$request->busqueda)
+                            ->orderBy('cliente_vehiculo.fecha','desc')
+                            ->get();
+                  $file = 'incidencias-'.$request->filtro.'-'.$request->busqueda.'.pdf';
+            }elseif ($request->filtro == 'apellido') {
+            $incidencias = Incidencia::join('cliente_vehiculo','incidencias.alquiler_id','=','cliente_vehiculo.id')
+                            ->join('clientes','cliente_vehiculo.cliente_id','=','clientes.id')
+                            ->where('clientes.apellido',$request->busqueda)
+                            ->orderBy('cliente_vehiculo.fecha','desc')
+                            ->get();
+                  $file = 'incidencias-'.$request->filtro.'-'.$request->busqueda.'.pdf';
+          }        
+        }else{
+            $incidencias = Incidencia::all();
+            $file = 'incidencias.pdf';
+        }
+        $pdf = PDF::loadView('pdf.incidenciasPDF',compact('incidencias'))->setPaper('a4', 'landscape');
+        return $pdf->download($file);
+      }
+
       if ($request->has('criterio')){
         $orden = $request->criterio;
         if ($orden == 'fecha'){

@@ -23,6 +23,22 @@ class VehiculoController extends Controller {
     @ Devuelve: Objeto vehiculos y count de vehiculos.
     */
     public function index(Request $request) {
+        //Si lo que queremos es imprimir...
+        if ($request->has('imp')){
+            if ($request->busqueda!=""){
+                $vehiculos = Vehiculo::where($request->filtro,$request->busqueda)
+                                        ->orderBy(\DB::raw('substr(matricula,5,3)'))
+                                        ->orderBy(\DB::raw('substr(vehiculos.matricula,1,4)'))
+                                        ->get();
+                $file = 'vehiculos-'.$request->filtro.'-'.$request->busqueda.'.pdf';
+            }else{
+                $vehiculos = Vehiculo::all();
+                $file = 'vehiculos.pdf';
+            }
+            $pdf = PDF::loadView('pdf.vehiculosPDF',compact('vehiculos'))->setPaper('a4', 'landscape');
+            return $pdf->download($file);
+        }
+        
         if ($request->has('criterio')){
             $orden = $request->criterio;
             if ($orden == 'alquileres') {
