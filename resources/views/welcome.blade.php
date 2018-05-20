@@ -89,7 +89,7 @@
                     <a href="{{ route('Incidencia.index') }}">Incidencias</a>
                     <a href="{{ route('Alquiler.index') }}">Alquileres</a>
    
-                    <a href="{{ route('Vehiculo.elegir') }}">Elegir</a>
+                    <a href="{{ route('home') }}">Home</a>
 
                 </div>
             </div>

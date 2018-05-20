@@ -5,17 +5,17 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>@yield('titulo')</title>
-        <!--Importando los estilos de BootStrap-->
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/custom.css">
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
         <link rel="shortcut icon" href="{{ asset('coche.ico') }}" >
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script type="text/javascript" src="{{ URL::asset('js/validate.js') }}"></script>
         <script type="text/javascript" src="{{ URL::asset('js/style.js') }}"></script>
 </script>
-
     </head>
     <body>
+      <!--
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href="{{ route('welcome') }}">RentalCars <span class="glyphicon glyphicon-home"></span></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,12 +42,22 @@
     @yield('formularioCabecera')
     
   </div>
-</nav>
-            <div class="content">
-                @yield('contenido')
-            </div>
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+</nav>-->
+  <div class="content">
+      @yield('contenido')
+  </div>
+  <script>
+    $(document).ready(function(){
+      $( ".destacar" ).hover(
+        function() {
+          $( this ).css("background-color","#d1d1d1") ;
+        }, function() {
+          $( this ).css("background-color","white");
+      }
+      ); 
+
+    });
+    </script>
       <!-- Include all compiled plugins (below), or include individual files as needed -->
       <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 

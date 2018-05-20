@@ -1,23 +1,8 @@
 @extends('plantilla')
 @section('titulo','Listado Averias')
-@section('formularioCabecera')
-<form class="form-inline my-2 my-lg-0" method="GET" action="{{ route('Averia.index' )}}" >
-<font color="white">De</font>::
-<input class="form-control" type="date" value="" name="date1">::
-<font color="white">Hasta </font>::
-<input class="form-control" type="date" value="{{date('Y-m-d')}}" name="date2">
-__
-  <select class='form-control' id="filtro" name="filtro">
-    <option value="matricula">Matricula</option>
-    <option value="tipo">Tipo</option>
-  </select>
-  <input class="form-control mr-sm-2" type="text" placeholder="Elige criterio" name="busqueda" value="">
-  <div class="btn-group" >
-  <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Buscar</button>
-          
-        </div>
-</form>
-@endsection
+@include('partials.navBar')
+@include('partials.formularioCabecera.averias')
+@include('partials.formularioCabecera.divNav')
 @section('contenido')
 
 <div class="container-fluid">
@@ -34,7 +19,7 @@ __
           @include('cabeceras.averiaSinorden')
         @endif
         @foreach($averias as $averia)
-        <tr>
+        <tr class="destacar">
           <td width="150" align="center">{{ucfirst ($averia->tipoaveria->nom)}}</td>
           <td width="150" align="center">
             <a href="{{ route('Vehiculo.view',['id'=>$averia->vehiculo->id]) }}">{{ $averia->vehiculo->marc}} {{ $averia->vehiculo->mod}}, {{ $averia->vehiculo->mat}}</a>
@@ -55,14 +40,13 @@ __
           </td>
         </tr>
         @endforeach
-    <tr class="table-light">
-        <td align='center' colspan="2">Total de averias: {{$count}}</td>
-        <td align='center' colspan="3">
-          {{ $averias->links() }}
-        </td>
-        <td align='center' colspan="2">Máximo pagina: 10</td>
-    </tr>
+    
     </table>
+    <div class="row" align="center">
+      <div class="col-md-4">Total de Averias: {{$count}}</div>
+      <div class="col-md-4">{{ $averias->links("pagination::bootstrap-4") }}</div>
+      <div class="col-md-4">Máximo pagina: 8</div>
+    </div>
     
 </div> 
 @if (session('Cancelado'))

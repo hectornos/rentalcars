@@ -15,6 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
+Route::get('/home', function () {
+    return view('home');
+})->name('home');
 
 //Rutas para la tabla Cliente
 Route::get('/Cliente', 'ClienteController@index')->name('Cliente.index');

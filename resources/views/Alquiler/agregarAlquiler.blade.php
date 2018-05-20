@@ -1,5 +1,7 @@
 @extends('plantilla')
 @section('titulo','Agregar alquiler')
+@include('partials.navBar')
+@include('partials.formularioCabecera.divNav')
 @section('contenido')  
 <div class="container">
   <h1 class="page-header">Agregar un alquiler</h1>

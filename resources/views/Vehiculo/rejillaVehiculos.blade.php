@@ -1,19 +1,8 @@
 @extends('plantilla')
 @section('titulo','Listado Vehiculos')
-@section('formularioCabecera')
-<form class="form-inline my-2 my-lg-0" method="GET" action="{{ route('Vehiculo.index' )}}" >
-  <select class='form-control' id="filtro" name="filtro">
-    <option value="matricula">Matricula</option>
-    <option value="modelo">Modelo</option>
-  </select>
-  <input class="form-control mr-sm-2" type="text" placeholder="Elige criterio" name="busqueda" value="">
-  <div class="btn-group" >
-  <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Buscar</button>
-          <a href="{{ route('Vehiculo.create')}}" class="btn btn-outline-success my-2 my-sm-0">
-            <span class="glyphicon glyphicon-edit"></span> Nuevo</button></a>
-        </div>
-</form>
-@endsection
+@include('partials.navBar')
+@include('partials.formularioCabecera.vehiculos')
+@include('partials.formularioCabecera.divNav')
 @section('contenido')
 
 <div class="container-fluid">
@@ -78,15 +67,13 @@
           </td>
         </tr>
         @endforeach
-        <tr class="table-light">
-        <td align="center" colspan="3">Total de vehiculos: {{$count}}</td>
-        <td align="center" colspan="3">
-          {{ $vehiculos->links() }}
-        </td>
-        <td align="center" colspan="3">Máximo pagina: 10</td>
-        </tr>
     </table>
-    </div> 
+    <div class="row" align="center">
+      <div class="col-md-4">Total de vehiculos: {{$count}}</div>
+      <div class="col-md-4">{{ $vehiculos->links("pagination::bootstrap-4") }}</div>
+      <div class="col-md-4">Máximo pagina: 8</div>
+    </div>
+</div> 
   @if (session('Cancelado'))
       <div class="alert alert-danger">
           {{ session('Cancelado') }}

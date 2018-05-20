@@ -9,6 +9,7 @@ use App\Averia as Averia;
 use App\Incidencia as Incidencia;
 use App\Alquiler as Alquiler;
 use App\Tipoaveria as Tipoaveria;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class AveriaController extends Controller
 {

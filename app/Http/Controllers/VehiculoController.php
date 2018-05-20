@@ -14,6 +14,7 @@ use App\Tipo as Tipo;
 use App\Combustible as Combustible;
 use App\Cambio as Cambio;
 use App\Color as Color;
+use Barryvdh\DomPDF\Facade as PDF;
 
 
 class VehiculoController extends Controller {

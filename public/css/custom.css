@@ -1,0 +1,15 @@
+.btn {
+	border-radius: 13px;
+}
+
+.pagination {
+  justify-content: center;
+}
+
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+  background-color: #140e30;
+  border-color:  #4e504e;       
+  color:        #bfc0bf;       
+  cursor:pointer;
+  z-index:2;
+}

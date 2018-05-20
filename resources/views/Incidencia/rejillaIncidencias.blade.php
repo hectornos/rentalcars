@@ -1,23 +1,8 @@
 @extends('plantilla')
 @section('titulo','Listado Incidencias')
-@section('formularioCabecera')
-<form class="form-inline my-2 my-lg-0" method="GET" action="{{ route('Vehiculo.index' )}}" >
-<font color="white">De</font>::
-<input class="form-control" type="date" value="" name="date1">::
-<font color="white">Hasta </font>::
-<input class="form-control" type="date" value="{{date('Y-m-d')}}" name="date2">
-__
-  <select class='form-control' id="filtro" name="filtro">
-    <option value="matricula">Matricula</option>
-    <option value="modelo">Modelo</option>
-  </select>
-  <input class="form-control mr-sm-2" type="text" placeholder="Elige criterio" name="busqueda" value="">
-  <div class="btn-group" >
-  <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Buscar</button>
-         
-        </div>
-</form>
-@endsection
+@include('partials.navBar')
+@include('partials.formularioCabecera.incidencias')
+@include('partials.formularioCabecera.divNav')
 @section('contenido')
 
 <div class="container-fluid">
@@ -34,7 +19,7 @@ __
 					@include('cabeceras.incidenciasSinorden')
 				@endif
         @foreach($incidencias as $incidencia)
-        <tr>
+        <tr class="destacar">
           <td width="150" align="center">
             <a href="{{ route('Cliente.view',['id'=>$incidencia->alquiler->cliente->id]) }}">{{$incidencia->alquiler->cliente->completo}}</a>
           </td>
@@ -64,15 +49,13 @@ __
           </td>
         </tr>
         @endforeach
-    <tr class="table-light">
-        <td align='center' colspan="2">Total de incidencias: {{$count}}</td>
-        <td align='center' colspan="4">
-          {{ $incidencias->links() }}
-        </td>
-        <td align='center' colspan="2">Máximo pagina: 8</td>
-    </tr>
+
     </table>
-    
+    <div class="row" align="center">
+      <div class="col-md-4">Total de incidencias: {{$count}}</div>
+      <div class="col-md-4">{{ $incidencias->links("pagination::bootstrap-4") }}</div>
+      <div class="col-md-4">Máximo pagina: 8</div>
+    </div>
 </div> 
 @if (session('Cancelado'))
       <div class="alert alert-danger">

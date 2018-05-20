@@ -1,5 +1,7 @@
 @extends('plantilla')
 @section('titulo','Crear')
+@include('partials.navBar')
+@include('partials.formularioCabecera.divNav')
 @section('contenido')  
 <div class="container">
   <h1 class="page-header">Crear un vehiculo</h1>

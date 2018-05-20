@@ -10,6 +10,7 @@ use App\Cliente as Cliente;
 use App\Averia as Averia;
 use App\Incidencia as Incidencia;
 use App\Alquiler as Alquiler;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class AlquilerController extends Controller
 {

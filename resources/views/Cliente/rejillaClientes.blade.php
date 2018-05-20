@@ -1,27 +1,15 @@
 @extends('plantilla')
 @section('titulo','Listado Clientes')
-@section('formularioCabecera')
-<form class="form-inline my-2 my-lg-0" method="GET" action="{{ route('Cliente.index' )}}" >
-  <select class='form-control' id="filtro" name="filtro">
-    <option value="nombre">Nombre</option>
-    <option value="apellido">Apellido</option>
-    <option value="telefono">Telefono</option>
-  </select>
-  <input class="form-control mr-sm-2" type="text" placeholder="Elige criterio" name="busqueda" value="">
-  <div class="btn-group" >
-  <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Buscar</button>
-          <a href="{{ route('Cliente.create')}}" class="btn btn-outline-success my-2 my-sm-0">
-            <span class="glyphicon glyphicon-edit"></span> Nuevo</button></a>
-        </div>
-</form>
-@endsection
+@include('partials.navBar')
+@include('partials.formularioCabecera.clientes')
+@include('partials.formularioCabecera.divNav')
 @section('contenido')       
 <div class="container-fluid">
 <h1 class="page-header" align="center">Listado de clientes</h1> 
     <br>
     <table class="table table-hover table-striped">
         
-        <tr>
+        <tr class="destacar">
           <td width="150" title="Nombre" align="center"><a href="{{ route('Cliente.index',['criterio' => 'nombre'] )}}" >Nombre</a></td>
           <td width="150" align="center" title="Apellido"><a href="{{ route('Cliente.index',['criterio' => 'apellido'] )}}" >Apellido</a></td>
           <td width="150" align="center" title="Telefono"><a href="{{ route('Cliente.index',['criterio' => 'telefono'] )}}" >Telefono</a></td>
@@ -62,15 +50,12 @@
           </td>
         </tr>
         @endforeach
-    
-    <tr class="table-light">
-        <td align='center' colspan="3">Total de clientes: {{$count}}</td>
-        <td align='center' colspan="3">
-          {{ $clientes->links() }}
-        </td>
-        <td align='center' colspan="4">Máximo pagina: 8</td>
-        </tr>
-        </table>
+    </table>
+    <div class="row" align="center">
+      <div class="col-md-4">Total de clientes: {{$count}}</div>
+      <div class="col-md-4">{{ $clientes->links("pagination::bootstrap-4") }}</div>
+      <div class="col-md-4">Máximo pagina: 8</div>
+    </div>
 </div>
   @if (session('Cancelado'))
       <div class="alert alert-danger">
