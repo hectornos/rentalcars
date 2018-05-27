@@ -15,7 +15,7 @@ use Barryvdh\DomPDF\Facade as PDF;
 class AlquilerController extends Controller
 {
     //Listado completo de alquileres
-    public function index (Request $request) {
+  public function index (Request $request) {
     //Si lo que queremos es imprimir...
     if ($request->has('imp')){
       if ($request->busqueda!=""){
@@ -142,14 +142,24 @@ class AlquilerController extends Controller
       return \View::make('Incidencia/rejillaIncidencias',compact('incidencias'),['count'=>$count, 'ordenar'=>$ordenar, 'subtitulo'=>$subtitulo]);
   }
 
-    /*Imprimir en pdf un vehiculo
-    @ Recibe: id del vehiculo
+    /*Imprimir en pdf un alquiler
+    @ Recibe: id del alquiler
     @ Devuelve: pdf creado*/
     public function pdf($id) {
       $alquiler = Alquiler::find($id);
       $pdf = PDF::loadView('pdf.alquilerPDF',compact('alquiler'));
       return $pdf->download('alquiler'.$alquiler->id.'detalle.pdf');
   }
+
+      /*Imprimir en pdf un alquiler
+    @ Recibe: id del alquiler
+    @ Devuelve: pdf creado*/
+    public function pdf2($id) {
+      $alquiler = Alquiler::find($id);
+      $pdf = PDF::loadView('pdf.alquilerPDF2',compact('alquiler'));
+      return $pdf->download('alquiler'.$alquiler->id.'detalle.pdf');
+  }
+
 
     /*Cancela operación, lleva al index.
   @ Recibe: Request con mensaje a mostrar

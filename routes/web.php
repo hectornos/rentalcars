@@ -70,6 +70,7 @@ Route::delete('/Alquiler/{id}', 'AlquilerController@destroy')->name('Alquiler.de
 
 Route::get('/Alquiler/{id}/incidencias', 'AlquilerController@listarinc')->name('Alquiler.incidencias');
 Route::get('/Alquiler/{id}/pdf', 'AlquilerController@pdf')->name('Alquiler.pdf');
+Route::get('/Alquiler/{id}/pdf2', 'AlquilerController@pdf2')->name('Alquiler.pdf2');
 Route::get('/AlquilerCancelado', 'AlquilerController@cancel')->name('Alquiler.cancel');
 
 

@@ -25,12 +25,14 @@ class ClienteController extends Controller
 		$dni = $request->dni;
 		$clientes = Cliente::where('dni',$dni)->get();
 		if ($clientes->count()<1) {
-			$alerta= 'NoEncontrado';
-			$mensaje='Cliente no encontrado en la base de datos';
 			return \View::make('Cliente/createCliente2',compact('dni'));
 		} else {
 			$cliente = Cliente::where('dni',$dni)->first();
-			return \View::make('Cliente/editCliente2',compact('cliente'));
+			if ($cliente->rol == 'user') {
+				return \View::make('Cliente/editCliente2',compact('cliente'));
+			} else {
+				return \View::make('home');
+			}
 		}
 	}
 
@@ -202,9 +204,12 @@ class ClienteController extends Controller
 		$cliente = Cliente::find($cliente_id);
 		$fecha = array('fecha'=>date('Y-m-d'));
 		$cliente->vehiculos()->save($vehiculo,$fecha);
+		//El vehiculo alquilado pasa a estar no disponible.
 		$vehiculo->disponible = '0';
 		$vehiculo->save();
-		echo ('Vehiculo alquilado!!!');
+		$alquiler = Alquiler::orderBy('fecha','desc')->first();
+		
+        return \View::make('Alquiler/viewAlquiler',compact('alquiler'));
     }
 
 	/*Imprimir en pdf un cliente

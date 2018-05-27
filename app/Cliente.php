@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Cliente extends Model
 {
     protected $table='clientes';
-    protected $fillable = ['id','nombre','apellido','ciudad','dni','f_nac','user_id','telefono'];
+    protected $fillable = ['id','nombre','apellido','ciudad','dni','f_nac','user_id','telefono','rol','password'];
 	//-----------------------------------------------------------------------
     //El cliente tiene varios alquileres
     //-----------------------------------------------------------------------
