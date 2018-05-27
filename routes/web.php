@@ -23,6 +23,7 @@ Route::get('/home', function () {
 Route::get('/Cliente', 'ClienteController@index')->name('Cliente.index');
 Route::get('/Cliente/crear', 'ClienteController@create')->name('Cliente.create');
 Route::post('/Cliente', 'ClienteController@store')->name('Cliente.store');
+Route::post('/Cliente2', 'ClienteController@store2')->name('Cliente.store2');
 Route::get('/Cliente/{id}', 'ClienteController@show')->name('Cliente.show');
 Route::get('/Cliente/{id}/editar', 'ClienteController@edit')->name('Cliente.edit');
 Route::put('/Cliente/{id}','ClienteController@update')->name('Cliente.update');
@@ -34,6 +35,7 @@ Route::get('/Cliente/{id}/pdf', 'ClienteController@pdf')->name('Cliente.pdf');
 Route::get('/Cliente/{id}/view', 'ClienteController@view')->name('Cliente.view');
 Route::get('/Cliente/{vehiculo_id}/{cliente_id}/alquilar', 'ClienteController@alquilar')->name('Cliente.alquilar');
 Route::get('/ClienteCancelado', 'ClienteController@cancel')->name('Cliente.cancel');
+Route::post('/Cliente/Login', 'ClienteController@login')->name('Cliente.login');
 
 
 //Rutas para la tabla Vehiculos
@@ -54,6 +56,7 @@ Route::get('/Vehiculo/{id}/view', 'VehiculoController@view')->name('Vehiculo.vie
 Route::get('/Vehiculos/elegir', 'VehiculoController@elegir')->name('Vehiculo.elegir');
 Route::post('/Vehiculos/filtrar', 'VehiculoController@filtrar')->name('Vehiculo.filtrar');
 Route::get('/VehiculoCancelado', 'VehiculoController@cancel')->name('Vehiculo.cancel');
+//Route::get('/Vehiculos/elegir/{cliente_id}', 'VehiculoController@elegir')->name('Vehiculo.elegir');
 
 
 //Rutas para la tabla cliente_vehiculo (Modelo Alquiler)
@@ -96,3 +99,7 @@ Route::get('/Incidencia/{id}/pdf', 'IncidenciaController@pdf')->name('Incidencia
 Route::get('/Incidencia/{id}/pdf', 'IncidenciaController@pdf')->name('Incidencia.pdf');
 Route::get('/IncidenciaCancelado', 'IncidenciaController@cancel')->name('Incidencia.cancel');
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

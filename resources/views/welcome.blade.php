@@ -1,98 +1,79 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title>Laravel</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
-                    @endauth
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    RENTAL CARS
-                </div>
-
-                <div class="links">
-                    <a href="{{ route('Cliente.index') }}">Clientes</a>
-                    <a href="{{ route('Vehiculo.index') }}">Vehiculos</a>
-                    <a href="{{ route('Averia.index') }}">Averias</a>
-                    <a href="{{ route('Incidencia.index') }}">Incidencias</a>
-                    <a href="{{ route('Alquiler.index') }}">Alquileres</a>
-   
-                    <a href="{{ route('home') }}">Home</a>
-
-                </div>
-            </div>
+@extends('plantilla')
+@section('titulo','Login')
+@include('partials.formularioCabecera.divNav')
+@section('contenido')  
+<div class="container">
+  <form action="{{ route('Cliente.login')}}" method="POST" id="formulario" onsubmit="return validar()">
+  {{ csrf_field() }}
+  <br>
+  <br>
+  <br>
+  <br>
+  <div class="card text-white bg-secondary mb-3 mx-auto align-middle" style="max-width: 30rem;">
+    <div class="card-header">LOGIN</div>
+      <div class="card-body">
+        <h5 class="card-title">Identificate como cliente</h5>
+        <div class="form-group">
+          <label for="nombre">DNI: </label>
+          <div class="col-12">
+            <input class="form-control" type="text" value="" id="dni" name="dni">
+          </div>
         </div>
-    </body>
-</html>
+        <div class="btn-group text-center mx-auto">
+          <button class="btn btn-success text-center" type="submit" name="acceder" value="acceder">
+          <span class="glyphicon glyphicon-ok"></span> Acceder</button>
+        </div>
+      </div>
+    </div>
+  </form>
+  <br>
+  <br>      
+  <div id="error"></div>
+  @if (session('NoEncontrado'))
+      <div class="alert alert-danger">
+          {{ session('NoEncontrado') }}
+      </div>
+  @endif
+</div>
+  <script>
+    function doc (valor) {
+      const caracteres = 'TRWAGMYFPDXBNJZSQVHLCKET';
+      const nif = /^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]$/i;
+      const nie = /^[XYZ][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKET]$/i;
+      const passport = /^[a-zA-Z]{3}[0-9]{6}[a-zA-Z]{1}$/i;
+      //Pasamos a mayúsculas
+      let valo = valor.toString().toUpperCase();
+      //Si es pasaporte lo validamos sin mas
+      if (passport.test(valor)) return true;
+      //Si es un nie, hemos de transformar la primera letra para el cálculo.
+      if (nie.test(valo)) { 
+        valo = valo
+          .replace('X','0')
+          .replace('Y','1')
+          .replace('Z','2');
+      }
+      //Luego sea dni o nie, se juzga...
+      resultado = parseInt(valo.substr(0,8)) % 23;
+      const letra = valo.substr(-1);
+      if (letra === caracteres.charAt(resultado)) {
+        return true;
+      }  
+      return false;
+    }
+    function validar() {
+      let dni = document.getElementById("dni");
+      if (!doc(dni.value)){
+        document.getElementById("error").outerHTML = "<div id='error' class='alert alert-warning'>DNI invalido</div>";
+        dni.style.borderColor="red";
+        //alert('nop');
+        return false;
+      } else {
+        //alerta('sip');
+        return true;
+      }
+    }
+  </script>
+
+@endsection
+
+

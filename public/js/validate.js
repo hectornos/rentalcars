@@ -75,10 +75,15 @@ function validarCoche () {
 }
 
 //Formularios de clientes.
+
 function validarCliente () {
   let form = document.getElementById('formulario');
   let inputs = form.getElementsByTagName("input");
   let salida = true;
+  let dni = document.getElementById("dni").value;
+  let telefono = document.getElementById("telefono").value;
+
+
 
   for (let i=1; i<7; i++){
     if ((inputs[i].value)=="") {
@@ -91,6 +96,48 @@ function validarCliente () {
       }
     }
   }
+
+  if (!doc(dni)){
+    document.getElementById("error").outerHTML = "<div id='error' class='alert alert-warning'>DNI invalido</div>";
+    inputs[3].style.borderColor="red";
+    salida = false;
+  } else {
+    if (inputs[3].style.borderColor="red"){
+      inputs[3].style.borderColor="grey";
+    }
+  }
+
+  if (!tel(telefono)){
+    document.getElementById("error").outerHTML = "<div id='error' class='alert alert-warning'>Telefono invalido</div>";
+    inputs[6].style.borderColor="red";
+    salida = false;
+  } else {
+    if (inputs[6].style.borderColor="red"){
+      inputs[6].style.borderColor="grey";
+    }
+  }
+
+  return salida;
+}
+
+//Formularios de login.
+
+function validarLogin () {
+  let form = document.getElementById('formulario');
+  let dni = document.getElementById("dni").value;
+
+  
+  if (!doc(dni)){
+    document.getElementById("error").outerHTML = "<div id='error' class='alert alert-warning'>DNI invalido</div>";
+    inputs[3].style.borderColor="red";
+    salida = false;
+  } else {
+    if (inputs[3].style.borderColor="red"){
+      inputs[3].style.borderColor="grey";
+    }
+  }
+
+
   return salida;
 }
 

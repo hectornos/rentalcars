@@ -17,6 +17,23 @@ use Barryvdh\DomPDF\Facade as PDF;
 
 class ClienteController extends Controller
 {
+	/*Checkeamos si existe el cliente.
+    @ Recibe: DNI.
+    @ Devuelve: Pantalla con datos del cliente.
+    */
+	public function login(Request $request) {
+		$dni = $request->dni;
+		$clientes = Cliente::where('dni',$dni)->get();
+		if ($clientes->count()<1) {
+			$alerta= 'NoEncontrado';
+			$mensaje='Cliente no encontrado en la base de datos';
+			return \View::make('Cliente/createCliente2',compact('dni'));
+		} else {
+			$cliente = Cliente::where('dni',$dni)->first();
+			return \View::make('Cliente/editCliente2',compact('cliente'));
+		}
+	}
+
 	/*Listado completo de clientes.
     @ Recibe: Criterios de ordenación o de filtro.
     @ Devuelve: Objeto clientes y count de clientes.
@@ -81,12 +98,21 @@ class ClienteController extends Controller
 
 	/*Metodo de añadir un cliente
     @ Recibe: Request con campos a insertar.
-    @ Devuelve: */
+    @ Devuelve: a la rejilla de los clientes*/
 	public function store(Request $request) {
 		Cliente::create($request->all());
 		$alerta = 'Creado';
 		$mensaje = $request->nombre. " añadido.";
 		return redirect(url('/Cliente'))->with($alerta,$mensaje);
+	}
+
+	/*Metodo de añadir un cliente desde pantalla usuario
+    @ Recibe: Request con campos a insertar.
+    @ Devuelve: Vista del cliente para continuar al alquiler*/
+	public function store2(Request $request) {
+		Cliente::create($request->all());
+		$cliente = Cliente::where('dni',$request->dni)->first();
+		return \View::make('Cliente/editCliente2',compact('cliente'));
 	}
 
 	/*Pantalla para editar un cliente

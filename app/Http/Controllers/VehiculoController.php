@@ -205,11 +205,13 @@ class VehiculoController extends Controller {
     }
 
 
-     /*Filtar vehiculos
+    /*Filtar vehiculos
     @ Recibe: request con criterios de búsqueda
     @ Devuelve: vehiculos coincidentes, count, todos los colores, tipos, cambios y combustibles*/
     public function elegir (Request $request) {
-        if (!$request->has('cancel') && $request->has('tipo_id') || $request->has('cambio_id') || $request->has('combustible_id') || $request->has('color_id')) {
+       
+        if ($request->has('tipo_id') || $request->has('cambio_id') || $request->has('combustible_id') || $request->has('color_id')) {
+            
             $cliente_id = $request->cliente_id;
             $vehiculos = Vehiculo::disponibles()
                                     ->cambio($request->cambio_id)
@@ -227,6 +229,7 @@ class VehiculoController extends Controller {
             return \View::make('Eleccion/elegirVehiculos',compact('vehiculos'),['count'=>$count,'tipos'=>$tipos, 'colores'=>$colores, 'combustibles'=>$combustibles, 'cambios'=>$cambios,'cliente_id'=>$cliente_id]);
 
         }
+            
             //Si le hemos dado a cancel o no vienen datos (primera entrada en el selector)...
             $cliente_id = $request->cliente_id;
             $vehiculos = Vehiculo::disponibles()->get();
@@ -238,8 +241,10 @@ class VehiculoController extends Controller {
             $colores= array_merge($coloresZero,$coloresPrevio);
             $count= count($vehiculos);
             
+           
         return \View::make('Eleccion/elegirVehiculos',compact('vehiculos'),['count'=>$count,'tipos'=>$tipos, 'colores'=>$colores, 'combustibles'=>$combustibles, 'cambios'=>$cambios,'cliente_id'=>$cliente_id]);
     }
+
 
     /*Cancela operación, lleva al index.
     @ Recibe: Request con mensaje a mostrar
