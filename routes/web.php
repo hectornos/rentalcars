@@ -31,7 +31,7 @@ Route::get('/Cliente/{id}/view', 'ClienteController@view')->name('Cliente.view')
 Route::get('/Cliente/{vehiculo_id}/{cliente_id}/alquilar', 'ClienteController@alquilar')->name('Cliente.alquilar');
 Route::get('/ClienteCancelado', 'ClienteController@cancel')->name('Cliente.cancel');
 Route::post('/Cliente/Login', 'ClienteController@login')->name('Cliente.login');
-Route::get('/Clientela/editLogin/{id}', 'ClienteController@editLogin')->name('Cliente.editLogin');
+
 
 //Rutas para la tabla Vehiculos
 Route::get('/Vehiculo', 'VehiculoController@index')->name('Vehiculo.index');

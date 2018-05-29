@@ -36,14 +36,7 @@ class ClienteController extends Controller
 		}
 	}
 
-	/*Editamos los datos del cliente.
-    @ Recibe: cliente.
-    @ Devuelve: Pantalla con datos del cliente.
-    */
-	public function editLogin($id) {
-		$cliente = Cliente::find($id);
-		return \View::make('Cliente/editCliente2',compact('cliente'));
-	}
+
 
 	/*Listado completo de clientes.
     @ Recibe: Criterios de ordenación o de filtro.

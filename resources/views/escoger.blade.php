@@ -13,18 +13,6 @@
         <script type="text/javascript" src="{{ URL::asset('js/style.js') }}"></script>
   </head>
   <body>
-
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-  <form action="{{ route('Cliente.editLogin', ['id'=>$cliente->id])}}" method="GET" id="formulario">
-      
-          <div class="btn-group" align="right" >
-      <button class="btn btn-outline-warning my-2 my-sm-0" value="{{$cliente->id}}" id="client" type="submit">{{$cliente->completo}}</button>      
-    </div>
-  </form>
-</div>
-</nav>
   <h1 class="page-header" align="center">Escoge tu vehiculo</h1>
     <div class="container-fluid">
         
