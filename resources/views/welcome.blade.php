@@ -1,6 +1,5 @@
 @extends('plantilla')
 @section('titulo','Login')
-@include('partials.formularioCabecera.divNav')
 @section('contenido')  
 <div class="container">
   <form action="{{ route('Cliente.login')}}" method="POST" id="formulario" onsubmit="return validar()">

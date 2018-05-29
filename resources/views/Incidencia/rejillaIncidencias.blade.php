@@ -1,8 +1,44 @@
 @extends('plantilla')
 @section('titulo','Listado Incidencias')
-@include('partials.navBar')
-@include('partials.formularioCabecera.incidencias')
-@include('partials.formularioCabecera.divNav')
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="{{ route('welcome') }}">RentalCars <span class="glyphicon glyphicon-home"></span></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+    <li class="nav-item" title="Clientes">
+        <a class="nav-link" href="{{ route('Cliente.index') }}"><span class="glyphicon glyphicon-user"></span> </a>
+      </li>
+      <li class="nav-item" title="Vehiculos">
+        <a class="nav-link" href="{{ route('Vehiculo.index') }}"><span class="glyphicon glyphicon-road"></span> </a>
+      </li>
+      <li class="nav-item" title="Alquileres">
+        <a class="nav-link" href="{{ route('Alquiler.index') }}"><span class="glyphicon glyphicon-euro"></span> </a>
+      </li>
+      <li class="nav-item" title="Incidencias">
+        <a class="nav-link" href="{{ route('Incidencia.index') }}"><span class="glyphicon glyphicon-tasks"></span> </a>
+      </li>
+      <li class="nav-item" title="Averias">
+        <a class="nav-link" href="{{ route('Averia.index') }}"><span class="glyphicon glyphicon-wrench"></span> </a>
+      </li>
+    </ul>
+    {!! Form::model(Request::all(), ['route' =>'Incidencia.index', 'method' => 'GET', 'class'=>'form-inline my-2 my-lg-0']) !!}
+<font color="white">De</font>::
+<input class="form-control" type="date" value="" name="date1">::
+<font color="white">Hasta </font>::
+<input class="form-control" type="date" value="{{date('Y-m-d')}}" name="date2">
+{!! Form::select('filtro',array('matricula'=>'matricula','apellido'=>'apellido') ,null, ['class'=>'form-control']) !!}
+{!! Form::text('busqueda',null, ['class'=>'form-control mr-sm-2','placeholder'=>'selecciona filtro']) !!}
+<div class="btn-group" >
+  <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Buscar</button>
+        
+        <div class="btn-group" >
+    <button class="btn btn-outline-warning my-2 my-sm-0" name="imp" id="imp" type="submit">Imprimir</button>      
+  </div>
+{!! Form::close() !!}
+</div>
+</nav>
 @section('contenido')
 
 <div class="container-fluid">
@@ -14,9 +50,27 @@
     <table class="table table-hover table-striped">
     
         @if ($ordenar)
-					@include('cabeceras.incidencias')
+        <tr>
+  <td width="150" title="Conductor del vehiculo" align="center"><b>Conductor</b></a></td>
+  <td width="150" align="center" title="Datos vehiculo"><b>Matricula</b></a></td>
+  <td width="150" align="center" title="Fecha incidencia"><b>Fecha</b></td>
+  <td width="150" align="center" title="Descripcion de la incidencia"><b>Descripccion</b></a></td>
+  <td width="150" align="center" title="Incidencia resuelta o no"><b>Resuelta</b></a></td>
+  <td width="150" align="center"><b>Editar</b></td>
+  <td width="150" align="center"><b>Eliminar</b></td>
+  <td width="150" align="center"><b>Imprimir</b></td>
+</tr>
 				@else
-					@include('cabeceras.incidenciasSinorden')
+        <tr>
+  <td width="150" title="Conductor del vehiculo" align="center"><b>Conductor</b></a></td>
+  <td width="150" align="center" title="Datos vehiculo"><b>Matricula</b></a></td>
+  <td width="150" align="center" title="Fecha incidencia"><b>Fecha</b></td>
+  <td width="150" align="center" title="Descripcion de la incidencia"><b>Descripccion</b></a></td>
+  <td width="150" align="center" title="Incidencia resuelta o no"><b>Resuelta</b></a></td>
+  <td width="150" align="center"><b>Editar</b></td>
+  <td width="150" align="center"><b>Eliminar</b></td>
+  <td width="150" align="center"><b>Imprimir</b></td>
+</tr>
 				@endif
         @foreach($incidencias as $incidencia)
         <tr class="destacar">

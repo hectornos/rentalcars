@@ -1,10 +1,9 @@
 @extends('plantilla')
-@section('titulo','Detalle')
-
-@include('partials.formularioCabecera.divNav')
+@section('titulo','Revisar datos')
 @section('contenido')  
 <div class="container">
-  <h1 class="page-header">Detalle de cliente</h1>
+  <h1 class="page-header">Cliente existente:</h1>
+  <h2 class="page-header">Revisa tus datos</h2>
               
           <div class="form-group">
               <label for="nombre" >Nombre: </label>

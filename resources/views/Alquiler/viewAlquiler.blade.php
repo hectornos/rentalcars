@@ -1,7 +1,5 @@
 @extends('plantilla')
 @section('titulo','Resumen alquiler')
-
-@include('partials.formularioCabecera.divNav')
 @section('contenido')  
 <div class="container">
   <h1 class="page-header">Este es el resumen de tu alquiler {{$alquiler->cliente->completo}}</h1>

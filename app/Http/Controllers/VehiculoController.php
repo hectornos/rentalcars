@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Vehiculo as Vehiculo;
@@ -15,8 +13,6 @@ use App\Combustible as Combustible;
 use App\Cambio as Cambio;
 use App\Color as Color;
 use Barryvdh\DomPDF\Facade as PDF;
-
-
 class VehiculoController extends Controller {
     /*Listado completo de vehiculos.
     @ Recibe: Criterios de ordenación o de filtro.
@@ -29,7 +25,7 @@ class VehiculoController extends Controller {
                 $vehiculos = Vehiculo::where($request->filtro,$request->busqueda)
                                         ->orderBy(\DB::raw('substr(matricula,5,3)'))
                                         ->orderBy(\DB::raw('substr(vehiculos.matricula,1,4)'))
-                                        ->get();
+                                        ->paginate(8);
                 $file = 'vehiculos-'.$request->filtro.'-'.$request->busqueda.'.pdf';
             }else{
                 $vehiculos = Vehiculo::all();
@@ -89,7 +85,6 @@ class VehiculoController extends Controller {
         $count = Vehiculo::all()->count();
         return \View::make('Vehiculo/rejillaVehiculos',compact('vehiculos'),['count'=>$count]);
     }
-
     /*Pantalla para crear un vehiculo nuevo
     @ Recibe:
     @ Devuelve: marcas, tipos, cambios, combustibles y colores */
@@ -101,7 +96,6 @@ class VehiculoController extends Controller {
         $colors = Color::all();
         return \View::make('Vehiculo/createVehiculo',['marcas'=>$marcas,'tipos'=>$tipos,'cambios'=>$cambios,'combustibles'=>$combustibles,'colors'=>$colors]);
 	}
-
     /*Metodo de añadir un vehiculo
     @ Recibe: Request con campos a insertar.
     @ Devuelve: */
@@ -111,7 +105,6 @@ class VehiculoController extends Controller {
 		$mensaje = "Vehiculo con matricula ".$request->matrciula. " añadido.";
 		return redirect(url('/Vehiculo'))->with($alerta,$mensaje);
     }
-
     /*Pantalla para editar un vehiculo
     @ Recibe: id del vehiculo.
     @ Devuelve: marcas, tipos, cambios, combustibles y colores*/
@@ -124,7 +117,6 @@ class VehiculoController extends Controller {
         $colors = Color::all();
 		return \View::make('Vehiculo/editVehiculo',compact('vehiculo'),['marcas'=>$marcas,'tipos'=>$tipos,'cambios'=>$cambios,'combustibles'=>$combustibles,'colors'=>$colors]);
     }
-
     /*Almacena los cambios realizados en el vehiculo
     @ Recibe: Request con campos a editar
     @ Devuelve: */
@@ -134,7 +126,6 @@ class VehiculoController extends Controller {
         Vehiculo::find($request->id)->update($request->all());
         return redirect(url('/Vehiculo'))->with($alerta,$mensaje);
     }
-
     /*Detalle de un vehiculo para su borrado
     @ Recibe: id del vehiculo
     @ Devuelve: objeto vehiculo a borrar*/
@@ -142,7 +133,6 @@ class VehiculoController extends Controller {
 		$vehiculo = Vehiculo::find($id);
         return \View::make('Vehiculo/showVehiculo',compact('vehiculo'));
     }
-
     /*Detalle de un vehiculo
     @ Recibe: id del vehiculo
     @ Devuelve: objeto vehiculo a ver*/
@@ -150,7 +140,6 @@ class VehiculoController extends Controller {
 		$vehiculo = Vehiculo::find($id);
         return \View::make('Vehiculo/viewVehiculo',compact('vehiculo'));
     }
-
     /*Borrado de un vehiculo
     @ Recibe: request con vehiculo a borrar
     @ Devuelve: */
@@ -173,6 +162,7 @@ class VehiculoController extends Controller {
     public function listaralc($id) {
         $vehiculo = Vehiculo::find($id);
         $alquileres = Alquiler::join('vehiculos', 'vehiculos.id', '=', 'cliente_vehiculo.vehiculo_id')
+                                ->select('cliente_vehiculo.*')
                                 ->where('cliente_vehiculo.vehiculo_id', '=', $id)
                                 ->paginate(8);
         $count = count($alquileres);
@@ -180,13 +170,13 @@ class VehiculoController extends Controller {
         $subtitulo = 'Alquileres del vehiculo: '.$vehiculo->mat;
         return \View::make('Alquiler/rejillaAlquileres',compact('alquileres'),['count'=>$count, 'ordenar'=>$ordenar, 'subtitulo'=>$subtitulo]);
     }
-
     /*Listar las averias de un vehiculo
     @ Recibe: id del vehiculo
     @ Devuelve: Objeto averias, count de averias, boolean ordenar, subtitulo*/
     public function listarave($id) {
         $vehiculo = Vehiculo::find($id);
         $averias = Averia::join('vehiculos', 'vehiculos.id', '=', 'averias.vehiculo_id')
+                                ->select('averias.*')
                                 ->where('averias.vehiculo_id', '=', $id)
                                 ->paginate(8);
         $count = count($averias);
@@ -194,7 +184,6 @@ class VehiculoController extends Controller {
         $subtitulo = 'Averias del vehiculo: '.$vehiculo->mat;
         return \View::make('Averia/rejillaAverias',compact('averias'),['count'=>$count, 'ordenar'=>$ordenar, 'subtitulo'=>$subtitulo]);
     }
-
     /*Imprimir en pdf un vehiculo
     @ Recibe: id del vehiculo
     @ Devuelve: pdf creado*/
@@ -203,8 +192,6 @@ class VehiculoController extends Controller {
         $pdf = PDF::loadView('pdf.vehiculoPDF',compact('vehiculo'));
         return $pdf->download($vehiculo->mat.'detalle.pdf');
     }
-
-
     /*Filtar vehiculos
     @ Recibe: request con criterios de búsqueda
     @ Devuelve: vehiculos coincidentes, count, todos los colores, tipos, cambios y combustibles*/
@@ -226,8 +213,8 @@ class VehiculoController extends Controller {
             $coloresZero = array('0'=>'Todos los colores');
             $colores= array_merge($coloresZero,$coloresPrevio);
             $count = count($vehiculos);
-            return \View::make('Eleccion/elegirVehiculos',compact('vehiculos'),['count'=>$count,'tipos'=>$tipos, 'colores'=>$colores, 'combustibles'=>$combustibles, 'cambios'=>$cambios,'cliente_id'=>$cliente_id]);
-
+            $cliente=Cliente::find($cliente_id);
+            return \View::make('Eleccion/elegirVehiculos',compact('vehiculos'),['count'=>$count,'tipos'=>$tipos, 'colores'=>$colores, 'combustibles'=>$combustibles, 'cambios'=>$cambios,'cliente_id'=>$cliente_id,'cliente'=>$cliente]);
         }
             
             //Si le hemos dado a cancel o no vienen datos (primera entrada en el selector)...
@@ -240,12 +227,10 @@ class VehiculoController extends Controller {
             $coloresZero = array('0'=>'Todos los colores');
             $colores= array_merge($coloresZero,$coloresPrevio);
             $count= count($vehiculos);
-            
+            $cliente=Cliente::find($cliente_id);
            
-        return \View::make('Eleccion/elegirVehiculos',compact('vehiculos'),['count'=>$count,'tipos'=>$tipos, 'colores'=>$colores, 'combustibles'=>$combustibles, 'cambios'=>$cambios,'cliente_id'=>$cliente_id]);
+        return \View::make('Eleccion/elegirVehiculos',compact('vehiculos'),['count'=>$count,'tipos'=>$tipos, 'colores'=>$colores, 'combustibles'=>$combustibles, 'cambios'=>$cambios,'cliente_id'=>$cliente_id,'cliente'=>$cliente]);
     }
-
-
     /*Cancela operación, lleva al index.
     @ Recibe: Request con mensaje a mostrar
     @ Devuelve: */
@@ -255,6 +240,4 @@ class VehiculoController extends Controller {
 		$vehiculos = Vehiculo::all();
 		return redirect(url('/Vehiculo'))->with($alerta,$mensaje,$vehiculos);
 	}
-
-
 }

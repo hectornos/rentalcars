@@ -23,15 +23,17 @@ class AveriaController extends Controller
       if ($request->busqueda!=""){
         if ($request->filtro == 'matricula') {
               $averias = Averia::join('vehiculos','averias.vehiculo_id','=','vehiculos.id')
+              ->select('averias.*')
               ->where('vehiculos.matricula',$request->busqueda)
               ->orderBy('fecha','desc')
-              ->get();
+              ->paginate(8);
                 $file = 'averias-'.$request->filtro.'-'.$request->busqueda.'.pdf';
           }elseif ($request->filtro == 'tipo') {
             $averias = Averia::join('tipoaverias', 'averias.tipoaveria_id','=','tipoaverias.id')
+            ->select('averias.*')
             ->where('tipoaverias.nombre',$request->busqueda)
             ->orderBy('fecha','desc')
-            ->get();
+            ->paginate(8);
                 $file = 'averias-'.$request->filtro.'-'.$request->busqueda.'.pdf';
         }        
       }else{
@@ -47,7 +49,8 @@ class AveriaController extends Controller
       if ($orden == 'tipo'){
           $averias = Averia::join('tipoaverias', 'averias.tipoaveria_id','=','tipoaverias.id')
                               ->select('averias.*')
-                              ->orderBy('tipoaverias.nombre','desc')->get();
+                              ->orderBy('tipoaverias.nombre','desc')
+                              ->paginate(8);
       }elseif ($orden == 'matricula') {
           $averias = Averia::join('vehiculos', 'vehiculos.id','=','averias.vehiculo_id')
                               ->select('averias.*')
@@ -61,11 +64,13 @@ class AveriaController extends Controller
       if ($request->busqueda!=""){
           if ($request->filtro == 'matricula') {
             $averias = Averia::join('vehiculos','averias.vehiculo_id','=','vehiculos.id')
+                                  ->select('averias.*')
                                   ->where('vehiculos.matricula',$request->busqueda)
                                   ->orderBy('fecha','desc')
                                   ->paginate(8);
           }elseif ($request->filtro == 'tipo') {
             $averias = Averia::join('tipoaverias', 'averias.tipoaveria_id','=','tipoaverias.id')
+                                  ->select('averias.*')
                                   ->where('tipoaverias.nombre',$request->busqueda)
                                   ->orderBy('fecha','desc')
                                   ->paginate(8);

@@ -31,9 +31,18 @@ class ClienteController extends Controller
 			if ($cliente->rol == 'user') {
 				return \View::make('Cliente/editCliente2',compact('cliente'));
 			} else {
-				return \View::make('home');
+				return \View::make('home',compact('cliente'));
 			}
 		}
+	}
+
+	/*Editamos los datos del cliente.
+    @ Recibe: cliente.
+    @ Devuelve: Pantalla con datos del cliente.
+    */
+	public function editLogin($id) {
+		$cliente = Cliente::find($id);
+		return \View::make('Cliente/editCliente2',compact('cliente'));
 	}
 
 	/*Listado completo de clientes.
@@ -44,8 +53,8 @@ class ClienteController extends Controller
         //Si lo que queremos es imprimir...
         if ($request->has('imp')){
           if ($request->busqueda!=""){
-              $clientes = Cliente::where($request->filtro,$request->busqueda)
-                                      ->get();
+			  $clientes = Cliente::where($request->filtro,$request->busqueda)
+                                      -paginate(8);
               $file = 'clientes'.$request->filtro.'-'.$request->busqueda.'.pdf';
           }else{
               $clientes = Cliente::all();
@@ -173,6 +182,7 @@ class ClienteController extends Controller
 	public function listaralc($id) {
 		$cliente = Cliente::find($id);
 		$alquileres = Alquiler::join('clientes', 'clientes.id', '=', 'cliente_vehiculo.cliente_id')
+								->select('cliente_vehiculo.*')
                                 ->where('cliente_vehiculo.cliente_id', '=', $id)
                                 ->paginate(8);
 		$count = count($alquileres);
@@ -188,6 +198,7 @@ class ClienteController extends Controller
 		$cliente = Cliente::find($id);
 		$incidencias = Incidencia::join('cliente_vehiculo', 'incidencias.alquiler_id', '=', 'cliente_vehiculo.id')
 							->join('clientes', 'cliente_vehiculo.cliente_id', '=', 'clientes.id')
+							->select('incidencias.*')
 							->where('cliente_id',$id)
 							->paginate(8);
 		$count = count($incidencias);
@@ -231,4 +242,6 @@ class ClienteController extends Controller
 		$clientes = Cliente::all();
 		return redirect(url('/Cliente'))->with($alerta,$mensaje,$clientes);
 	}
+
+
 }

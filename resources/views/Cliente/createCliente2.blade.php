@@ -1,7 +1,5 @@
 @extends('plantilla')
 @section('titulo','Agregar')
-
-@include('partials.formularioCabecera.divNav')
 @section('contenido')  
 <div class="container">
   <h1 class="page-header">Agregar un cliente</h1>

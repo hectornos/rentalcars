@@ -21,6 +21,7 @@ class IncidenciaController extends Controller
           if ($request->filtro == 'matricula') {
             $incidencias = Incidencia::join('cliente_vehiculo','incidencias.alquiler_id','=','cliente_vehiculo.id')
                             ->join('vehiculos','cliente_vehiculo.vehiculo_id','=','vehiculos.id')
+                            ->select('incidencias.*')
                             ->where('vehiculos.matricula',$request->busqueda)
                             ->orderBy('cliente_vehiculo.fecha','desc')
                             ->get();
@@ -28,6 +29,7 @@ class IncidenciaController extends Controller
             }elseif ($request->filtro == 'apellido') {
             $incidencias = Incidencia::join('cliente_vehiculo','incidencias.alquiler_id','=','cliente_vehiculo.id')
                             ->join('clientes','cliente_vehiculo.cliente_id','=','clientes.id')
+                            ->select('incidencias.*')
                             ->where('clientes.apellido',$request->busqueda)
                             ->orderBy('cliente_vehiculo.fecha','desc')
                             ->get();
@@ -45,8 +47,9 @@ class IncidenciaController extends Controller
         $orden = $request->criterio;
         if ($orden == 'fecha'){
           $incidencias = Incidencia::join('cliente_vehiculo as c', 'c.id','=','incidencias.alquiler_id')
-                                    ->orderBy('c.fecha', 'asc')
                                     ->select('incidencias.*')
+                                    ->orderBy('c.fecha', 'asc')
+                                 
                                     ->paginate(8);    
         }elseif ($orden == 'conductor') {
           $incidencias = Incidencia::join('cliente_vehiculo', 'incidencias.alquiler_id','=','cliente_vehiculo.id')
@@ -69,12 +72,14 @@ class IncidenciaController extends Controller
           if ($request->filtro == 'matricula') {
             $incidencias = Incidencia::join('cliente_vehiculo','incidencias.alquiler_id','=','cliente_vehiculo.id')
                             ->join('vehiculos','cliente_vehiculo.vehiculo_id','=','vehiculos.id')
+                            ->select('incidencias.*')
                             ->where('vehiculos.matricula',$request->busqueda)
                             ->orderBy('cliente_vehiculo.fecha','desc')
                             ->paginate(8);
           }elseif ($request->filtro == 'apellido') {
             $incidencias = Incidencia::join('cliente_vehiculo','incidencias.alquiler_id','=','cliente_vehiculo.id')
                             ->join('clientes','cliente_vehiculo.cliente_id','=','clientes.id')
+                            ->select('incidencias.*')
                             ->where('clientes.apellido',$request->busqueda)
                             ->orderBy('cliente_vehiculo.fecha','desc')
                             ->paginate(8);
@@ -82,6 +87,7 @@ class IncidenciaController extends Controller
         }else{
           if ($request->date1 != "" && $request->date2 != "") {
             $incidencias = Incidencia::join('cliente_vehiculo','incidencias.alquiler_id','=','cliente_vehiculo.id')
+                              ->select('incidencias.*')
                               ->whereBetween('cliente_vehiculo.fecha', [$request->date1, $request->date2])
                               ->orderBy('cliente_vehiculo.fecha','desc')
                               ->paginate(8);

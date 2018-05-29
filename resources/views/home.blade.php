@@ -61,9 +61,9 @@
             
             <div class="content">
                 <div class="title m-b-md">
-                    RENTAL CARS
+                    RENTAL CARS (admin)
                 </div>
-                <h3>Modo de administrador</h3>
+                <h3>Bienvenido {{$cliente->completo}}</h3>
 
                 <div class="links">
                     <a href="{{ route('Cliente.index') }}">Clientes</a>

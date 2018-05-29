@@ -21,11 +21,13 @@ class AlquilerController extends Controller
       if ($request->busqueda!=""){
         if ($request->filtro == 'matricula') {
               $alquileres = Alquiler::join('vehiculos', 'cliente_vehiculo.vehiculo_id','=','vehiculos.id')
+                ->select('cliente_vehiculo.*')
                 ->where('vehiculos.matricula',$request->busqueda)
                 ->orderby('fecha','desc')->get();
             $file = 'alquileres'.$request->filtro.'-'.$request->busqueda.'.pdf';
           }elseif ($request->filtro == 'apellido') {
               $alquileres = Alquiler::join('clientes', 'cliente_vehiculo.cliente_id','=','clientes.id')
+                ->select('cliente_vehiculo.*')
                 ->where('clientes.apellido',$request->busqueda)
                 ->orderby('fecha','desc')->get();
             $file = 'alquileres'.$request->filtro.'-'.$request->busqueda.'.pdf';
@@ -64,11 +66,13 @@ class AlquilerController extends Controller
           if ($request->busqueda!=""){
             if ($request->filtro == 'matricula') {
               $alquileres = Alquiler::join('vehiculos', 'cliente_vehiculo.vehiculo_id','=','vehiculos.id')
+                            ->select('cliente_vehiculo.*')
                             ->where('vehiculos.matricula',$request->busqueda)
                             ->orderby('fecha','desc')
                             ->paginate(8);
             }elseif ($request->filtro == 'apellido') {
               $alquileres = Alquiler::join('clientes', 'cliente_vehiculo.cliente_id','=','clientes.id')
+                            ->select('cliente_vehiculo.*')
                             ->where('clientes.apellido',$request->busqueda)
                             ->orderby('fecha','desc')
                             ->paginate(8);
@@ -86,7 +90,7 @@ class AlquilerController extends Controller
             $ordenar = true;
             $count = count($alquileres);
             return \View::make('Alquiler/rejillaAlquileres',compact('alquileres'),['count'=>$count, 'ordenar'=>$ordenar]);
-    }
+  }
 
     //Detalle de un alquiler dado su id (primary key)
     public function show($id) {
@@ -95,20 +99,18 @@ class AlquilerController extends Controller
 		  return \View::make('Alquiler/showAlquiler',compact('alquiler'),['numIncidencias'=>$numIncidencias]);
     }
     
-    
-
     //Metodo de añadir un alquiler
-	public function store(Request $request) {
-		if ($request->has('cancel')) {
-			$alerta = 'Cancelado';
-			$mensaje = 'Operacion cancelada';
-		} else {
-			Alquiler::create($request->all());
-			$alerta = 'Creado';
-			$mensaje = $request->nombre. " ha sido creado.";
-		}
-		return redirect(url('/Alquiler'))->with($alerta,$mensaje);
-	}
+	  public function store(Request $request) {
+      if ($request->has('cancel')) {
+        $alerta = 'Cancelado';
+        $mensaje = 'Operacion cancelada';
+      } else {
+        Alquiler::create($request->all());
+        $alerta = 'Creado';
+        $mensaje = $request->nombre. " ha sido creado.";
+      }
+      return redirect(url('/Alquiler'))->with($alerta,$mensaje);
+	  }
 
     	//Metodo de borrar un alquiler
 		public function destroy(Request $request) {
@@ -134,8 +136,13 @@ class AlquilerController extends Controller
     @ Recibe: id del alquiler
     @ Devuelve: Objeto incidencias, count de incidencias, boolean ordenar, subtitulo*/
     public function listarinc($id) {
+      $incidencias = Incidencia::join('cliente_vehiculo','cliente_vehiculo.id','=','incidencias.alquiler_id')
+                            ->select('incidencias.*')
+                            ->where('alquiler_id',$id)
+                            ->paginate(8);
+
       $alquiler = Alquiler::find($id);
-      $incidencias = $alquiler->incidencias;
+      //$incidencias = $alquiler->incidencias;
       $count = count($incidencias);
       $ordenar = false;
       $subtitulo = 'Incidencias asociadas al alquiler con id: '.$alquiler->id;

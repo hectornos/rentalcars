@@ -1,8 +1,44 @@
 @extends('plantilla')
 @section('titulo','Listado Alquileres')
-@include('partials.navBar')
-@include('partials.formularioCabecera.alquileres')
-@include('partials.formularioCabecera.divNav')
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="{{ route('welcome') }}">RentalCars <span class="glyphicon glyphicon-home"></span></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+    <li class="nav-item" title="Clientes">
+        <a class="nav-link" href="{{ route('Cliente.index') }}"><span class="glyphicon glyphicon-user"></span> </a>
+      </li>
+      <li class="nav-item" title="Vehiculos">
+        <a class="nav-link" href="{{ route('Vehiculo.index') }}"><span class="glyphicon glyphicon-road"></span> </a>
+      </li>
+      <li class="nav-item" title="Alquileres">
+        <a class="nav-link" href="{{ route('Alquiler.index') }}"><span class="glyphicon glyphicon-euro"></span> </a>
+      </li>
+      <li class="nav-item" title="Incidencias">
+        <a class="nav-link" href="{{ route('Incidencia.index') }}"><span class="glyphicon glyphicon-tasks"></span> </a>
+      </li>
+      <li class="nav-item" title="Averias">
+        <a class="nav-link" href="{{ route('Averia.index') }}"><span class="glyphicon glyphicon-wrench"></span> </a>
+      </li>
+    </ul>
+{!! Form::model(Request::all(), ['route' =>'Alquiler.index', 'method' => 'GET', 'class'=>'form-inline my-2 my-lg-0']) !!}
+<font color="white">De</font>::
+<input class="form-control" type="date" value="" name="date1">::
+<font color="white">Hasta </font>::
+<input class="form-control" type="date" value="{{date('Y-m-d')}}" name="date2">
+__
+{!! Form::select('filtro',array('matricula'=>'matricula','apellido'=>'apellido') ,null, ['class'=>'form-control']) !!}
+{!! Form::text('busqueda',null, ['class'=>'form-control mr-sm-2','placeholder'=>'selecciona filtro']) !!}
+<div class="btn-group" >
+  <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Buscar</button> 
+        <div class="btn-group" >
+    <button class="btn btn-outline-warning my-2 my-sm-0" name="imp" id="imp" type="submit">Imprimir</button>      
+  </div>
+{!! Form::close() !!}
+</div>
+</nav>
 @section('contenido')
        
 <div class="container-fluid">
@@ -15,9 +51,25 @@
       
     <table class="table table-hover table-striped">
       @if ($ordenar)
-          @include('cabeceras.alquiler')
+      <tr>
+  <td width="150" title="Fecha del alquiler" align="center"><a href="{{ route('Alquiler.index',['criterio' => 'fecha'] )}}" ><b>Fecha</b></a></td>
+  <td width="150" align="center" title="Datos conductor"><a href="{{ route('Alquiler.index',['criterio' => 'conductor'] )}}" ><b>Conductor</b></a></td>
+  <td width="150" align="center" title="Matricula"><a href="{{ route('Alquiler.index',['criterio' => 'matricula'] )}}" ><b>Matricula</b></a></td>
+  <td width="150" align="center" title="Incidencias sufridas"><a href="{{ route('Alquiler.index',['criterio'=>'incidencias']) }}"><b>Incidencias</b></a></td>
+  <td width="150" align="center"><b>Añade incidencia</b></td>
+  <td width="150" align="center"><b>Eliminar</b></td>
+  <td width="150" align="center"><b>Imprimir</b></td>
+</tr>
       @else
-          @include('cabeceras.alquilerSinorden')
+      <tr>
+  <td width="150" title="Fecha del alquiler" align="center"><b>Fecha</b></a></td>
+  <td width="150" align="center" title="Datos conductor"><b>Conductor</b></a></td>
+  <td width="150" align="center" title="Matricula"><b>Matricula</b></a></td>
+  <td width="150" align="center" title="Incidencias sufridas"><b>Incidencias</b></a></td>
+  <td width="150" align="center"><b>Añade incidencia</b></td>
+  <td width="150" align="center"><b>Eliminar</b></td>
+  <td width="150" align="center"><b>Imprimir</b></td>
+</tr>
       @endif
       @foreach($alquileres as $alquiler)
       <tr class="destacar">
