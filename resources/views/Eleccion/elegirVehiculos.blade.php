@@ -3,8 +3,10 @@
 @section('formulario')
 
 <div class="container-fluid">
-    <input type="hidden" value="{{$cliente_id}}"/>
-    {!! Form::model(Request::only(['tipo_id','color_id','cambio_id','combustible_id']), ['route' =>'Vehiculo.elegir', 'method' => 'GET']) !!}
+    
+    {!! Form::model(Request::all(), ['route' =>'Vehiculo.elegir', 'method' => 'GET']) !!}
+    {{ Form::hidden('cliente_id', '$cliente_id') }}
+  
     <table class="table">
       <tr>
       <td></td><td class='table-primary'><b>Tipos:</b></td><td class='table-primary'><b>Combustibles:</b></td><td class='table-primary'><b>Colores:</b></td><td class='table-primary'><b>Cambios:</b></td><td class='table-primary'></td>
